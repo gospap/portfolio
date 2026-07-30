@@ -1,0 +1,480 @@
+/* ===========================================================================
+   Giorgos Papanikolaou — portfolio · global stylesheet (plain CSS, no framework)
+
+   TWO THEMES, ONE TOKEN SET — AND BOTH OF THEM ARE SILVER
+   -------------------------------------------------------
+   The site is silver throughout. The two themes are two *depths* of it: pale
+   silver for reading (.theme-silver) and a deeper brushed silver for the
+   sections carrying a 3D scene (.theme-metal), which need to sit back far
+   enough that chrome and glass have something to be brighter than. Neither is
+   dark — the ink is graphite on both, and the light-purple accent is the only
+   colour in the system.
+
+   Rather than two stylesheets, every component styles itself against six
+   semantic tokens — --bg, --surface, --text, --muted, --line, --accent — and a
+   section flips them by carrying one class. Nothing below the token block
+   knows which theme it is in.
+   =========================================================================== */
+
+:root {
+  /* —— metal: the deeper brushed silver, for 3D stages —— */
+  --m-bg: #c5c8d1;
+  --m-bg-2: #d0d3db;
+  --m-surface: #d9dbe2;
+  --m-text: #14161b;
+  --m-muted: #565b66;
+  --m-line: rgba(56, 60, 70, 0.17);
+  --m-line-strong: rgba(20, 22, 27, 0.3);
+
+  /* —— silver: pale brushed metal, graphite ink —— */
+  --s-bg: #e6e7ec;
+  --s-bg-2: #f2f3f6;
+  --s-surface: #dcdee5;
+  --s-text: #16181d;
+  --s-muted: #5b606c;
+  --s-line: rgba(22, 24, 29, 0.14);
+  --s-line-strong: rgba(22, 24, 29, 0.26);
+
+  /* —— accent: light purple ——
+     Both grounds are light, so the accent that carries text has to be the
+     deep tone; the pale one is for glows, edges and 3D only, where it is
+     never asked to be read. */
+  --purple: #6f52cc;
+  --purple-deep: #5a40b0;
+  --purple-pale: #a892ee;
+  --purple-glow: #cfc2ff;
+
+  /* chrome hairline, used for the metallic edges */
+  --chrome: #d8dae2;
+
+  --wrap: 74rem;
+  --wrap-narrow: 46rem;
+  --gutter: 1.5rem;
+  --radius: 14px;
+  --radius-sm: 9px;
+
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* default surface is silver — the site is mostly reading matter */
+  color-scheme: light;
+}
+
+/* ——— the flip ——— */
+.theme-metal {
+  --bg: var(--m-bg);
+  --bg-2: var(--m-bg-2);
+  --surface: var(--m-surface);
+  --text: var(--m-text);
+  --muted: var(--m-muted);
+  --line: var(--m-line);
+  --line-strong: var(--m-line-strong);
+  --accent: var(--purple);
+  --accent-quiet: var(--purple-pale);
+  /* brushed, not flat: a faint diagonal sheen over the base so a full-bleed
+     metal section does not read as a grey rectangle */
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.5) 0%, transparent 34%),
+    linear-gradient(300deg, rgba(255, 255, 255, 0.32) 0%, transparent 40%),
+    var(--bg);
+  color: var(--text);
+}
+.theme-silver {
+  --bg: var(--s-bg);
+  --bg-2: var(--s-bg-2);
+  --surface: var(--s-surface);
+  --text: var(--s-text);
+  --muted: var(--s-muted);
+  --line: var(--s-line);
+  --line-strong: var(--s-line-strong);
+  --accent: var(--purple-deep);
+  --accent-quiet: var(--purple-deep);
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ——— reset ——— */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Moksha's type is thin and widely tracked; that is most of its character.
+   Manrope carries Greek, which a display serif would not, so the weight does
+   the work instead of the family. */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /* the page is silver; the metal sections are a deeper shade of the same */
+  background: var(--s-bg);
+  color: var(--s-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Fine grain over everything. On silver it reads as paper tooth, on graphite
+   as sensor noise — either way it kills the flat-plastic look. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--purple-deep);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--purple-deep);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--purple-deep);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transform: translateY(-160%);
+  transition: transform 0.25s var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ——— Lenis ——— */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ===========================================================================
+   Primitives
+   =========================================================================== */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.wrap-narrow {
+  max-width: var(--wrap-narrow);
+}
+
+.section {
+  position: relative;
+}
+.section-pad {
+  padding-block: clamp(4.5rem, 10vw, 8.5rem);
+}
+
+/* Small monospace label. Tracked out far enough to read as an instrument
+   marking rather than as shouted body copy — moksha's whole UI is this. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.kicker::before {
+  content: "";
+  width: 1.7rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.kicker--plain::before {
+  display: none;
+}
+
+.h1 {
+  font-size: clamp(2.4rem, 6.5vw, 4.8rem);
+  line-height: 1;
+}
+.h2 {
+  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+}
+.h3 {
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 400;
+}
+
+.lead {
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  line-height: 1.75;
+  color: var(--muted);
+  /* Measure, not width. On a wide monitor an unbounded paragraph inside a
+     74rem column runs to ~100 characters, which is where reading turns into
+     scanning — the single biggest thing that makes type look wrong on a big
+     screen. 62ch is the top of the comfortable band. */
+  max-width: 62ch;
+}
+
+.mono-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ——— buttons ——— */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--purple-deep);
+  border: 1px solid transparent;
+  transition:
+    background-color 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.btn:hover {
+  background: var(--purple-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px -14px rgba(111, 82, 204, 0.9);
+}
+
+.btn-ghost {
+  background: none;
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: var(--accent);
+  box-shadow: none;
+}
+
+/* A brushed-metal rule: light catches the middle, falls off at both ends. */
+.rule-chrome {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-strong) 18%,
+    var(--chrome) 50%,
+    var(--line-strong) 82%,
+    transparent
+  );
+  opacity: 0.55;
+}
+
+/* ===========================================================================
+   STAGE / CURTAIN — the section-to-section transition.
+
+   This is how Shopify Editions does it, and it is not WebGL or canvas at all:
+   it is two CSS rules. A STAGE pins itself to the top of the viewport and then
+   takes up no space in the flow, so whatever follows scrolls straight up over
+   it. A CURTAIN is that follower — positioned, above in the stacking order,
+   and opaque, so it wipes the pinned stage as it rises. Alternating the two is
+   the entire rhythm.
+
+   Active Theory's version is the same move rendered inside their single
+   canvas, which is why it looked like a shader: the geometry of it is
+   identical, they just get to dissolve real pixels at the boundary.
+
+   Doing it in CSS costs nothing per frame, never drops a frame, and cannot
+   desync from the scrollbar — which is worth more here than the dissolve.
+
+   TWO RULES THAT BREAK IT, both silent:
+     · a stage inside a parent with `transform`, or the wrong `overflow`,
+       simply will not stick;
+     · a curtain without a solid background lets the stage show through and
+       the whole effect reads as a bug.
+   =========================================================================== */
+.stage {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100lvh;
+  /* the negative margin is the trick: the stage contributes nothing to the
+     flow, so the curtain's own height is the scroll runway */
+  margin-bottom: -100lvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.curtain {
+  position: relative;
+  z-index: 10;
+  /* the theme classes supply the solid background this needs */
+}
+
+@supports not (min-height: 100lvh) {
+  .stage {
+    min-height: 100vh;
+    margin-bottom: -100vh;
+  }
+}
+
+/* ===========================================================================
+   Reveal — one-shot entrance. --i staggers siblings, so the reveal order can
+   differ from the DOM order.
+   =========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.6rem);
+  transition:
+    opacity 0.85s var(--ease-out),
+    transform 0.85s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  will-change: transform, opacity;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===========================================================================
+   Large screens
+
+   Everything on this site is sized in rem, so moving the root moves the whole
+   scale at once — type, gaps, the hero's portrait column — and keeps every
+   proportion the design was tuned at. Two steps rather than a fluid clamp,
+   and both above 1440px, so nothing below that width shifts by a pixel from
+   what was signed off at 1280.
+   =========================================================================== */
+@media (min-width: 1440px) {
+  html {
+    font-size: 106.25%; /* 17px */
+  }
+}
+@media (min-width: 1920px) {
+  html {
+    font-size: 112.5%; /* 18px */
+  }
+  :root {
+    /* the column widens a little too, or the larger type would sit in a
+       measure that is now proportionally narrower than intended */
+    --wrap: 78rem;
+    --gutter: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .btn,
+  .skip-link {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,336 @@
+/* ===========================================================================
+   site.css — header, locale switch, footer.
+
+   The header floats over sections of both themes, so it cannot inherit them:
+   it carries its own pair and is told which one to wear by SiteHeader, which
+   watches what is passing under the top band of the viewport.
+   =========================================================================== */
+
+.hdr {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  --hdr-fg: var(--s-text);
+  --hdr-muted: var(--s-muted);
+  --hdr-line: var(--s-line);
+  --hdr-accent: var(--purple-deep);
+  --hdr-scrim: rgba(230, 231, 236, 0.82);
+  color: var(--hdr-fg);
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.5s var(--ease-out),
+    backdrop-filter 0.5s var(--ease-out),
+    border-color 0.5s var(--ease-out),
+    color 0.5s var(--ease-out);
+}
+/* over a graphite section */
+.hdr.is-dark {
+  --hdr-fg: var(--m-text);
+  --hdr-muted: var(--m-muted);
+  --hdr-line: var(--m-line);
+  --hdr-accent: var(--purple);
+  --hdr-scrim: rgba(14, 15, 18, 0.72);
+}
+.hdr.is-solid {
+  background: var(--hdr-scrim);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom-color: var(--hdr-line);
+}
+
+.hdr__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: 0.9rem var(--gutter);
+}
+
+.hdr__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-right: auto;
+}
+/* Brushed-metal chip: a diagonal sheen over a graphite plate, with the accent
+   only on the type. Reads as a machined part rather than as a coloured box. */
+.hdr__mark {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.34) 0%, transparent 42%),
+    linear-gradient(150deg, #3a3e49, #191b21);
+  box-shadow:
+    inset 0 0 0 1px rgba(216, 218, 226, 0.35),
+    0 2px 8px -3px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--purple-pale);
+  transition: color 0.3s var(--ease-out);
+}
+.hdr__brand:hover .hdr__mark {
+  color: #fff;
+}
+.hdr__name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.22;
+}
+.hdr__nameFull {
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.hdr__nameRole {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hdr-muted);
+}
+
+.hdr__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.hdr__link {
+  position: relative;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.87rem;
+  color: var(--hdr-muted);
+  transition: color 0.25s var(--ease-out);
+}
+.hdr__link:hover,
+.hdr__link.is-active {
+  color: var(--hdr-fg);
+}
+/* A dot, not an underline — it does not compete with the rule under the bar. */
+.hdr__link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.08rem;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--hdr-accent);
+  transform: translateX(-50%);
+}
+
+.hdr__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.hdr__cta {
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--hdr-line);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition:
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+.hdr__cta:hover {
+  background: var(--hdr-accent);
+  border-color: var(--hdr-accent);
+  color: #fff;
+}
+.hdr.is-dark .hdr__cta:hover {
+  color: #14121e;
+}
+
+/* ——— locale switch ——— */
+.lsw {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--hdr-line);
+}
+.lsw__opt {
+  padding: 0.28rem 0.56rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  color: var(--hdr-muted);
+  transition:
+    background-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+.lsw__opt:hover {
+  color: var(--hdr-fg);
+}
+.lsw__opt.is-active {
+  background: var(--hdr-accent);
+  color: #fff;
+}
+.hdr.is-dark .lsw__opt.is-active {
+  color: #14121e;
+}
+
+/* ——— mobile ——— */
+.hdr__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 7px;
+  border: 1px solid var(--hdr-line);
+}
+.hdr__burger span {
+  display: block;
+  width: 15px;
+  height: 1.5px;
+  margin-inline: auto;
+  background: currentColor;
+  transition: transform 0.35s var(--ease-out);
+}
+.hdr.is-open .hdr__burger span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+.hdr.is-open .hdr__burger span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+.hdr__sheet {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hdr__nav,
+  .hdr__cta {
+    display: none;
+  }
+  .hdr__burger {
+    display: flex;
+  }
+  .hdr__nameRole {
+    display: none;
+  }
+
+  .hdr__sheet {
+    display: block;
+    border-top: 1px solid var(--hdr-line);
+    background: var(--hdr-scrim);
+    backdrop-filter: blur(20px);
+    padding: 1rem var(--gutter) 2rem;
+  }
+  .hdr__sheet[hidden] {
+    display: none;
+  }
+  .hdr__sheet nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .hdr__sheetLink {
+    padding: 0.95rem 0.25rem;
+    border-bottom: 1px solid var(--hdr-line);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    animation: sheetIn 0.45s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+  .hdr__sheetLink.is-active {
+    color: var(--hdr-accent);
+  }
+  @keyframes sheetIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .hdr__nameFull {
+    font-size: 0.82rem;
+  }
+}
+
+/* ——————————————————————————— footer ——————————————————————————— */
+.ftr {
+  position: relative;
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+}
+.ftr__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-block: clamp(2.5rem, 5vw, 4rem) 2rem;
+}
+.ftr__name {
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+.ftr__role {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+.ftr__built {
+  margin-top: 1rem;
+  max-width: 26rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.ftr__nav,
+.ftr__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+.ftr__nav a,
+.ftr__links a {
+  color: var(--muted);
+  width: fit-content;
+  transition: color 0.25s var(--ease-out);
+}
+.ftr__nav a:hover,
+.ftr__links a:hover {
+  color: var(--text);
+}
+.ftr__base {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.ftr__handle::before {
+  content: "@";
+  opacity: 0.5;
+}
+
+@media (max-width: 760px) {
+  .ftr__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ftr__brand {
+    grid-column: 1 / -1;
+  }
+  .ftr__base {
+    flex-direction: column;
+  }
+}

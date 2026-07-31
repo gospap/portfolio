@@ -176,7 +176,7 @@ export const PROJECTS = [
   {
     slug: "vibely",
     kind: "app",
-    status: "wip",
+    status: "soon",
     year: "2026",
     url: "",
     tint: "#3a2d4d",
@@ -322,8 +322,11 @@ export const PROJECTS = [
     year: "2026",
     url: "",
     tint: "#30343f",
-    cover: "",
-    images: [],
+    /* The enclosure renders. Assembled reads better as the card — an exploded
+       view at card size is a grey smear — so the exploded one leads the detail
+       gallery instead, where it has the room to be read. */
+    cover: "/media/cards/cad1.png",
+    images: ["/media/cards/cad2.png"],
     stack: ["Autodesk Inventor", "Mesh export"],
     en: {
       title: "Mechanical CAD",

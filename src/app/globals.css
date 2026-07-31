@@ -54,6 +54,9 @@
   --radius-sm: 9px;
 
   --font-sans: var(--font-manrope), system-ui, sans-serif;
+  /* Display face. Everything with a heading level uses this; body copy stays on
+     the sans. Both carry Greek — see the note in layout.jsx. */
+  --font-serif: var(--font-serif-src), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-mono-jb), ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -141,16 +144,21 @@ p {
   text-wrap: pretty;
 }
 
-/* Moksha's type is thin and widely tracked; that is most of its character.
-   Manrope carries Greek, which a display serif would not, so the weight does
-   the work instead of the family. */
+/* Headings are the serif; body copy stays on the sans. That split is the whole
+   type system — an editorial display face over a geometric text face.
+
+   The tracking is nearly neutral now. The old -0.025em was tuned for Manrope
+   set very light and very large; a serif at the same negative tracking closes
+   up the counters and the words start to knit together, which is the opposite
+   of what a display serif is for. */
 h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.008em;
   text-wrap: balance;
 }
 
@@ -271,8 +279,7 @@ html.lenis body {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--accent);
 }
 .kicker::before {
@@ -312,8 +319,7 @@ html.lenis body {
 .mono-note {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--muted);
 }
 
@@ -458,6 +464,80 @@ html.lenis body {
        measure that is now proportionally narrower than intended */
     --wrap: 78rem;
     --gutter: 2rem;
+  }
+}
+
+/* ===========================================================================
+   Phones
+
+   Two things measured wrong at 375px and both are fixed here rather than in
+   each component, because both are systemic:
+
+   · the small labels were 9.9–11.2px. That is a size chosen for a desktop
+     monitor at arm's length; on a phone held at 30cm it is below what most
+     people can read comfortably, so every one of them gets a floor.
+
+   · tap targets. The burger was 34×34 and the locale options 32×22, against
+     a 44×44 minimum in both Apple's and Google's guidance. The elements keep
+     their visual size — the padding does the growing, so nothing looks
+     different and everything is reachable with a thumb.
+   =========================================================================== */
+@media (max-width: 620px) {
+  body .kicker,
+  body .mono-note {
+    font-size: 0.76rem;
+  }
+
+  body .hdr__burger {
+    width: 44px;
+    height: 44px;
+    /* the two bars are absolutely centred, so growing the box does not move
+       the mark itself */
+    display: grid;
+    place-content: center;
+    gap: 5px;
+  }
+
+  /* The bar is the tap target, not the label inside it. */
+  body .lsw__opt {
+    min-width: 44px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Any inline link in running copy stays inline — this is only for the ones
+     that stand alone as controls. */
+  body .hdr__link,
+  body .hdr__sheetLink,
+  body .contact__copy,
+  body .disc__row,
+  body .show__open,
+  body .btn {
+    min-height: 44px;
+  }
+  body .hdr__link,
+  body .hdr__sheetLink {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* The stragglers: labels with their own font-size further down the cascade.
+     The monogram is exempt — it is a mark, not text to be read. */
+  body .lsw__opt,
+  body .show__status,
+  body .ftr__role,
+  body .show__frameLabel {
+    font-size: 0.74rem;
+  }
+
+  /* Footer links measured 22px tall — the text height and nothing else. */
+  body .ftr a,
+  body .ftr__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }
 

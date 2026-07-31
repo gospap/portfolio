@@ -18,7 +18,39 @@ import * as THREE from "three";
 const W = 1280;
 const H = 720;
 
-export function makeCardMask({ title = "", kicker = "", index = 0 }) {
+/* A pill in the accent, right-aligned on the index line. Drawn rather than
+   composed because everything else on this plate is: the badge has to bend and
+   rotate with the card, and a DOM element cannot follow it.
+
+   Returns nothing — it paints and leaves the cursor where it found it. */
+function drawBadge(ctx, text, rightX, baselineY) {
+  ctx.save();
+  ctx.font = "600 24px ui-monospace, 'JetBrains Mono', monospace";
+  ctx.letterSpacing = "2px";
+
+  const padX = 20;
+  const h = 40;
+  const w = Math.ceil(ctx.measureText(text).width) + padX * 2;
+  const x = rightX - w;
+  const y = baselineY - h + 8;
+  const r = h / 2;
+
+  /* Filled, not outlined. The plate under it is near-black and the accent is a
+     pale purple, so an outline would read as a thin grey rectangle at the size
+     these cards are actually seen at. */
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  ctx.fillStyle = "rgba(168,146,238,0.92)";
+  ctx.fill();
+
+  ctx.fillStyle = "#14121f";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText(text, x + w / 2, y + h / 2 + 1);
+  ctx.restore();
+}
+
+export function makeCardMask({ title = "", kicker = "", index = 0, badge = "" }) {
   if (typeof document === "undefined") return null;
 
   const canvas = document.createElement("canvas");
@@ -49,13 +81,28 @@ export function makeCardMask({ title = "", kicker = "", index = 0 }) {
   ctx.textBaseline = "alphabetic";
   ctx.fillText(String(index + 1).padStart(2, "0"), padX, y);
 
-  // hairline under the index, stopping short of the right edge
+  /* Hairline under the index. It stops short of the badge rather than of the
+     right edge when there is one — a rule running under a pill reads as a
+     mistake, and the two are on the same line. */
+  const badgeW = badge
+    ? (() => {
+        ctx.save();
+        ctx.font = "600 24px ui-monospace, 'JetBrains Mono', monospace";
+        ctx.letterSpacing = "2px";
+        const w = Math.ceil(ctx.measureText(badge).width) + 40;
+        ctx.restore();
+        return w + 22;
+      })()
+    : 0;
+
   ctx.strokeStyle = "rgba(233,235,242,0.34)";
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(padX + 58, y - 9);
-  ctx.lineTo(W - padX, y - 9);
+  ctx.lineTo(W - padX - badgeW, y - 9);
   ctx.stroke();
+
+  if (badge) drawBadge(ctx, badge, W - padX, y);
 
   // title — shrink to fit rather than wrap; these are product names, and a
   // wrapped product name reads as a mistake
@@ -75,7 +122,7 @@ export function makeCardMask({ title = "", kicker = "", index = 0 }) {
   ctx.font = "400 26px ui-monospace, 'JetBrains Mono', monospace";
   ctx.letterSpacing = "2px";
   ctx.fillStyle = "rgba(226,228,236,0.74)";
-  ctx.fillText(kicker.toUpperCase(), padX, y);
+  ctx.fillText(kicker, padX, y);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;

@@ -23,6 +23,21 @@
   gap: clamp(2rem, 6vw, 5rem);
   align-items: start;
 }
+/* The plates sit under the aside, in the narrow column — the quote keeps the
+   whole of the wide one. Sized in vh rather than rem so the object and the
+   type it sits under always share the pinned viewport in the same proportion,
+   whatever the visitor's root font size is. */
+.stmt__art {
+  height: clamp(11rem, 26vh, 18rem);
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .stmt__art {
+    display: none;
+  }
+}
+
 .stmt__note {
   margin-top: 1.5rem;
   max-width: 22rem;
@@ -34,7 +49,7 @@
 .stmt__quote {
   position: relative;
   font-size: clamp(1.55rem, 3.8vw, 3rem);
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1.24;
   letter-spacing: -0.03em;
   text-wrap: balance;
@@ -100,6 +115,94 @@
 .feat__lead {
   margin-top: 1rem;
   max-width: 34rem;
+}
+
+/* ===========================================================================
+   02b · the stack — plain hover cards
+
+   Deliberately the quietest section on the page. Everything around it is
+   scroll-driven or rendered, so the one section whose job is "can they be
+   trusted with Postgres" answers that in a grid you can read at a glance and
+   leave. The only motion is the entrance and a hover state.
+   =========================================================================== */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  /* the 1px gap over a line colour IS the ruling — no per-card borders, so
+     there is never a doubled line between two neighbours */
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.skill {
+  position: relative;
+  display: block;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  background: var(--bg);
+  transition: background-color 0.4s var(--ease-out);
+}
+.skill:hover {
+  background: var(--surface);
+}
+/* A hairline that draws across the top of the card being pointed at — the
+   same gesture the discipline rows use, so the two read as one system. */
+.skill::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+.skill:hover::before {
+  transform: scaleX(1);
+}
+
+.skill__num {
+  font-size: 0.6rem;
+  color: var(--accent);
+}
+.skill__title {
+  margin-top: 0.9rem;
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 300;
+  letter-spacing: -0.012em;
+  transition: transform 0.35s var(--ease-out);
+}
+.skill:hover .skill__title {
+  transform: translateX(0.25rem);
+}
+.skill__kicker {
+  margin-top: 0.5rem;
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+.skill__body {
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.72;
+  color: var(--muted);
+  transition: color 0.35s var(--ease-out);
+}
+.skill:hover .skill__body {
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .skills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .skills {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ===========================================================================
@@ -265,8 +368,7 @@
 .deck__tickLabel {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--muted);
   transition: color 0.4s var(--ease-out);
 }
@@ -340,6 +442,24 @@
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
+  /* The gutter the machined block lives in. CapabilityCube sizes itself
+     against the same limits, so the two can never disagree about how much
+     room there is. */
+  padding-right: clamp(11rem, 20vw, 19rem);
+}
+
+/* The canvas covers the stage and the block positions itself within it — an
+   orthographic pan is exact, and a canvas the size of its subject would clip
+   the reflections at the silhouette. */
+.deck__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.deck.is-live .deck__inner {
+  position: relative;
+  z-index: 1;
 }
 .deck.is-live .deck__rail {
   display: grid;
@@ -369,8 +489,8 @@
 .deck.is-live .deck__slideTitle {
   margin-top: 1rem;
   font-size: clamp(1.9rem, 4.4vw, 3.2rem);
-  font-weight: 200;
-  letter-spacing: -0.035em;
+  font-weight: 300;
+  letter-spacing: -0.012em;
 }
 .deck.is-live .deck__items {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
@@ -427,7 +547,7 @@
 }
 .hstrip__num {
   font-size: 2.4rem;
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--accent);
@@ -444,7 +564,15 @@
   color: var(--muted);
 }
 
-/* Reduced motion: no longer tall, no longer sticky — an ordinary list. */
+/* Reduced motion — AND every phone. On a narrow screen the strip is a
+   scroll-jack: four viewports of vertical scrolling that move content
+   sideways, on a device where sideways is already a gesture the OS owns. It
+   becomes an ordinary stacked list instead.
+
+   The JS keeps running and keeps writing a transform; `!important` is what
+   overrides it, and it is deliberate rather than lazy — the alternative is
+   teaching ProcessStrip a breakpoint, which would then have to agree with this
+   one forever. */
 .hstrip--static {
   height: auto !important;
 }
@@ -463,6 +591,27 @@
 }
 .hstrip--static .hstrip__panel {
   width: min(24rem, 100%);
+}
+
+@media (max-width: 900px) {
+  .hstrip {
+    height: auto !important;
+  }
+  .hstrip .hstrip__stage {
+    position: static;
+    height: auto;
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  }
+  .hstrip .hstrip__track {
+    flex-wrap: wrap;
+    gap: 1rem;
+    transform: none !important;
+    width: 100%;
+    padding-inline: var(--gutter);
+  }
+  .hstrip .hstrip__panel {
+    width: 100%;
+  }
 }
 
 /* ===========================================================================
@@ -493,7 +642,7 @@
    last thing to arrive in its row instead of a part of the block. */
 .now__value {
   font-size: clamp(1.35rem, 2.8vw, 2.1rem);
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: -0.03em;
   clip-path: inset(0 100% -0.3em 0);
   transition: clip-path 0.9s var(--ease-out);
@@ -557,7 +706,7 @@
 .home__aboutLead {
   margin-top: 1.1rem;
   font-size: clamp(1.35rem, 2.9vw, 2.2rem);
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1.32;
   letter-spacing: -0.03em;
 }
@@ -625,7 +774,7 @@
 }
 .home__factValue {
   font-size: 2.4rem;
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em;
 }

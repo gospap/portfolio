@@ -96,9 +96,18 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: clamp(1.25rem, 3vh, 2.25rem);
-  /* clear of the fixed header at the top, of the banner ring at the bottom */
+  /* Clear of the fixed header at the top, of the banner ring at the bottom.
+
+     The left inset used to align the portrait to the content column, which put
+     it a long way in on a wide screen. It is pulled 3rem outboard of that now —
+     but through max(), so on anything narrow it lands on the gutter and never
+     runs off the edge chasing an offset that only makes sense at 1440px.
+
+     The bottom padding lifts the block off the banner ring; it is the number to
+     change if the portrait needs to sit higher or lower. */
   padding: clamp(6rem, 14vh, 9rem) clamp(1.5rem, 3vw, 3rem)
-    clamp(3rem, 8vh, 5.5rem) max(var(--gutter), calc(50vw - var(--wrap) / 2));
+    clamp(5rem, 13vh, 8.5rem)
+    max(var(--gutter), calc(50vw - var(--wrap) / 2 - 3rem));
   color: var(--m-text);
   /* Two layers: a silver wash that carries the text, and a faint purple pool
      low down that ties the column to the horizon line. Both fade to nothing

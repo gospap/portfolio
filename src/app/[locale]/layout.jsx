@@ -1,4 +1,4 @@
-import { Manrope, JetBrains_Mono } from "next/font/google";
+import { Manrope, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import { DEFAULT_LOCALE, LOCALES, getDict, isLocale } from "@/lib/content/i18n";
 import { PROFILE } from "@/lib/content/profile";
 import { SITE_URL } from "@/lib/site";
@@ -23,6 +23,16 @@ const sans = Manrope({
   variable: "--font-manrope",
   display: "swap",
 });
+/* The display face. Anthropic-adjacent: an editorial serif for headings over a
+   geometric sans for reading. Source Serif 4 is the one that carries GREEK —
+   most serifs with this feel are Latin-only, and a Latin-only display face
+   would silently fall back mid-heading on half of this site. */
+const serif = Source_Serif_4({
+  subsets: ["latin", "latin-ext", "greek"],
+  variable: "--font-serif-src",
+  display: "swap",
+});
+
 const mono = JetBrains_Mono({
   subsets: ["latin", "latin-ext", "greek"],
   variable: "--font-mono-jb",
@@ -72,7 +82,10 @@ export default async function LocaleLayout({ children, params }) {
   const dict = getDict(loc);
 
   return (
-    <html lang={dict.htmlLang} className={`${sans.variable} ${mono.variable}`}>
+    <html
+      lang={dict.htmlLang}
+      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
+    >
       <body>
         <a className="skip-link" href="#main">
           {dict.a11y.skip}

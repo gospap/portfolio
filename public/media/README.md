@@ -65,8 +65,23 @@ Three projects have **no** card image on purpose and always use a generated
 plate, because there is nothing real to photograph yet:
 
 - `property-hub` — not built
-- `mechanical-cad` — waiting on your 2 CAD photos
 - `async-proctoring` — waiting on a capture of the proctoring console
+
+## Mechanical CAD — the two enclosure renders
+
+```
+public/media/cards/mechanical-cad.jpg           ← assembled view
+public/media/cards/mechanical-cad-exploded.jpg  ← exploded view
+```
+
+`projects.js` already points at both: the assembled one is the card, the
+exploded one is the first image in the detail gallery. That way round because
+an exploded view shrunk to card size reads as a grey smear — it needs the
+room the detail panel gives it.
+
+The renders are on a pale ground, which is the same silver the page is, so no
+cropping or background removal is needed. `.jpg` as named; if you export PNG,
+change the two paths on the `mechanical-cad` record to match.
 
 To give those a real image later, drop the file in as above and set `cover` on
 that record in `src/lib/content/projects.js`.

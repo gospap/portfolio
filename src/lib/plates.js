@@ -68,12 +68,12 @@ function caption(ctx, label, sub) {
   ctx.font = "500 21px ui-monospace, 'JetBrains Mono', monospace";
   ctx.fillStyle = BONE;
   ctx.globalAlpha = 0.92;
-  ctx.fillText(label.toUpperCase(), 54, PLATE_H - 84);
+  ctx.fillText(label, 54, PLATE_H - 84);
   if (sub) {
     ctx.font = "400 17px ui-monospace, 'JetBrains Mono', monospace";
     ctx.fillStyle = PURPLE;
     ctx.globalAlpha = 0.8;
-    ctx.fillText(sub.toUpperCase(), 54, PLATE_H - 54);
+    ctx.fillText(sub, 54, PLATE_H - 54);
   }
   ctx.restore();
 }

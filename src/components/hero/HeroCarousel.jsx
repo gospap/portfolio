@@ -149,8 +149,14 @@ function Card({ item, media, index, count, onOpen, flying, rotRef }) {
   );
 
   const mask = useMemo(
-    () => makeCardMask({ title: item.label, kicker: item.sub, index }),
-    [item.label, item.sub, index],
+    () =>
+      makeCardMask({
+        title: item.label,
+        kicker: item.sub,
+        index,
+        badge: item.badge,
+      }),
+    [item.label, item.sub, item.badge, index],
   );
   useEffect(() => () => mask?.dispose(), [mask]);
 

@@ -1,6 +1,7 @@
 import { DEFAULT_LOCALE, getDict, href, isLocale } from "@/lib/content/i18n";
 import { PROFILE } from "@/lib/content/profile";
 import Reveal from "@/components/Reveal";
+import StudyStack from "@/components/three/StudyStack";
 import Link from "next/link";
 
 export async function generateMetadata({ params }) {
@@ -51,6 +52,10 @@ export default async function About({ params }) {
                   />
                 ))}
               </div>
+
+              {/* …and the same numbers a third time, as cut stock: four
+                  segments finished, the fifth still raw. See StudyColumn. */}
+              <StudyStack done={study.year} total={study.of} />
             </div>
             <div>
               <p className="about__asideTitle">

@@ -11,6 +11,11 @@ import { clamp01, damp, influence } from "@/lib/motion";
 /* ===========================================================================
    ShowcaseScene — after pmndrs/examples "moksha".
 
+   This is the FLAT showcase, and it is what /work, /apps and /hardware use.
+   Those are pages you go to in order to read what the projects are, so the
+   scene behind the copy stays a quiet parallax layer and never asks to be
+   navigated. The helix lives on the landing page only — see components/helix.
+
    Moksha's grammar, and what is kept from it:
      · an ORTHOGRAPHIC camera at zoom 1, so one world unit is one CSS pixel and
        a plate can be placed against the DOM layout by arithmetic instead of by

@@ -191,28 +191,29 @@ export const en = {
 
   about: {
     title: "About",
-    lead: "I build products that ship, and I am finishing the degree that makes the hardware half of them possible.",
+    lead: "Software engineer working across interfaces, the services behind them and the hardware underneath. Currently completing a degree in Information Technology & Electronic Systems Engineering.",
     body: [
-      "I work across the whole depth of a product: the interface people touch, the services behind it, and — increasingly — the electronics underneath. That range is deliberate. The interesting problems tend to sit exactly on the seams between those layers, and the seams are where handovers usually lose them.",
-      "Most of what I build stays up. LivelyVend runs live shopping broadcasts for merchants. BeasyPro carries candidates from an advert through to a hire. Two of the sites I have built are the public face of the businesses that commissioned them. I care much more about things that survive contact with real users than about things that demo well.",
-      "The 3D work is not decoration either. A voxel cliff built from a client's own CAD mesh, a hero that shatters and burns on a custom shader, a camera that flies down a helix of project cards — each of those exists because a rectangle with a photograph in it would have said less about the company than the thing it replaced.",
+      "I take on the whole path: from designing the interface through to the product running in production, used by real people around the world. Web interfaces, the services that support them, and the databases and authentication systems they depend on.",
+      "I have worked at Overpass Connect since August 2025. Projects include LivelyVend, a live-selling platform for merchants; BeasyPro, a recruitment system running from job advert through to hire; and corporate sites for clients in Greece. I take on the full cycle — architecture, implementation, deployment and ongoing maintenance.",
+      "A product in production is as much an infrastructure and security question as a code one. I configure web servers and reverse proxies, apply rate limiting and attack prevention, and work across firewalls and computer networks — addressing, routing, DNS and TLS termination.",
+      "On the hardware side I am a student of Information Technology & Electronic Systems Engineering, with practical experience in PCB design, multi-stage transistor amplifiers for signal amplification, and laboratory instrumentation — oscilloscopes and spectrum analysers for wireless communications.",
     ],
     studyKicker: "Education",
     studyBody:
-      "I am in my fourth year of a five-year Information Technology & Electronics Engineering degree. The electronics half is what turns a hardware idea into a board rather than a wish, and it is why the property hub is a device I am building rather than a device I am specifying for somebody else.",
+      "Fourth year of a five-year degree in Information Technology & Electronic Systems Engineering.",
     valuesKicker: "How I work",
     values: [
       {
-        title: "Ship it, then defend it",
-        body: "Work that is live and holding up is worth more than work that is elegant in a branch. Everything here is measured against whether it survived users.",
+        title: "Delivery",
+        body: "Work counts when it is in production and keeps running there. What I ship is what I maintain.",
       },
       {
-        title: "Precision over polish",
-        body: "The difference between good and excellent motion is usually not more effects — it is one frame-accurate value where there used to be an approximation.",
+        title: "Correctness first",
+        body: "Accurate values, predictable state and consistent behaviour across devices come before visual refinement. Polish applied over unreliable behaviour does not hold.",
       },
       {
-        title: "Own the whole seam",
-        body: "Interface, service and hardware are one product. I would rather understand all three than be handed an interface between two of them.",
+        title: "The full system",
+        body: "Interface, service and hardware form one system. I prefer to understand all three rather than work to a specification handed across the boundary between two of them.",
       },
     ],
   },

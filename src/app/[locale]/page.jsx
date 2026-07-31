@@ -5,14 +5,25 @@ import { PROJECTS, ROUTE_FOR, bySlug, localise } from "@/lib/content/projects";
 import { PLATE_STYLES } from "@/lib/plates";
 import HeroCarousel from "@/components/hero/HeroCarousel";
 import Showcase from "@/components/showcase/Showcase";
+import SkillGrid from "@/components/home/SkillGrid";
 import ProcessStrip from "@/components/ProcessStrip";
 import Reveal from "@/components/Reveal";
 import ScrubQuote from "@/components/home/ScrubQuote";
+import StatementStack from "@/components/home/StatementStack";
 import DisciplineIndex from "@/components/home/DisciplineIndex";
-import CapabilityDeck from "@/components/home/CapabilityDeck";
 import CountUp from "@/components/home/CountUp";
 import TiltPanel from "@/components/home/TiltPanel";
 import MagneticCta from "@/components/home/MagneticCta";
+
+/* The home showcase is a curated five, not the whole list. The full sets
+   live on their own routes. */
+const FEATURED = [
+  "overpass",
+  "livelyvend",
+  "async-proctoring",
+  "beasypro",
+  "property-hub",
+];
 
 const LANES = [
   { key: "work", kind: "web" },
@@ -20,15 +31,108 @@ const LANES = [
   { key: "hardware", kind: "hardware" },
 ];
 
-/* The home showcase is a curated five, not the whole list: one from each
-   discipline plus the two that carry the most weight. The full sets live on
-   their own routes. */
-const FEATURED = [
-  "overpass",
-  "livelyvend",
-  "async-proctoring",
-  "beasypro",
-  "property-hub",
+/* The stack, for the grid in section 04. Product names are not translated —
+   PostgreSQL is PostgreSQL in both — so only the descriptions carry locales.
+   Ordered front to back: what a visitor sees first is the interface layer and
+   the last thing is the network under it, which is the order the work is
+   actually built in. */
+const SKILLS = [
+  {
+    key: "next",
+    title: "Next.js",
+    en: {
+      kicker: "App Router · RSC",
+      body: "Server components, route handlers and static generation — including this site, which prerenders every locale rather than rendering Greek on demand.",
+    },
+    el: {
+      kicker: "App Router · RSC",
+      body: "Server components, route handlers και στατικές σελίδες. Και αυτός ο ιστότοπος, που βγάζει έτοιμες και τις δύο γλώσσες στο build.",
+    },
+  },
+  {
+    key: "react",
+    title: "React",
+    en: {
+      kicker: "Hooks · React Three Fiber",
+      body: "Including the parts most projects never reach: frame loops writing straight to the DOM or the GPU rather than through state, because re-rendering a tree sixty times a second to move one element is the wrong mechanism.",
+    },
+    el: {
+      kicker: "Hooks · React Three Fiber",
+      body: "Και τα κομμάτια που σπάνια χρειάζεται κανείς: loops που γράφουν κατευθείαν στο DOM ή στην GPU, χωρίς state — δεν ξαναχτίζεις ένα δέντρο εξήντα φορές το δευτερόλεπτο για να κουνήσεις ένα στοιχείο.",
+    },
+  },
+  {
+    key: "node",
+    title: "Node.js",
+    en: {
+      kicker: "Services · realtime",
+      body: "REST and WebSocket services behind live products — a live-selling platform, a hiring pipeline — plus the video pipelines that feed them.",
+    },
+    el: {
+      kicker: "Υπηρεσίες · realtime",
+      body: "Υπηρεσίες REST και WebSocket πίσω από προϊόντα που είναι ήδη σε χρήση, μαζί με το κομμάτι του βίντεο.",
+    },
+  },
+  {
+    key: "mongodb",
+    title: "MongoDB",
+    en: {
+      kicker: "Document stores",
+      body: "Native driver rather than an ODM where the schema is genuinely fluid, and aggregation pipelines for the reporting that would otherwise be six round trips.",
+    },
+    el: {
+      kicker: "Αποθήκες εγγράφων",
+      body: "Native driver αντί για ODM όταν η δομή αλλάζει συχνά, και aggregation pipelines για αναφορές που αλλιώς θέλουν πέντε-έξι ερωτήματα.",
+    },
+  },
+  {
+    key: "postgres",
+    title: "PostgreSQL",
+    en: {
+      kicker: "Relational · transactional",
+      body: "Where the data has shape and the constraints belong in the database rather than in whichever service happens to be writing that week.",
+    },
+    el: {
+      kicker: "Σχεσιακή · συναλλακτική",
+      body: "Όταν τα δεδομένα έχουν σταθερή δομή και οι κανόνες πρέπει να είναι στη βάση, όχι σε κάθε υπηρεσία ξεχωριστά.",
+    },
+  },
+  {
+    key: "kerberos",
+    title: "Kerberos",
+    en: {
+      kicker: "Authentication · SPNEGO",
+      body: "Ticket-based single sign-on end to end: realms and KDCs, keytabs, SPNEGO over a reverse proxy, and the delegation edge cases that only show up against a real domain controller.",
+    },
+    el: {
+      kicker: "Ταυτοποίηση · SPNEGO",
+      body: "Single sign-on με tickets: realms και KDC, keytabs, SPNEGO πίσω από reverse proxy, και τα θέματα delegation που βγαίνουν μόνο πάνω σε πραγματικό domain controller.",
+    },
+  },
+  {
+    key: "systems",
+    title: "Systems & Networking",
+    en: {
+      kicker: "Architecture · IP",
+      body: "Web servers and reverse proxies, addressing and subnets, DNS and TLS. Knowing which layer a fault is actually in before changing anything.",
+    },
+    el: {
+      kicker: "Αρχιτεκτονική · IP",
+      body: "Web servers και reverse proxies, διευθύνσεις και υποδίκτυα, DNS και TLS. Να ξέρω σε ποιο επίπεδο είναι η βλάβη πριν αλλάξω κάτι.",
+    },
+  },
+  {
+    key: "security",
+    title: "Security",
+    en: {
+      kicker: "Hardening · rate limiting",
+      body: "Rate limiting, firewalls and attack prevention on services that are open to the internet. Assume the traffic is hostile and size the limits for it.",
+    },
+    el: {
+      kicker: "Θωράκιση · rate limiting",
+      body: "Rate limiting, firewalls και προστασία από επιθέσεις σε υπηρεσίες ανοιχτές στο internet. Η κίνηση θεωρείται εχθρική και τα όρια μπαίνουν ανάλογα.",
+    },
+  },
 ];
 
 export default async function Home({ params }) {
@@ -51,6 +155,11 @@ export default async function Home({ params }) {
       label: t.title,
       sub: t.kicker,
       video: `/media/vids/${p.slug}.mp4`,
+      /* Anything not shipped yet says so on the card itself. Read off `status`
+         rather than listed by slug, so marking a project live in projects.js
+         is the only edit needed to clear the badge. */
+      badge:
+        p.status === "soon" || p.status === "wip" ? dict.status[p.status] : "",
       plate: PLATE_STYLES[i % PLATE_STYLES.length],
       /* the background colour inside this card's portal */
       tint: p.tint,
@@ -59,6 +168,15 @@ export default async function Home({ params }) {
   });
 
   const featured = FEATURED.map((slug) => localise(bySlug(slug), loc));
+
+  /* Flattened for the grid: product names are shared, only the descriptions
+     carry a locale. */
+  const skills = SKILLS.map((s) => ({
+    slug: s.key,
+    title: s.title,
+    kicker: s[loc]?.kicker ?? s.en.kicker,
+    body: s[loc]?.body ?? s.en.body,
+  }));
 
   /* Resolved here rather than inside the index: DisciplineIndex is a client
      component for the pointer tracking, and the project list has no business
@@ -71,8 +189,8 @@ export default async function Home({ params }) {
   }));
 
   const bannerWords = [
-    PROFILE.name.toUpperCase(),
-    dict.hero.role.toUpperCase(),
+    PROFILE.name,
+    dict.hero.role,
   ];
 
   return (
@@ -95,10 +213,14 @@ export default async function Home({ params }) {
           STAGE / CURTAIN block in globals.css. */}
       <section className="section-pad stmt theme-silver stage">
         <div className="wrap stmt__inner">
-          <Reveal className="stmt__side">
-            <p className="kicker">{dict.home.statementKicker}</p>
-            <p className="stmt__note">{dict.home.statementNote}</p>
-          </Reveal>
+          <div className="stmt__side">
+            <Reveal>
+              <p className="kicker">{dict.home.statementKicker}</p>
+              <p className="stmt__note">{dict.home.statementNote}</p>
+            </Reveal>
+            {/* the sentence beside it, as an object — see StatementScene */}
+            <StatementStack />
+          </div>
           {/* No Reveal on the quote: it inks itself in word by word off the
               scroll position, and a fade-up underneath that would be two
               entrances fighting over the same element. */}
@@ -112,6 +234,9 @@ export default async function Home({ params }) {
       </section>
 
       {/* ——— 02 · selected work ——————————————————————————————————— */}
+      {/* The helix, and ONLY here. /work, /apps and /hardware keep the flat
+          showcase: those are pages you go to in order to read, and a column
+          you have to fly through is the wrong shape for reading. */}
       <div className="feat curtain">
         <section className="feat__head theme-metal">
           <div className="wrap">
@@ -141,17 +266,21 @@ export default async function Home({ params }) {
         <DisciplineIndex lanes={lanes} />
       </section>
 
-      {/* ——— 04 · capability index ———————————————————————————————— */}
-      {/* This was a table you scrolled past. It is now a pinned deck that
-          deals one group at a time — the section's own scroll runway IS the
-          animation, so it takes the place of a `stage` here rather than
-          sitting on top of one. */}
-      <CapabilityDeck
-        groups={dict.home.capabilities}
-        kicker={dict.home.capabilitiesKicker}
-        title={dict.home.capabilitiesTitle}
-        lead={dict.home.capabilitiesLead}
-      />
+      {/* ——— 04 · the stack ——————————————————————————————————————— */}
+      {/* Deliberately the plainest section on the page. It was a pinned deck
+          for a while and that was the wrong instrument: someone scanning for
+          "do they know Postgres" should not have to scroll four viewports to
+          find out. Flat grid, hover state, done. */}
+      <section className="section-pad cap theme-silver stage">
+        <div className="wrap">
+          <Reveal className="cap__head">
+            <p className="kicker">{dict.home.capabilitiesKicker}</p>
+            <h2 className="h2">{dict.home.capabilitiesTitle}</h2>
+            <p className="lead cap__lead">{dict.home.capabilitiesLead}</p>
+          </Reveal>
+          <SkillGrid items={skills} />
+        </div>
+      </section>
 
       {/* ——— 05 · process, sideways ——————————————————————————————— */}
       <ProcessStrip

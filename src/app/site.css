@@ -91,8 +91,7 @@
 .hdr__nameRole {
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--hdr-muted);
 }
 
@@ -242,7 +241,7 @@
     border-bottom: 1px solid var(--hdr-line);
     font-size: 1.4rem;
     font-weight: 300;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.012em;
     animation: sheetIn 0.45s var(--ease-out) both;
     animation-delay: calc(var(--i, 0) * 45ms);
   }
@@ -282,8 +281,7 @@
 .ftr__role {
   font-family: var(--font-mono);
   font-size: 0.66rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--accent);
   margin-top: 0.25rem;
 }

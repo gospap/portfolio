@@ -3,6 +3,7 @@ import { DEFAULT_LOCALE, LOCALES, getDict, isLocale } from "@/lib/content/i18n";
 import { PROFILE } from "@/lib/content/profile";
 import { SITE_URL } from "@/lib/site";
 import SmoothScroll from "@/components/SmoothScroll";
+import Cursor from "@/components/Cursor";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -91,6 +92,7 @@ export default async function LocaleLayout({ children, params }) {
           {dict.a11y.skip}
         </a>
         <SmoothScroll />
+        <Cursor />
         <SiteHeader locale={loc} dict={dict} />
         <main id="main">{children}</main>
         <SiteFooter locale={loc} dict={dict} />

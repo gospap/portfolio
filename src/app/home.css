@@ -210,14 +210,45 @@
   color: #8a6b1f;
 }
 
+/* The wall stays a WALL on a phone — two columns all the way down, just
+   smaller. Collapsing to one column turns it into a stack of banners, which is
+   the one thing a masonry layout is not: the interlock between two ragged
+   columns IS the effect, and with a single column there is nothing to
+   interlock. Only the type shrinks. */
 @media (max-width: 900px) {
   .wall {
     columns: 2;
+    column-gap: 0.7rem;
+  }
+  .wall__cell {
+    margin-bottom: 0.7rem;
   }
 }
 @media (max-width: 560px) {
   .wall {
-    columns: 1;
+    column-gap: 0.55rem;
+    padding-inline: 0.85rem;
+  }
+  .wall__cell {
+    margin-bottom: 0.55rem;
+  }
+  .wall__body {
+    padding: 0.7rem 0.75rem 0.8rem;
+    gap: 0.3rem;
+  }
+  .wall__title {
+    font-size: 0.95rem;
+    line-height: 1.25;
+  }
+  .wall__kicker {
+    font-size: 0.55rem;
+  }
+  .wall__meta {
+    font-size: 0.58rem;
+    gap: 0.5rem;
+  }
+  .wall__mark {
+    font-size: 1.6rem;
   }
 }
 

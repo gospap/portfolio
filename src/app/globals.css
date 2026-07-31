@@ -250,6 +250,69 @@ html.lenis body {
 }
 
 /* ===========================================================================
+   The custom cursor
+
+   Two elements: a dot pinned exactly under the pointer, and a ring that trails
+   it. See components/Cursor.jsx for why it is two and not one.
+
+   `.has-cursor` is added by JS once the replacement is running — never from
+   here. In the stylesheet it would hide the native pointer even when the
+   component failed to mount, and a page with no cursor at all is worse than
+   any cursor.
+   =========================================================================== */
+.cur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-out);
+  /* the transform is written every frame; promoting once avoids a re-raster */
+  will-change: transform;
+}
+.has-cursor--on .cur {
+  opacity: 1;
+}
+
+.cur__dot {
+  width: 5px;
+  height: 5px;
+  background: var(--purple-deep);
+}
+.cur__ring {
+  width: 30px;
+  height: 30px;
+  border: 1px solid color-mix(in srgb, var(--purple-deep) 55%, transparent);
+  transition:
+    opacity 0.25s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+/* Over something pressable the ring fills faintly, so the state is legible on
+   a silver ground where a colour change alone would be too quiet. */
+.cur__ring[data-over="1"] {
+  border-color: var(--purple-deep);
+  background: color-mix(in srgb, var(--purple-deep) 10%, transparent);
+}
+
+/* The native pointer goes only while the replacement is live. `!important`
+   beats the per-element cursor rules below — those stay in the stylesheet so
+   that a visitor without the custom cursor still gets accurate shapes. */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+/* …except where the shape carries information the ring cannot: a text caret
+   tells you the character boundary, which a circle cannot do. */
+.has-cursor input,
+.has-cursor textarea,
+.has-cursor [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* ===========================================================================
    Cursors
 
    Stated once, here, rather than per component — the cursor is a claim about

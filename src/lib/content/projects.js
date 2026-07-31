@@ -36,9 +36,11 @@ export const PROJECTS = [
     year: "2026",
     url: "",
     tint: "#1e2c38",
-    /* No card still yet — the generated plate stands in. Drop
+    /* No showcase card yet — the generated plate stands in on /work. Drop
        public/media/cards/async-proctoring.jpg in and set this to its path. */
     cover: "",
+    /* The landing-page wall has its own capture: the proctoring console. */
+    wall: ["/media/wall/proctoring.png"],
     images: [],
     stack: ["TensorFlow.js", "coco-ssd", "face-api", "MediaPipe", "WebRTC"],
     en: {

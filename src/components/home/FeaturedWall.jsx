@@ -15,10 +15,35 @@ import Reveal from "@/components/Reveal";
  * landing page, where the job is to show five things quickly.
  */
 
-/* Aspect per position, so the wall has a rhythm instead of five identical
-   boxes. Indexed by position rather than assigned per project: the shape is a
-   property of the layout, not of the work. */
-const SHAPES = ["4 / 5", "1 / 1", "3 / 4", "4 / 3", "1 / 1"];
+/* Aspect ratios for the faces. A wall reads as random when no two neighbours
+   share a height and no run of shapes repeats — cycling a short list by index
+   gives you a visible pattern the moment there are more items than shapes.
+
+   So the shape is picked by HASHING the slug. That is not the same as random:
+   it is stable, which matters twice over. The server and the client must agree
+   or React reports a hydration mismatch, and a card must not change height
+   between two visits — a wall that reshuffles on reload reads as broken rather
+   than as lively.
+
+   Eight ratios, none of them equal and none a neat multiple of another, so
+   even a long wall never lands in a rhythm. */
+const SHAPES = [
+  "3 / 4",
+  "1 / 1",
+  "4 / 5",
+  "5 / 7",
+  "4 / 3",
+  "2 / 3",
+  "16 / 11",
+  "5 / 6",
+];
+
+/* djb2-ish. Any stable hash does; this one is three lines and needs no import. */
+function shapeFor(slug) {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) | 0;
+  return SHAPES[Math.abs(h) % SHAPES.length];
+}
 
 export default function FeaturedWall({ items, dict, routeFor }) {
   return (
@@ -38,10 +63,10 @@ export default function FeaturedWall({ items, dict, routeFor }) {
                 key={f}
                 className="wall__face"
                 style={{
-                  /* only the first face keeps the shape rhythm; the ones under
-                     it are wider than tall so the card does not become a
-                     column of squares */
-                  aspectRatio: f === 0 ? SHAPES[i % SHAPES.length] : "16 / 10",
+                  /* Only the first face takes the hashed shape; the ones under
+                     it are wider than tall so a multi-photo card does not
+                     become a column of squares. */
+                  aspectRatio: f === 0 ? shapeFor(p.slug) : "16 / 10",
                   "--tint": p.tint,
                   backgroundImage: src ? `url(${src})` : undefined,
                 }}

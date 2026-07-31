@@ -6,8 +6,9 @@ Extra photos for the masonry wall in section 1 of the landing page. These are
 which makes that card taller and gives the wall its rhythm.
 
 ```
-public/media/wall/overpass1.png
-public/media/wall/overpass2.png
+public/media/wall/overpass1.png     ← Overpass Connect, photo 1
+public/media/wall/overpass2.png     ← Overpass Connect, photo 2
+public/media/wall/proctoring.png    ← Async Exam Proctoring — the console
 ```
 
 Set on a project with a `wall` array in `src/lib/content/projects.js`:

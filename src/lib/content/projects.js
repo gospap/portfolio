@@ -19,7 +19,10 @@
      cover     string    path under /public, or '' to fall back to a
                          generated plate
      images    string[]  detail-panel gallery; cover is prepended automatically
-     stack     string[]  short tech labels
+     stack     string[]  optional — short tech labels. Only the three projects
+                         whose build is worth itemising carry one; everywhere
+                         else the detail panel drops the section rather than
+                         showing an empty heading.
      en/el     { title, kicker, summary, role, highlights: string[] }
 
    `title` is intentionally NOT localised for product names — LivelyVend is
@@ -31,8 +34,8 @@ export const PROJECTS = [
   /* ————————————————————————— WEB ————————————————————————— */
   {
     slug: "async-proctoring",
-    kind: "web",
-    status: "wip",
+    kind: "app",
+    status: "soon",
     year: "2026",
     url: "",
     tint: "#1e2c38",
@@ -42,7 +45,6 @@ export const PROJECTS = [
     /* The landing-page wall has its own capture: the proctoring console. */
     wall: ["/media/wall/proctoring.png"],
     images: [],
-    stack: ["TensorFlow.js", "coco-ssd", "face-api", "MediaPipe", "WebRTC"],
     en: {
       title: "Async Exam Proctoring",
       kicker: "Proctoring prototype · 5 surfaces",
@@ -188,7 +190,6 @@ export const PROJECTS = [
     tint: "#3a2d4d",
     cover: "/media/cards/vibely.jpg",
     images: [],
-    stack: ["React Native", "Maps", "Realtime messaging"],
     en: {
       title: "Vibely",
       kicker: "Social app · React Native",
@@ -223,7 +224,6 @@ export const PROJECTS = [
     tint: "#4a3a58",
     cover: "",
     images: [],
-    stack: ["Embedded", "IoT gateway", "Cloud API"],
     en: {
       title: "Property Hub",
       kicker: "Coming soon · electronics for short-term rentals",
@@ -260,7 +260,6 @@ export const PROJECTS = [
     tint: "#262b33",
     cover: "/media/cards/broadcast-box.png",
     images: [],
-    stack: ["Next.js", "React Three Fiber", "Product design"],
     en: {
       title: "Broadcast Monitoring Box",
       kicker: "Hardware product · 3D presentation",
@@ -295,7 +294,6 @@ export const PROJECTS = [
     tint: "#2c3040",
     cover: "/media/cards/space-canvas.jpg",
     images: [],
-    stack: ["React", "Konva", "Computational geometry"],
     en: {
       title: "Space Canvas Designer",
       kicker: "CAD module · metre-accurate",
@@ -333,7 +331,6 @@ export const PROJECTS = [
        gallery instead, where it has the room to be read. */
     cover: "/media/cards/cad1.png",
     images: ["/media/cards/cad2.png"],
-    stack: ["Autodesk Inventor", "Mesh export"],
     en: {
       title: "Mechanical CAD",
       kicker: "Enclosures & parts",

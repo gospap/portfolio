@@ -122,14 +122,20 @@ export default function ProjectPanel({ project, dict, closing, onClose }) {
             ) : null}
           </div>
 
-          <aside className="pnl__aside">
-            <h3 className="pnl__h3">{dict.panel.stack}</h3>
-            <ul className="pnl__stack">
-              {project.stack.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          </aside>
+          {/* Only the projects whose build is worth itemising carry a stack.
+              Without this guard an empty one leaves the heading standing over
+              nothing, which reads as a section that failed to load rather than
+              as a section that was never there. */}
+          {project.stack?.length ? (
+            <aside className="pnl__aside">
+              <h3 className="pnl__h3">{dict.panel.stack}</h3>
+              <ul className="pnl__stack">
+                {project.stack.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </aside>
+          ) : null}
         </div>
       </div>
     </div>

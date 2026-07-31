@@ -232,23 +232,34 @@
     display: none;
   }
 
-  /* The band becomes the bottom third rather than the left column: at this
-     width a 40vw column leaves the ring nowhere to be. The fade turns to run
-     upward so the ring still dissolves into it instead of being cut. */
+  /* The band becomes a horizontal strip rather than the left column: at this
+     width a 40vw column leaves the ring nowhere to be.
+
+     It sits at the TOP, above the ring. Below it the portrait and the name
+     were the last thing on a two-viewport hero — you met a rotating ring with
+     no idea whose site it was, and had to scroll past it to find out. Who this
+     is should be the first thing read, and the cards are perfectly legible
+     under it.
+
+     The fade runs downward to match: solid behind the type at the top, gone by
+     the time it reaches the ring, so the ring dissolves into it rather than
+     being cut by an edge. */
   .hero__aside {
-    top: auto;
+    top: 0;
+    bottom: auto;
     right: 0;
     width: auto;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 1.1rem;
-    padding: 2.5rem var(--gutter) clamp(2.5rem, 7vh, 4rem);
+    /* clears the fixed header */
+    padding: clamp(5rem, 12vh, 7rem) var(--gutter) 2.5rem;
     background:
-      linear-gradient(0deg, rgba(168, 146, 238, 0.2) 0%, transparent 78%),
+      linear-gradient(180deg, rgba(168, 146, 238, 0.2) 0%, transparent 78%),
       linear-gradient(
-        0deg,
+        180deg,
         rgba(220, 222, 229, 0.96) 0%,
-        rgba(214, 217, 225, 0.8) 46%,
+        rgba(214, 217, 225, 0.8) 52%,
         transparent 100%
       );
   }

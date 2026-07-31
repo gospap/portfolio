@@ -250,6 +250,50 @@ html.lenis body {
 }
 
 /* ===========================================================================
+   Cursors
+
+   Stated once, here, rather than per component — the cursor is a claim about
+   what an element DOES, and the same claim should look the same everywhere.
+
+   No custom image cursor. A drawn one lags the real pointer by a frame on
+   every machine and disappears entirely over a canvas on some, which is worse
+   than the system arrow it replaces. These are the native shapes, applied
+   accurately.
+   =========================================================================== */
+button:not(:disabled),
+a[href],
+summary,
+label[for],
+[role="button"] {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* The hero ring is dragged, not clicked-through. `grab` says "this moves"
+   before anyone tries, which is the whole reason the affordance exists —
+   ShowcaseScene and HeroCarousel also set `pointer` from JS while a card is
+   under the cursor, and that is more specific so it wins. */
+.hero__stage,
+.hero__stage canvas {
+  cursor: grab;
+}
+.hero__stage:active,
+.hero__stage canvas:active {
+  cursor: grabbing;
+}
+
+/* Copy is selectable and should say so; the mono values on /contact are the
+   ones people actually want to select. */
+.contact__value,
+.about__prose p,
+.pnl__summary {
+  cursor: text;
+}
+
+/* ===========================================================================
    Primitives
    =========================================================================== */
 
@@ -420,6 +464,27 @@ html.lenis body {
   .stage {
     min-height: 100vh;
     margin-bottom: -100vh;
+  }
+}
+
+/* ——— and NOT on a phone ———
+   The wipe assumes a stage fits in one viewport: it pins, the curtain rises
+   over it, and you have read it by the time it is covered. On a narrow screen
+   the same content is two or three viewports tall, so the curtain starts
+   covering it while you are still reading the top — and because a stage
+   contributes nothing to the flow, the section after it begins at the SAME
+   scroll offset. Measured at 375px: `.home__about` was 869px tall and the
+   contact section started 58 pixels later, so 93% of it was never visible.
+
+   Below this width every stage is an ordinary block. The rhythm is a
+   large-screen effect and it does not survive the translation. */
+@media (max-width: 900px) {
+  .stage {
+    position: static;
+    min-height: 0;
+    margin-bottom: 0;
+    display: block;
+    overflow: visible;
   }
 }
 

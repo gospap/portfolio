@@ -74,6 +74,10 @@ export const PROJECTS = [
     url: "https://overpassconnect.com",
     tint: "#232838",
     cover: "/media/cards/overpass.jpg",
+    /* The landing-page wall only. Two photos stack inside the one card, so
+       Overpass reads as the biggest thing on the wall without needing a
+       "featured" flag that nothing else would ever use. */
+    wall: ["/media/wall/overpass1.png", "/media/wall/overpass2.png"],
     images: [],
     stack: ["Next.js", "React Three Fiber", "GLSL", "Lenis"],
     en: {
@@ -252,7 +256,7 @@ export const PROJECTS = [
     year: "2026",
     url: "",
     tint: "#262b33",
-    cover: "/media/cards/broadcast-box.jpg",
+    cover: "/media/cards/broadcast-box.png",
     images: [],
     stack: ["Next.js", "React Three Fiber", "Product design"],
     en: {

@@ -118,6 +118,110 @@
 }
 
 /* ===========================================================================
+   02a · the featured wall — flat masonry
+
+   `columns`, not grid. A wall is defined by unequal cards packing tightly, and
+   columns does that natively; a grid would need every card measured first.
+
+   break-inside: avoid on the cell is not optional — without it a card splits
+   across a column boundary and the bottom half appears at the top of the next
+   one, which is the single way this layout goes wrong.
+   =========================================================================== */
+.wall {
+  columns: 3;
+  column-gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding: clamp(2rem, 5vw, 3.5rem) var(--gutter)
+    clamp(4rem, 8vw, 6rem);
+  max-width: var(--wrap);
+  margin-inline: auto;
+}
+.wall__cell {
+  break-inside: avoid;
+  margin-bottom: clamp(0.9rem, 2vw, 1.4rem);
+}
+
+.wall__card {
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--m-line);
+  background: var(--m-surface);
+  overflow: hidden;
+  transition:
+    transform 0.45s var(--ease-out),
+    border-color 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+.wall__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple);
+  box-shadow: 0 18px 40px -22px rgba(20, 22, 27, 0.55);
+}
+
+.wall__face {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  background-color: var(--tint, #2a2540);
+  background-size: cover;
+  background-position: center;
+  /* the same brushed sheen the metal theme carries, so a tinted face reads as
+     a plate rather than as a coloured rectangle */
+  background-image:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.22), transparent 55%);
+  transition: filter 0.45s var(--ease-out);
+}
+.wall__card:hover .wall__face {
+  filter: brightness(1.06);
+}
+.wall__mark {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.wall__body {
+  display: grid;
+  gap: 0.4rem;
+  padding: clamp(0.9rem, 2vw, 1.15rem);
+}
+.wall__kicker {
+  font-size: 0.6rem;
+  color: var(--purple);
+}
+.wall__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  color: var(--m-text);
+}
+.wall__meta {
+  display: flex;
+  gap: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--m-muted);
+}
+.wall__status--live {
+  color: #1f7a52;
+}
+.wall__status--wip {
+  color: var(--purple);
+}
+.wall__status--soon {
+  color: #8a6b1f;
+}
+
+@media (max-width: 900px) {
+  .wall {
+    columns: 2;
+  }
+}
+@media (max-width: 560px) {
+  .wall {
+    columns: 1;
+  }
+}
+
+/* ===========================================================================
    02b · the stack — plain hover cards
 
    Deliberately the quietest section on the page. Everything around it is

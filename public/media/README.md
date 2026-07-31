@@ -53,7 +53,7 @@ public/media/cards/overpass.jpg
 public/media/cards/livelyvend.jpg
 public/media/cards/beasypro.jpg
 public/media/cards/vibely.jpg
-public/media/cards/broadcast-box.jpg
+public/media/cards/broadcast-box.png
 public/media/cards/space-canvas.jpg
 ```
 

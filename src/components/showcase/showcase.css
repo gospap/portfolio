@@ -108,7 +108,22 @@
   color: var(--m-muted);
 }
 
+/* ——— the open button, and its lock ———
+
+   On hover two brackets fly in from outside and clamp onto the button, the way
+   a targeting reticle acquires something. It reads as "locked on" rather than
+   as "highlighted", which suits a site whose whole UI is instrument markings.
+
+   The ease is the trick. A normal ease-out arrives and stops, which reads as a
+   slide. cubic-bezier(0.34, 1.56, 0.64, 1) overshoots past the target and
+   settles back into it — that tiny rebound is the difference between a bracket
+   that moved and a bracket that CLAMPED. The 1.56 is the overshoot; anything
+   much above it starts to wobble like jelly.
+
+   Brackets, not a border: a border can only get brighter, and brightness is
+   what everything else on the page already does on hover. */
 .show__open {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
@@ -124,6 +139,41 @@
     background-color 0.35s var(--ease-out),
     padding 0.35s var(--ease-out);
 }
+
+.show__open::before,
+.show__open::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 11px;
+  border: 1.5px solid var(--purple);
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.22s var(--ease-out);
+}
+/* left bracket: no right edge, so it reads as "[" and not as a box */
+.show__open::before {
+  left: -9px;
+  border-right: 0;
+  transform: translateX(-18px);
+}
+.show__open::after {
+  right: -9px;
+  border-left: 0;
+  transform: translateX(18px);
+}
+.show__open:hover::before,
+.show__open:hover::after,
+.show__open:focus-visible::before,
+.show__open:focus-visible::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .show__open span {
   transition: transform 0.35s var(--ease-out);
 }
@@ -133,6 +183,16 @@
 }
 .show__open:hover span {
   transform: translateX(4px);
+}
+
+/* The brackets are the whole gesture, so with reduced motion they simply are
+   where they land — the state still reads, nothing travels to get there. */
+@media (prefers-reduced-motion: reduce) {
+  .show__open::before,
+  .show__open::after {
+    transition: opacity 0.2s linear;
+    transform: none;
+  }
 }
 
 /* ——— the fixed frame ——— */
@@ -169,25 +229,64 @@
   color: var(--m-text);
 }
 
+/* ===========================================================================
+   Phones — a different layout, not a squeezed one.
+
+   The old mobile rule kept the WebGL plates and put a DARK scrim behind the
+   copy so it would read over them. It did not: the type on these blocks is
+   `--m-text`, which is graphite, so it was dark ink on a near-black panel with
+   a plate sticking out from behind it. Unreadable, and it looked broken.
+
+   So on a phone the canvas goes away entirely and each project becomes an
+   ordinary card. Three things are won at once: it is legible, it stops costing
+   one full viewport per project — five projects was five screens of scrolling
+   — and a phone no longer has to hold a WebGL context to read a list.
+   =========================================================================== */
 @media (max-width: 900px) {
-  /* One column: the plates sit behind the copy rather than beside it, so the
-     copy gets a scrim of its own to stay readable over them. */
+  .show__bg {
+    display: none;
+  }
+
+  .show__blocks {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(2rem, 6vw, 3rem) var(--gutter);
+  }
+
+  /* min-height was 100svh per block. That is what made the section five
+     viewports tall — the canvas behind needed the runway, and there is no
+     canvas here any more. */
   .show__block,
   .show__block--right {
-    justify-content: flex-start;
-    align-items: flex-end;
-    padding-bottom: 5rem;
+    display: block;
+    min-height: 0;
+    width: 100%;
+    padding: 0;
   }
+
   .show__copy {
     width: 100%;
-    padding: 1.5rem;
+    padding: clamp(1.35rem, 5vw, 1.75rem);
     border-radius: var(--radius);
-    background: linear-gradient(
-      180deg,
-      rgba(14, 15, 18, 0.55),
-      rgba(14, 15, 18, 0.9)
-    );
-    backdrop-filter: blur(6px);
+    border: 1px solid var(--m-line);
+    background: var(--m-surface);
+    backdrop-filter: none;
+  }
+
+  .show__title {
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+  }
+  .show__summary {
+    margin-top: 1rem;
+  }
+  .show__open {
+    margin-top: 1.5rem;
+  }
+
+  /* The frame counter is a heads-up display for a scene that is no longer
+     there. */
+  .show__frame {
+    display: none;
   }
 }
 

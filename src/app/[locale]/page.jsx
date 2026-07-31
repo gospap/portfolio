@@ -4,7 +4,7 @@ import { PROFILE } from "@/lib/content/profile";
 import { PROJECTS, ROUTE_FOR, bySlug, localise } from "@/lib/content/projects";
 import { PLATE_STYLES } from "@/lib/plates";
 import HeroCarousel from "@/components/hero/HeroCarousel";
-import Showcase from "@/components/showcase/Showcase";
+import FeaturedWall from "@/components/home/FeaturedWall";
 import SkillGrid from "@/components/home/SkillGrid";
 import ProcessStrip from "@/components/ProcessStrip";
 import Reveal from "@/components/Reveal";
@@ -247,7 +247,11 @@ export default async function Home({ params }) {
             </Reveal>
           </div>
         </section>
-        <Showcase items={featured} dict={dict} />
+        <FeaturedWall
+          items={featured}
+          dict={dict}
+          routeFor={(p) => href(loc, `${ROUTE_FOR[p.kind]}#${p.slug}`)}
+        />
       </div>
 
       {/* ——— 03 · disciplines ————————————————————————————————————— */}

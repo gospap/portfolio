@@ -63,9 +63,6 @@ export default function SiteHeader({ locale, dict }) {
     >
       <div className="hdr__inner">
         <Link className="hdr__brand" href={href(locale, "/")} aria-label={PROFILE.name}>
-          <span className="hdr__mark" aria-hidden>
-            GP
-          </span>
           <span className="hdr__name">
             <span className="hdr__nameFull">{PROFILE.name}</span>
             <span className="hdr__nameRole">{dict.hero.role}</span>

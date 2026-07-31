@@ -276,25 +276,56 @@ html.lenis body {
   opacity: 1;
 }
 
-.cur__dot {
-  width: 5px;
-  height: 5px;
-  background: var(--purple-deep);
-}
+/* ——— inversion, not a colour ———
+   `mix-blend-mode: difference` against pure white subtracts every channel from
+   1, which IS the exact inverse of whatever pixels are underneath. So the
+   cursor has no colour of its own: over pale silver it is near-black, over the
+   deep metal sections it goes light, over a purple accent it comes out its
+   complement — and it can never disappear against the thing it is on, which is
+   the actual failure mode of a fixed-colour cursor on a site with two grounds.
+
+   Pure #fff is required. Any other value is a partial inversion and reads as a
+   tint rather than as a negative. */
+.cur__dot,
 .cur__ring {
-  width: 30px;
-  height: 30px;
-  border: 1px solid color-mix(in srgb, var(--purple-deep) 55%, transparent);
-  transition:
-    opacity 0.25s var(--ease-out),
-    background-color 0.3s var(--ease-out),
-    border-color 0.3s var(--ease-out);
+  mix-blend-mode: difference;
 }
-/* Over something pressable the ring fills faintly, so the state is legible on
-   a silver ground where a colour change alone would be too quiet. */
-.cur__ring[data-over="1"] {
-  border-color: var(--purple-deep);
-  background: color-mix(in srgb, var(--purple-deep) 10%, transparent);
+
+/* ——— FILLED, not an outline ———
+   An outline only inverts the pixels under its own 1.5px stroke, so passing it
+   over type did almost nothing — the letters were never under any ink. A solid
+   shape inverts everything it covers, which is why letters now go negative as
+   it passes: the glyph and the ground beneath it both flip.
+
+   A squircle rather than a circle. On a site whose whole UI is machined
+   markings and hairline rules, a plain dot is the one shape that says nothing;
+   a rounded square reads as an instrument reticle and is distinguishable from
+   every circular cursor on every other portfolio. */
+.cur__ring {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  background: #fff;
+  transition: opacity 0.25s var(--ease-out);
+}
+
+/* The aim point, punched out of the middle. Black under `difference` means
+   "subtract nothing", so this pixel keeps its true colour — the reticle reads
+   as a negative square with a clear hole rather than as a solid block, and you
+   can still see exactly what you are pointing at. */
+.cur__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 1px;
+  background: #000;
+}
+
+/* Blend modes need something to blend WITH. The grain overlay sits at z-index
+   60 with mix-blend-mode: overlay and would otherwise be the backdrop the
+   cursor inverts against, so the cursor is pulled above it — 300 already is,
+   but this states the dependency rather than leaving it to luck. */
+.cur {
+  isolation: auto;
 }
 
 /* The native pointer goes only while the replacement is live. `!important`
@@ -303,6 +334,29 @@ html.lenis body {
 .has-cursor,
 .has-cursor * {
   cursor: none !important;
+}
+
+/* ——— except over the hero ———
+   The ring is dragged, and the grab hand is a shape every visitor already
+   knows. Cursor.jsx flips this class while the pointer is inside the stage:
+   the reticle hides and the native hand comes back, so the one place on the
+   site with a real drag gesture keeps the cursor that announces it. */
+.has-cursor--native .cur {
+  opacity: 0;
+}
+.has-cursor .hero__stage,
+.has-cursor .hero__stage * {
+  cursor: grab !important;
+}
+.has-cursor .hero__stage:active,
+.has-cursor .hero__stage *:active {
+  cursor: grabbing !important;
+}
+/* A link inside the hero is still a link — the grab hand is for the ring, not
+   for the copy sitting over it. */
+.has-cursor .hero__stage a[href],
+.has-cursor .hero__stage button:not(:disabled) {
+  cursor: pointer !important;
 }
 /* …except where the shape carries information the ring cannot: a text caret
    tells you the character boundary, which a circle cannot do. */

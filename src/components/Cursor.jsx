@@ -65,8 +65,17 @@ export default function Cursor() {
         ry = py;
         document.documentElement.classList.add("has-cursor--on");
       }
-      const el = e.target instanceof Element ? e.target.closest(INTERACTIVE) : null;
-      over = !!el;
+      const t = e.target instanceof Element ? e.target : null;
+      over = !!t?.closest(INTERACTIVE);
+
+      /* The hero ring is DRAGGED, and drag has a cursor everybody already
+         knows. A reticle there would be replacing a universally understood
+         affordance with a decorative one, so over the hero the custom cursor
+         steps aside and the native grab hand comes back. */
+      document.documentElement.classList.toggle(
+        "has-cursor--native",
+        !!t?.closest(".hero__stage"),
+      );
     };
 
     const onDown = () => {
@@ -100,7 +109,10 @@ export default function Cursor() {
          with mass. */
       rx = damp(rx, px, 0.045, dt);
       ry = damp(ry, py, 0.045, dt);
-      scale = damp(scale, over ? 1.9 : 1, 0.05, dt) * (down ? 0.82 : 1);
+      /* A filled reticle needs less growth than an outline did to read: at 1.9
+         a 17px square became 32px, which covers a whole word. 1.5 is enough to
+         be unmistakable and still lets you see what is under it. */
+      scale = damp(scale, over ? 1.5 : 1, 0.05, dt) * (down ? 0.8 : 1);
 
       d.style.transform = `translate3d(${px}px, ${py}px, 0) translate(-50%, -50%)`;
       r.style.transform = `translate3d(${rx.toFixed(2)}px, ${ry.toFixed(2)}px, 0) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
@@ -116,7 +128,11 @@ export default function Cursor() {
       window.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
       document.removeEventListener("pointerleave", onLeave);
-      document.documentElement.classList.remove("has-cursor", "has-cursor--on");
+      document.documentElement.classList.remove(
+        "has-cursor",
+        "has-cursor--on",
+        "has-cursor--native",
+      );
     };
   }, []);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useRef } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { trackEnter } from "@/lib/scroll";
 import { damp, prefersReducedMotion } from "@/lib/motion";
 
@@ -25,6 +25,17 @@ export default function ScrubQuote({ text, className = "" }) {
   // split once — the text is a prop that never changes within a locale
   const words = useMemo(() => text.split(/\s+/).filter(Boolean), [text]);
   const count = words.length;
+  const [narrow, setNarrow] = useState(false);
+
+  /* The two timings below are tuned against two different layouts, so which
+     one applies has to be re-decided when the breakpoint is crossed. */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setNarrow(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const el = host.current;
@@ -36,7 +47,16 @@ export default function ScrubQuote({ text, className = "" }) {
       return;
     }
 
-    const tracker = trackEnter(el, { lead: 0.62, run: 1.05 });
+    /* Desktop: the section is a pinned stage, so the scrub can afford a long
+       runway and finish while the reader is held still.
+
+       Narrow: it is an ordinary 0.7-viewport block that scrolls straight past.
+       The same timings meant the ink was still arriving after the section had
+       left the screen. Start almost as soon as it appears from the bottom, and
+       finish inside half a viewport of scrolling. */
+    const tracker = narrow
+      ? trackEnter(el, { lead: 0.95, run: 0.5 })
+      : trackEnter(el, { lead: 0.62, run: 1.05 });
     let raf = 0;
     let lit = 0;
     let last = performance.now();
@@ -56,7 +76,7 @@ export default function ScrubQuote({ text, className = "" }) {
       cancelAnimationFrame(raf);
       tracker.dispose();
     };
-  }, [count]);
+  }, [count, narrow]);
 
   return (
     <blockquote

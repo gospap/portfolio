@@ -216,8 +216,17 @@
    hide the thing worth watching. */
 
 @media (max-width: 900px) {
+  /* Two viewports of scroll so the ring has runway to turn through. */
   .hero {
     height: 200vh;
+  }
+  /* …and the stage has to PIN for it, or the second viewport is a viewport of
+     nothing. That was the plain silver band under the hero on a phone: the
+     section was 200vh, the stage was 100svh and statically positioned, so you
+     scrolled a full empty screen between the ring and the next section. */
+  .hero__stage {
+    position: sticky;
+    top: 0;
   }
   .hero__hint {
     display: none;

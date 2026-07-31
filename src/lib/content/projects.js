@@ -126,11 +126,12 @@ export const PROJECTS = [
       kicker: "Live shopping platform",
       summary:
         "A live-selling platform: merchants run shopping broadcasts, viewers chat and react in real time, and products surface and disappear inside the video as the host talks about them.",
-      role: "Product engineering",
+      role: "End to end — design, layout, front end, back end, database and deployment",
       highlights: [
         "Real-time layer carries chat, reactions and product state to every viewer at once, and stays consistent when someone joins mid-broadcast.",
         "Two-way catalogue sync with Shopify and WooCommerce, so stock is right during a broadcast rather than right afterwards.",
         "Attribution that can actually answer which sales came from the stream, not just which happened during it.",
+        "Shipped through a CI/CD pipeline rather than by hand, and I contributed to an in-house Jenkins shared library that the wider set of projects now deploys through — so the release path is one reviewed thing instead of a script per repository.",
       ],
     },
     el: {
@@ -138,11 +139,12 @@ export const PROJECTS = [
       kicker: "Πλατφόρμα live shopping",
       summary:
         "Πλατφόρμα ζωντανών πωλήσεων: οι έμποροι πραγματοποιούν εκπομπές αγορών, οι θεατές συνομιλούν και αντιδρούν σε πραγματικό χρόνο, και τα προϊόντα εμφανίζονται και αποκρύπτονται μέσα στο βίντεο καθώς ο παρουσιαστής τα παρουσιάζει.",
-      role: "Product engineering",
+      role: "Από άκρη σε άκρη — σχεδιασμός, διάταξη, front end, back end, βάση και deployment",
       highlights: [
         "Το real-time επίπεδο μεταφέρει chat, αντιδράσεις και κατάσταση προϊόντων σε όλους ταυτόχρονα, και παραμένει συνεπές όταν κάποιος μπει στη μέση της εκπομπής.",
         "Αμφίδρομος συγχρονισμός καταλόγου με Shopify και WooCommerce, ώστε το απόθεμα να είναι σωστό κατά τη διάρκεια της εκπομπής, όχι μετά.",
         "Απόδοση πωλήσεων που απαντά ποιες πωλήσεις προήλθαν πραγματικά από το stream, όχι απλώς ποιες έγιναν όσο έπαιζε.",
+        "Η παράδοση γίνεται μέσω CI/CD και όχι με το χέρι, και συνεισέφερα σε εσωτερική shared library του Jenkins από την οποία περνούν πλέον τα deployments και των υπόλοιπων έργων — μία ελεγμένη διαδρομή αντί για ένα script ανά repository.",
       ],
     },
   },
@@ -161,11 +163,12 @@ export const PROJECTS = [
       kicker: "Hiring pipeline",
       summary:
         "A hiring pipeline that picks up where the job board stops: it takes candidates from the advert through screening, asynchronous video interviews and team review, to the hire.",
-      role: "Product engineering",
+      role: "End to end — design, layout, front end, back end, database and deployment",
       highlights: [
         "Deliberately not another job board — companies already have channels. What they lack is everything after the candidate clicks the advert.",
         "Asynchronous video interviews remove the scheduling round that burns the most time and reaches the fewest useful candidates.",
         "Team review keeps every assessment against one candidate in one place, so a decision is a comparison rather than a memory.",
+        "Shipped through a CI/CD pipeline rather than by hand, and I contributed to an in-house Jenkins shared library that the wider set of projects now deploys through — so the release path is one reviewed thing instead of a script per repository.",
       ],
     },
     el: {
@@ -173,11 +176,12 @@ export const PROJECTS = [
       kicker: "Διαχείριση προσλήψεων",
       summary:
         "Πλατφόρμα προσλήψεων που ξεκινά εκεί που σταματά το job board: μεταφέρει τους υποψηφίους από την αγγελία στην αξιολόγηση, σε ασύγχρονες βιντεοσυνεντεύξεις και σε ομαδική κρίση, μέχρι την πρόσληψη.",
-      role: "Product engineering",
+      role: "Από άκρη σε άκρη — σχεδιασμός, διάταξη, front end, back end, βάση και deployment",
       highlights: [
         "Σκόπιμα δεν είναι άλλο ένα job board — οι εταιρείες έχουν ήδη κανάλια. Τους λείπει ό,τι έρχεται αφού ο υποψήφιος κάνει κλικ στην αγγελία.",
         "Οι ασύγχρονες βιντεοσυνεντεύξεις εξαλείφουν τον γύρο προγραμματισμού που καταναλώνει τον περισσότερο χρόνο με το μικρότερο όφελος.",
         "Η ομαδική αξιολόγηση συγκεντρώνει κάθε κρίση για έναν υποψήφιο σε ένα σημείο, ώστε η απόφαση να είναι σύγκριση και όχι ανάμνηση.",
+        "Η παράδοση γίνεται μέσω CI/CD και όχι με το χέρι, και συνεισέφερα σε εσωτερική shared library του Jenkins από την οποία περνούν πλέον τα deployments και των υπόλοιπων έργων — μία ελεγμένη διαδρομή αντί για ένα script ανά repository.",
       ],
     },
   },
@@ -262,26 +266,26 @@ export const PROJECTS = [
     images: [],
     en: {
       title: "Broadcast Monitoring Box",
-      kicker: "Hardware product · 3D presentation",
+      kicker: "Enclosure & electronics design",
       summary:
-        "A monitoring appliance for broadcast chains, presented the way hardware deserves: the unit sits in a realistic studio and the camera arcs around it on an orbit, rather than sitting flat in a product photo.",
-      role: "Product page, 3D scene and device concept",
+        "A monitoring appliance that sits in a station's broadcast chain. It takes the live output, passes it to a service that identifies copyrighted music, and gives a television or radio station a continuous record of what it has actually aired — which is what royalty reporting is judged on. My work was the physical device: the enclosure and the electronics inside it. The product page is mine as well.",
+      role: "Enclosure design and electronics; product page",
       highlights: [
-        "The box is static and the camera moves — an arc orbit around a fixed object reads as inspection, where a spinning object reads as a turntable.",
-        "Studio lighting and materials tuned for a matte instrument enclosure, which is far less forgiving than the glossy renders most product pages use.",
-        "Every asset in the scene was licence-audited for commercial use before it shipped.",
+        "The enclosure was modelled to manufacturing detail rather than as a shell — board mounting, port cut-outs, fastener positions and airflow all resolved against the hardware that has to fit inside it.",
+        "A full wiring schematic for the single-board computer at its centre: power, capture input and the peripherals around it, drawn to be built from rather than to be looked at.",
+        "The product page presents the unit in a realistic studio with the camera arcing around a fixed object — inspection rather than a turntable.",
       ],
     },
     el: {
       title: "Broadcast Monitoring Box",
-      kicker: "Προϊόν hardware · τρισδιάστατη παρουσίαση",
+      kicker: "Σχεδίαση περιβλήματος & ηλεκτρονικών",
       summary:
-        "Συσκευή παρακολούθησης για αλυσίδες εκπομπής, παρουσιασμένη όπως αξίζει σε hardware: η μονάδα στέκεται σε ρεαλιστικό στούντιο και η κάμερα διαγράφει τόξο γύρω της, αντί για μια επίπεδη φωτογραφία προϊόντος.",
-      role: "Σελίδα προϊόντος, τρισδιάστατη σκηνή και concept συσκευής",
+        "Συσκευή παρακολούθησης που μπαίνει στην αλυσίδα εκπομπής ενός σταθμού. Παίρνει το ζωντανό σήμα, το προωθεί σε υπηρεσία που αναγνωρίζει μουσική με πνευματικά δικαιώματα, και δίνει σε τηλεοπτικό ή ραδιοφωνικό σταθμό συνεχές αρχείο με το τι έχει πραγματικά μεταδώσει — αυτό είναι που μετράει στη δήλωση δικαιωμάτων. Η δική μου δουλειά ήταν η συσκευή: το περίβλημα και τα ηλεκτρονικά μέσα σε αυτό. Δική μου είναι και η σελίδα του προϊόντος.",
+      role: "Σχεδίαση περιβλήματος και ηλεκτρονικών· σελίδα προϊόντος",
       highlights: [
-        "Το κουτί μένει ακίνητο και κινείται η κάμερα — το τόξο γύρω από σταθερό αντικείμενο διαβάζεται ως επιθεώρηση, ενώ το περιστρεφόμενο αντικείμενο ως βιτρίνα.",
-        "Φωτισμός και υλικά στούντιο ρυθμισμένα για ματ μεταλλικό περίβλημα, που συγχωρεί πολύ λιγότερα από τα γυαλιστερά renders των περισσότερων σελίδων προϊόντος.",
-        "Κάθε asset της σκηνής ελέγχθηκε ως προς την άδεια εμπορικής χρήσης πριν χρησιμοποιηθεί.",
+        "Το περίβλημα σχεδιάστηκε σε επίπεδο κατασκευής και όχι ως κέλυφος — στηρίξεις πλακέτας, ανοίγματα θυρών, θέσεις κοχλιών και ροή αέρα, όλα λυμένα πάνω στο υλικό που πρέπει να χωρέσει μέσα.",
+        "Πλήρες σχέδιο συνδεσμολογίας για τον υπολογιστή μονής πλακέτας στο κέντρο της: τροφοδοσία, είσοδος σήματος και τα περιφερειακά γύρω τους, σχεδιασμένο για να κατασκευαστεί και όχι για να το κοιτάς.",
+        "Η σελίδα του προϊόντος δείχνει τη μονάδα σε ρεαλιστικό στούντιο με την κάμερα να διαγράφει τόξο γύρω από σταθερό αντικείμενο — επιθεώρηση, όχι βιτρίνα.",
       ],
     },
   },

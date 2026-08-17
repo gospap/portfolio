@@ -336,12 +336,22 @@ export default async function Home({ params }) {
           for a while and that was the wrong instrument: someone scanning for
           "do they know Postgres" should not have to scroll four viewports to
           find out. Flat grid, hover state, done. */}
-      {/* NOT a stage. A stage pins itself, contributes nothing to the flow and
+      {/* A CURTAIN, not a stage, and it must be one or the other — never
+          neither.
+
+          Not a stage: a stage pins itself, contributes nothing to the flow and
           clips to `overflow: hidden`, so it only works for content that fits
-          in one viewport — and this section does not: measured at 1280x720 it
-          needs 1290px against a 720px stage, so 570px of the grid was simply
-          unreachable on a laptop. It takes its natural height instead. */}
-      <section className="section-pad cap theme-silver">
+          in one viewport. This does not — measured at 1280x720 it needs 1290px
+          against a 720px stage, so 570px of the grid was unreachable.
+
+          But a plain section is not the answer either, and that mistake is
+          invisible until you scroll onto it. The statement section above is
+          sticky and stays pinned for the whole page; the ONLY thing keeping it
+          out of the sections that follow is `.curtain`, which gives them
+          `position: relative; z-index: 10` and an opaque background. Drop the
+          class and this section paints UNDER the pinned statement, so the
+          quote reads straight through the middle of the grid. */}
+      <section className="section-pad cap theme-silver curtain">
         <div className="wrap">
           <Reveal className="cap__head">
             <p className="kicker">{dict.home.capabilitiesKicker}</p>

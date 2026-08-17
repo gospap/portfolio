@@ -66,10 +66,13 @@ export const el = {
       {
         name: "mcp-krb-server",
         org: "overpassconnect",
-        role: "Συν-δημιουργός",
+        role: "Contributor",
         licence: "Apache-2.0",
+        /* Η περιγραφή του ίδιου του repository. Λέει τι είναι σε δύο γραμμές·
+           ό,τι μεγαλύτερο εδώ κάνει μια κάρτα της αρχικής τεκμηρίωση, και η
+           τεκμηρίωση απέχει ένα κλικ. */
         summary:
-          "Kerberos single sign-on για MCP. Ένας MCP client δεν μιλάει HTTP Negotiate/SPNEGO — τον καθιερωμένο τρόπο με τον οποίο ένα εργαλείο αποδεικνύει ταυτότητα Kerberos σε μια υπηρεσία web — οπότε δεν μπορεί καν να ταυτοποιηθεί σε εσωτερικό Kerberised server. Αυτό καλύπτει το κενό με το εισιτήριο που ήδη κρατά ο προγραμματιστής από τη σύνδεσή του: χωρίς κωδικούς, χωρίς κλειδιά API, χωρίς μυστικά ανά άτομο.",
+          "Kerberos/SPNEGO single sign-on για MCP servers σε περιβάλλοντα FreeIPA. Framework εγκατάστασης για περιβάλλοντα ανάπτυξης σε Windows (μέσω WSL), Linux και macOS.",
         url: "https://github.com/overpassconnect/mcp-krb-server",
       },
     ],

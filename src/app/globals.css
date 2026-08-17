@@ -775,6 +775,54 @@ a.card:hover,
   transform: none;
 }
 
+/* ——— text roll ———
+   A label that swaps itself out on hover: the visible line leaves upward
+   while an identical copy arrives from below, so the word appears to rotate
+   on a drum rather than to move. It is the gesture the reference uses on
+   every card title, and the giveaway is in its markup — the title is in the
+   DOM twice.
+
+   The second copy is ABSOLUTE, which is what makes the wrapper exactly one
+   line tall without anyone having to state a height in `lh` or `em`. Both
+   copies laid out in flow would make the box two lines tall and the clip
+   would show the understudy sitting under the actor.
+
+   105%, not 100%: at exactly 100% the two copies meet edge to edge and a
+   fractional device pixel of the outgoing glyph survives at the seam.
+
+   The padding/negative-margin pair buys descender room back — "Next.js" has
+   a j, and a clip box sized to the line would cut it. Same trick as
+   .line-clip, and needed for the same reason.
+
+   The copy is aria-hidden and the host carries no extra semantics: a screen
+   reader should hear the title once. */
+.roll {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+.roll > span {
+  display: block;
+  transition: transform 0.55s var(--ease-out);
+}
+.roll > span + span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(105%);
+}
+.roll-host:hover .roll > span:first-child,
+.roll-host:focus-visible .roll > span:first-child {
+  transform: translateY(-105%);
+}
+.roll-host:hover .roll > span + span,
+.roll-host:focus-visible .roll > span + span {
+  transform: translateY(0);
+}
+
 /* ——— marquee ———
    Two identical tracks side by side, the pair translated by exactly -50%.
    At the instant the animation restarts, track two is where track one began,
@@ -1031,6 +1079,18 @@ a.card:hover,
      scaling goes, because that is the part that moves without being asked. */
   .stack__item {
     transform: none;
+  }
+
+  /* The roll is a swap between two identical words, so cancelling it costs
+     nothing: the understudy stays parked below the clip and the visible copy
+     never leaves. No transition, no state to get stuck in. */
+  .roll > span,
+  .roll-host:hover .roll > span:first-child {
+    transition: none;
+    transform: none;
+  }
+  .roll-host:hover .roll > span + span {
+    transform: translateY(105%);
   }
 
   .marquee__track {

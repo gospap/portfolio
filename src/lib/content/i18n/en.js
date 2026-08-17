@@ -66,10 +66,13 @@ export const en = {
       {
         name: "mcp-krb-server",
         org: "overpassconnect",
-        role: "Co-author",
+        role: "Contributor",
         licence: "Apache-2.0",
+        /* The repository's own description, verbatim. It says what the thing
+           is in two lines; anything longer here turns a landing-page card
+           into documentation, and the documentation is one click away. */
         summary:
-          "Kerberos single sign-on for MCP. An MCP client cannot speak HTTP Negotiate/SPNEGO — the standard way a tool proves a Kerberos identity to a web service — so it cannot authenticate to a Kerberised internal server at all. This closes that gap using the ticket a developer already holds from logging in: no passwords, no API keys, no per-developer secrets.",
+          "Kerberos/SPNEGO single sign-on for MCP servers in FreeIPA environments. Provisioning framework for Windows (via WSL), Linux and macOS development environments.",
         url: "https://github.com/overpassconnect/mcp-krb-server",
       },
     ],

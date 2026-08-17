@@ -394,15 +394,14 @@
   font-size: 0.6rem;
   color: var(--accent);
 }
+/* The title no longer slides sideways on hover — the .roll swap replaced it.
+   Running both meant the word travelled right while it was also rotating
+   away, which read as a glitch rather than as one gesture. */
 .skill__title {
   margin-top: 0.9rem;
   font-size: clamp(1.25rem, 2.2vw, 1.6rem);
   font-weight: 300;
   letter-spacing: -0.012em;
-  transition: transform 0.35s var(--ease-out);
-}
-.skill:hover .skill__title {
-  transform: translateX(0.25rem);
 }
 .skill__kicker {
   margin-top: 0.5rem;

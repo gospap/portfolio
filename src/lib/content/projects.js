@@ -75,7 +75,7 @@ export const PROJECTS = [
     kind: "web",
     status: "live",
     year: "2026",
-    url: "https://overpassconnect.com",
+    url: "https://overpassconnect.vercel.app",
     tint: "#232838",
     cover: "/media/cards/overpass.jpg",
     /* The landing-page wall only. Two photos stack inside the one card, so

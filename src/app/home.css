@@ -264,6 +264,89 @@
    trusted with Postgres" answers that in a grid you can read at a glance and
    leave. The only motion is the entrance and a hover state.
    =========================================================================== */
+/* ——————————————————————— open source ———————————————————————
+   Sits directly under the wall, inside the same curtain. Prominent because it
+   is on the landing page at all and because the credit carries the accent —
+   not because it is large. It is one card, one paragraph, and a link out.
+
+   The top padding is smaller than a normal section's: this belongs to the
+   work above it, and a full section rhythm here would read as a new chapter
+   rather than as a footnote to the one just read. */
+.oss {
+  position: relative;
+  padding-block: clamp(2.5rem, 6vw, 4rem) clamp(3.5rem, 8vw, 6rem);
+}
+.oss__head {
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+.oss__title {
+  margin-top: 0.9rem;
+}
+
+.oss__card {
+  display: grid;
+  gap: clamp(1.1rem, 3vw, 2.5rem);
+  padding: clamp(1.35rem, 3vw, 2.1rem);
+}
+/* Two columns once there is room: the identity is a fixed-ish label column
+   and the prose takes the rest, so the paragraph keeps a sane measure instead
+   of running the full width of a 74rem wrap. */
+@media (min-width: 860px) {
+  .oss__card {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.oss__top {
+  display: grid;
+  gap: 0.7rem;
+  justify-items: start;
+}
+/* The repository name is an identifier, so it is set as one — monospace, with
+   the owner dimmed so the eye lands on the repo rather than the org. */
+.oss__name {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.oss__org {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.oss__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.oss__tag {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--card-line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+/* The credit is the one thing here a visitor is actually checking, so it is
+   the one tag that carries the accent. */
+.oss__tag--role {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+.oss__summary {
+  font-size: clamp(0.95rem, 1.5vw, 1.02rem);
+  line-height: 1.75;
+  color: var(--muted);
+}
+.oss__cta {
+  margin-top: 1.25rem;
+}
+
 .skills {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -943,9 +1026,6 @@
 }
 .home__contactInner .kicker {
   justify-content: center;
-}
-.home__contactInner .kicker::before {
-  display: none;
 }
 .home__contactTitle {
   margin-top: 1rem;

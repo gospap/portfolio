@@ -24,9 +24,10 @@ export const PROFILE = {
      roughly 4:5, at least 800px wide. */
   photo: "/media/portrait.png",
 
-  email: "dev@letstudy.gr", // TODO confirm: work address or a personal one?
+  email: "g.pap2005@gmail.com",
   github: "", // TODO
-  linkedin: "", // TODO
+  linkedin: "https://www.linkedin.com/in/george-papanikolaou-71a925344/",
+  instagram: "https://www.instagram.com/gospap_/",
   cv: "", // TODO e.g. "/giorgos-papanikolaou-cv.pdf" in public/
 
   location: { en: "Greece", el: "Ελλάδα" },
@@ -64,6 +65,23 @@ export function socialLinks() {
       href: PROFILE.linkedin,
       value: shortUrl(PROFILE.linkedin),
     },
+  ].filter((l) => l.href);
+}
+
+/* The footer's icon row.
+
+   Separate from socialLinks() because these are PLATFORMS — recognisable by
+   their mark, so a glyph is enough — while socialLinks() is a list of contact
+   routes that the contact page prints alongside their actual values.
+
+   Email is deliberately absent: an address is something you read and copy, and
+   an envelope glyph would hide the one piece of information on that row that
+   anybody wants. It stays a labelled link. */
+export function socialIcons() {
+  return [
+    { key: "linkedin", label: "LinkedIn", href: PROFILE.linkedin },
+    { key: "instagram", label: "Instagram", href: PROFILE.instagram },
+    { key: "github", label: "GitHub", href: PROFILE.github },
   ].filter((l) => l.href);
 }
 

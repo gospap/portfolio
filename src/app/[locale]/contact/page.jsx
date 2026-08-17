@@ -35,7 +35,7 @@ export default async function Contact({ params }) {
         </Reveal>
 
         <Reveal index={1}>
-          <p className="contact__note">{dict.contact.availability}</p>
+          <p className="contact__note">{dict.contact.current}</p>
           {PROFILE.cv ? (
             <a className="btn btn-ghost" href={PROFILE.cv} download style={{ marginTop: "1.5rem" }}>
               CV (PDF)

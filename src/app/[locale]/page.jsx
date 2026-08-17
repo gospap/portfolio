@@ -250,7 +250,6 @@ export default async function Home({ params }) {
                   <span>{dict.home.featuredTitle}</span>
                 </span>
               </h2>
-              <p className="lead feat__lead tint-in">{dict.home.featuredLead}</p>
             </Reveal>
           </div>
         </section>
@@ -259,6 +258,57 @@ export default async function Home({ params }) {
           dict={dict}
           routeFor={(p) => href(loc, `${ROUTE_FOR[p.kind]}#${p.slug}`)}
         />
+
+        {/* ——— open source, directly under the work ———
+            Inside the same curtain as the wall rather than a section of its
+            own: it belongs to the work above it, and giving it its own
+            stage/curtain would insert a full-viewport wipe between a project
+            grid and a single card — announcing it far louder than one card
+            can carry.
+
+            Small on purpose. It is one card wide, one paragraph deep, and the
+            depth lives on the repository at the other end of the link. */}
+        <section className="oss">
+          <div className="wrap">
+            <Reveal className="oss__head">
+              <p className="kicker">{dict.home.openSourceKicker}</p>
+              <h2 className="h2 oss__title">
+                <span className="line-clip">
+                  <span>{dict.home.openSourceTitle}</span>
+                </span>
+              </h2>
+            </Reveal>
+
+            {dict.home.openSource.map((o, i) => (
+              <Reveal key={o.name} index={i + 1}>
+                <article className="oss__card card">
+                  <header className="oss__top">
+                    <h3 className="oss__name">
+                      <span className="oss__org">{o.org}/</span>
+                      {o.name}
+                    </h3>
+                    <ul className="oss__tags">
+                      <li className="oss__tag oss__tag--role">{o.role}</li>
+                      <li className="oss__tag">{o.licence}</li>
+                    </ul>
+                  </header>
+
+                  <p className="oss__summary">{o.summary}</p>
+
+                  <a
+                    className="btn-line oss__cta"
+                    href={o.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {dict.home.openSourceCta}
+                    <span aria-hidden>↗</span>
+                  </a>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
       </div>
 
       {/* ——— 03 · disciplines ————————————————————————————————————— */}
@@ -286,7 +336,12 @@ export default async function Home({ params }) {
           for a while and that was the wrong instrument: someone scanning for
           "do they know Postgres" should not have to scroll four viewports to
           find out. Flat grid, hover state, done. */}
-      <section className="section-pad cap theme-silver stage">
+      {/* NOT a stage. A stage pins itself, contributes nothing to the flow and
+          clips to `overflow: hidden`, so it only works for content that fits
+          in one viewport — and this section does not: measured at 1280x720 it
+          needs 1290px against a 720px stage, so 570px of the grid was simply
+          unreachable on a laptop. It takes its natural height instead. */}
+      <section className="section-pad cap theme-silver">
         <div className="wrap">
           <Reveal className="cap__head">
             <p className="kicker">{dict.home.capabilitiesKicker}</p>
@@ -295,7 +350,6 @@ export default async function Home({ params }) {
                 <span>{dict.home.capabilitiesTitle}</span>
               </span>
             </h2>
-            <p className="lead cap__lead tint-in">{dict.home.capabilitiesLead}</p>
           </Reveal>
           <SkillGrid items={skills} />
         </div>

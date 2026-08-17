@@ -53,13 +53,29 @@ export const en = {
 
     featuredKicker: "Selected work",
     featuredTitle: "Five things worth showing.",
-    featuredLead:
-      "Scroll to travel the column. Click a card to read how it was built.",
+
+    /* Open source, directly under the work. NOT a projects.js record: that
+       shape carries status, year, tint, cover and a live-site CTA, all of
+       which describe client work, and this is neither client work nor a
+       product. Deliberately short — it sits on the landing page to be seen,
+       and the case for it is the one paragraph, not a dossier. */
+    openSourceKicker: "Open source",
+    openSourceTitle: "Built in the open.",
+    openSourceCta: "View on GitHub",
+    openSource: [
+      {
+        name: "mcp-krb-server",
+        org: "overpassconnect",
+        role: "Co-author",
+        licence: "Apache-2.0",
+        summary:
+          "Kerberos single sign-on for MCP. An MCP client cannot speak HTTP Negotiate/SPNEGO — the standard way a tool proves a Kerberos identity to a web service — so it cannot authenticate to a Kerberised internal server at all. This closes that gap using the ticket a developer already holds from logging in: no passwords, no API keys, no per-developer secrets.",
+        url: "https://github.com/overpassconnect/mcp-krb-server",
+      },
+    ],
 
     capabilitiesKicker: "Capabilities",
     capabilitiesTitle: "What I actually use.",
-    capabilitiesLead:
-      "Not a skills bar chart. These are the tools that shipped the work on this site.",
     capabilities: [
       {
         title: "Interface",
@@ -135,16 +151,16 @@ export const en = {
         note: "Information Technology & Electronics Engineering.",
       },
       {
-        label: "Open to",
-        value: "Product & R&D work",
-        note: "Especially anything where the software has to talk to hardware.",
+        label: "Working",
+        value: "Overpass Connect",
+        note: "Full cycle — architecture, implementation, deployment and maintenance.",
       },
     ],
 
     aboutKicker: "About",
     aboutCta: "More about me",
     contactKicker: "Contact",
-    contactTitle: "Have something that needs building?",
+    contactTitle: "Where to find me.",
     contactBody: "The fastest way to reach me is email. I read everything.",
     contactCta: "Get in touch",
   },
@@ -217,31 +233,6 @@ export const en = {
       },
     ],
 
-    /* Open source. Not a project record — these are not client work and they
-       have no status, year or gallery — so they live here rather than in
-       projects.js, and the shape is deliberately different. */
-    openSourceKicker: "Open source",
-    openSourceTitle: "Built in the open",
-    openSourceLead:
-      "Work released publicly, for anyone to read, review and run.",
-    openSourceCta: "View on GitHub",
-    openSource: [
-      {
-        name: "mcp-krb-server",
-        org: "overpassconnect",
-        role: "Co-author, with a colleague",
-        licence: "Apache-2.0",
-        summary:
-          "Kerberos single sign-on for MCP. An MCP client can attach an OAuth flow or a fixed header to its requests, but it cannot speak HTTP Negotiate/SPNEGO — the standard way a tool proves a Kerberos identity to a web service — so it cannot authenticate to a Kerberised internal server at all. This closes that gap using the ticket a developer already holds from logging in: no passwords, no API keys, no per-developer secrets.",
-        points: [
-          "A reference implementation rather than a library. The MCP tools it ships are deliberately stubs; the part worth reading is the authentication, authorisation, delegation and provisioning scaffolding around them. Site-specific tools load from outside the repository, so a deployment never ends up maintaining a fork of a file it did not write.",
-          "One credential, in one place. A developer's ticket never leaves their workstation — SSH forwards the sockets, never the ticket itself, so no second copy of anyone's identity exists to be stolen.",
-          "Optional on-behalf-of delegation lets a tool call a downstream service as the person who invoked it, so that service logs a real human rather than a shared account. Off by default, because it is the one genuinely subtle piece of security in the design.",
-          "Provisioning for Linux, macOS and Windows through WSL, against a FreeIPA directory.",
-        ],
-        url: "https://github.com/overpassconnect/mcp-krb-server",
-      },
-    ],
   },
 
   contact: {
@@ -250,12 +241,11 @@ export const en = {
     copy: "Copy",
     copied: "Copied",
     copyAria: "Copy to clipboard",
-    availability: "Open to product work, R&D collaborations and interesting hardware.",
+    current: "Software engineer at Overpass Connect.",
     pending: "Links coming soon.",
   },
 
   footer: {
-    built: "Built with Next.js, React Three Fiber and three.js.",
     rights: "All rights reserved.",
     top: "Back to top",
   },

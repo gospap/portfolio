@@ -103,6 +103,15 @@ export async function generateMetadata({ params }) {
       title: `${PROFILE.name} — ${dict.hero.role}`,
       description: dict.about.lead,
     },
+    /* Search Console verification, the meta-tag method. The HTML file in
+       public/ does the same job, and both are kept because they fail in
+       different places: the file is fetched at a literal path and cannot be
+       redirected, while this tag is only seen if the crawler follows "/" to
+       "/en" through the locale proxy. Whichever Google reaches first wins,
+       and removing either one later un-verifies nothing. */
+    verification: {
+      google: "v9_Y3gA9RUM6XgdCS_JePkRvkU-UGGlv8x--xcBfzW8",
+    },
     robots: {
       index: true,
       follow: true,

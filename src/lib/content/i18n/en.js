@@ -216,6 +216,32 @@ export const en = {
         body: "Interface, service and hardware form one system. I prefer to understand all three rather than work to a specification handed across the boundary between two of them.",
       },
     ],
+
+    /* Open source. Not a project record — these are not client work and they
+       have no status, year or gallery — so they live here rather than in
+       projects.js, and the shape is deliberately different. */
+    openSourceKicker: "Open source",
+    openSourceTitle: "Built in the open",
+    openSourceLead:
+      "Work released publicly, for anyone to read, review and run.",
+    openSourceCta: "View on GitHub",
+    openSource: [
+      {
+        name: "mcp-krb-server",
+        org: "overpassconnect",
+        role: "Co-author, with a colleague",
+        licence: "Apache-2.0",
+        summary:
+          "Kerberos single sign-on for MCP. An MCP client can attach an OAuth flow or a fixed header to its requests, but it cannot speak HTTP Negotiate/SPNEGO — the standard way a tool proves a Kerberos identity to a web service — so it cannot authenticate to a Kerberised internal server at all. This closes that gap using the ticket a developer already holds from logging in: no passwords, no API keys, no per-developer secrets.",
+        points: [
+          "A reference implementation rather than a library. The MCP tools it ships are deliberately stubs; the part worth reading is the authentication, authorisation, delegation and provisioning scaffolding around them. Site-specific tools load from outside the repository, so a deployment never ends up maintaining a fork of a file it did not write.",
+          "One credential, in one place. A developer's ticket never leaves their workstation — SSH forwards the sockets, never the ticket itself, so no second copy of anyone's identity exists to be stolen.",
+          "Optional on-behalf-of delegation lets a tool call a downstream service as the person who invoked it, so that service logs a real human rather than a shared account. Off by default, because it is the one genuinely subtle piece of security in the design.",
+          "Provisioning for Linux, macOS and Windows through WSL, against a FreeIPA directory.",
+        ],
+        url: "https://github.com/overpassconnect/mcp-krb-server",
+      },
+    ],
   },
 
   contact: {

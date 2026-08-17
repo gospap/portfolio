@@ -81,6 +81,62 @@ export default async function About({ params }) {
           ))}
         </div>
 
+        {/* ——— open source ———
+            Not a project card. These have no status, no year and no gallery,
+            and they are not client work, so they get their own shape rather
+            than being forced into the one projects.js describes. */}
+        <section className="oss">
+          <Reveal className="oss__head">
+            <p className="kicker">{dict.about.openSourceKicker}</p>
+            <h2 className="h2">
+              <span className="line-clip">
+                <span>{dict.about.openSourceTitle}</span>
+              </span>
+            </h2>
+            <p className="lead tint-in">{dict.about.openSourceLead}</p>
+          </Reveal>
+
+          {dict.about.openSource.map((o, i) => (
+            <Reveal key={o.name} index={i}>
+              <article className="oss__card card">
+                <header className="oss__top">
+                  <h3 className="oss__name">
+                    <span className="oss__org">{o.org}/</span>
+                    {o.name}
+                  </h3>
+                  <ul className="oss__tags">
+                    <li className="oss__tag oss__tag--role">{o.role}</li>
+                    <li className="oss__tag">{o.licence}</li>
+                  </ul>
+                </header>
+
+                <p className="oss__summary">{o.summary}</p>
+
+                <ol className="oss__points">
+                  {o.points.map((p, n) => (
+                    <li key={n}>
+                      <span className="oss__num mono-note">
+                        {String(n + 1).padStart(2, "0")}
+                      </span>
+                      <p>{p}</p>
+                    </li>
+                  ))}
+                </ol>
+
+                <a
+                  className="btn-line oss__cta"
+                  href={o.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {dict.about.openSourceCta}
+                  <span aria-hidden>↗</span>
+                </a>
+              </article>
+            </Reveal>
+          ))}
+        </section>
+
         <Reveal className="section-pad" style={{ textAlign: "center" }}>
           <Link className="btn" href={href(loc, "/contact")}>
             {dict.home.contactCta}

@@ -150,6 +150,115 @@
   color: var(--muted);
 }
 
+/* ——————————————————————— open source ———————————————————————
+   A card, not a ruled cell. The values above are a set of three that read as
+   one block, so they share a grid and are divided by hairlines; this is one
+   standalone thing and it needs to look like an object you can go and get.
+   Hence the shared .card treatment rather than a fourth flavour of panel. */
+.oss {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+.oss__head {
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.oss__card {
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.oss__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--card-line);
+}
+
+/* The repository name is an identifier, so it is set as one — monospace, and
+   the owner dimmed so the eye lands on the repo rather than the org. */
+.oss__name {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.oss__org {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.oss__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.oss__tag {
+  padding: 0.32rem 0.75rem;
+  border: 1px solid var(--card-line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+/* The credit is the one thing on this card a visitor is here to check, so it
+   is the one tag that carries the accent. */
+.oss__tag--role {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+.oss__summary {
+  margin-top: 1.4rem;
+  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--text) 86%, transparent);
+}
+
+.oss__points {
+  display: grid;
+  gap: 1px;
+  margin-top: 1.75rem;
+  background: var(--card-line);
+  border-block: 1px solid var(--card-line);
+}
+.oss__points li {
+  display: flex;
+  gap: 1.15rem;
+  padding: 1.1rem 0.15rem;
+  /* the ground, not the card fill — see .skill in home.css for why a
+     translucent fill cannot be used on cells that share a seam */
+  background: var(--bg);
+}
+.oss__num {
+  flex: 0 0 auto;
+  padding-top: 0.22rem;
+  font-size: 0.64rem;
+  color: var(--accent);
+}
+.oss__points p {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.oss__cta {
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 620px) {
+  .oss__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .oss__points li {
+    gap: 0.85rem;
+  }
+}
+
 /* ——————————————————————— contact ——————————————————————— */
 /* The rows and the block they drive. The block takes a fixed column rather
    than floating over the rows: it is an index of them, and an index that

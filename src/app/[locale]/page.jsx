@@ -242,8 +242,15 @@ export default async function Home({ params }) {
           <div className="wrap">
             <Reveal>
               <p className="kicker">{dict.home.featuredKicker}</p>
-              <h2 className="h2 feat__title">{dict.home.featuredTitle}</h2>
-              <p className="lead feat__lead">{dict.home.featuredLead}</p>
+              {/* The heading wipes up from behind its own baseline and the
+                  lead resolves from muted to full — see .line-clip and
+                  .tint-in. Both are driven by the .is-in this Reveal adds. */}
+              <h2 className="h2 feat__title">
+                <span className="line-clip">
+                  <span>{dict.home.featuredTitle}</span>
+                </span>
+              </h2>
+              <p className="lead feat__lead tint-in">{dict.home.featuredLead}</p>
             </Reveal>
           </div>
         </section>
@@ -259,8 +266,12 @@ export default async function Home({ params }) {
         <div className="wrap">
           <Reveal className="home__introHead">
             <p className="kicker">{dict.home.introKicker}</p>
-            <h2 className="h2 home__introTitle">{dict.home.introTitle}</h2>
-            <p className="lead home__introBody">{dict.home.introBody}</p>
+            <h2 className="h2 home__introTitle">
+              <span className="line-clip">
+                <span>{dict.home.introTitle}</span>
+              </span>
+            </h2>
+            <p className="lead home__introBody tint-in">{dict.home.introBody}</p>
           </Reveal>
         </div>
 
@@ -279,8 +290,12 @@ export default async function Home({ params }) {
         <div className="wrap">
           <Reveal className="cap__head">
             <p className="kicker">{dict.home.capabilitiesKicker}</p>
-            <h2 className="h2">{dict.home.capabilitiesTitle}</h2>
-            <p className="lead cap__lead">{dict.home.capabilitiesLead}</p>
+            <h2 className="h2">
+              <span className="line-clip">
+                <span>{dict.home.capabilitiesTitle}</span>
+              </span>
+            </h2>
+            <p className="lead cap__lead tint-in">{dict.home.capabilitiesLead}</p>
           </Reveal>
           <SkillGrid items={skills} />
         </div>
@@ -298,7 +313,11 @@ export default async function Home({ params }) {
         <div className="wrap">
           <Reveal>
             <p className="kicker">{dict.home.nowKicker}</p>
-            <h2 className="h2 now__title">{dict.home.nowTitle}</h2>
+            <h2 className="h2 now__title">
+              <span className="line-clip">
+                <span>{dict.home.nowTitle}</span>
+              </span>
+            </h2>
           </Reveal>
           <div className="now__rows">
             {dict.home.now.map((n, i) => (

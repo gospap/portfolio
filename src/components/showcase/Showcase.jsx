@@ -20,7 +20,7 @@ import { startScroll, stopScroll, scrollY } from "@/lib/scroll";
  * scrolls exactly as far as its text is long, the scrollbar tells the truth,
  * and every word is real selectable DOM rather than a texture.
  */
-export default function Showcase({ items, dict, accent = "#a892ee" }) {
+export default function Showcase({ items, dict, accent = "#6ff5f5" }) {
   const section = useRef(null);
   const local = useRef(0);
 

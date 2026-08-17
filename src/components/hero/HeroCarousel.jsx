@@ -576,7 +576,9 @@ export default function HeroCarousel({
                 {/* re-registered on the pulled-back camera: near face ~11.65
                   away, far face ~16.75, so the fade covers the back half of
                   the ring and nothing else */}
-                <fog attach="fog" args={["#c5c8d1", 13, 18.5]} />
+                {/* Must track the mid-tone of .hero__stage::before, or the far
+                    side of the ring fades to a colour that is not behind it. */}
+                <fog attach="fog" args={["#0c0c10", 13, 18.5]} />
                 <Rig
                   cards={cards}
                   media={media}

@@ -36,14 +36,14 @@ function drawBadge(ctx, text, rightX, baselineY) {
   const r = h / 2;
 
   /* Filled, not outlined. The plate under it is near-black and the accent is a
-     pale purple, so an outline would read as a thin grey rectangle at the size
+     bright cyan, so an outline would read as a thin grey rectangle at the size
      these cards are actually seen at. */
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, r);
-  ctx.fillStyle = "rgba(168,146,238,0.92)";
+  ctx.fillStyle = "rgba(6,255,255,0.92)";
   ctx.fill();
 
-  ctx.fillStyle = "#14121f";
+  ctx.fillStyle = "#04191b";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText(text, x + w / 2, y + h / 2 + 1);
@@ -77,7 +77,7 @@ export function makeCardMask({ title = "", kicker = "", index = 0, badge = "" })
   // index, in the accent — the one coloured mark on the plate
   ctx.font = "500 26px ui-monospace, 'JetBrains Mono', monospace";
   ctx.letterSpacing = "6px";
-  ctx.fillStyle = "#a892ee";
+  ctx.fillStyle = "#06ffff";
   ctx.textBaseline = "alphabetic";
   ctx.fillText(String(index + 1).padStart(2, "0"), padX, y);
 

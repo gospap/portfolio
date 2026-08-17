@@ -26,7 +26,7 @@ const PaneMaterial = shaderMaterial(
     uHover: 0,
     uOpacity: 1,
     uTime: 0,
-    uAccent: new THREE.Color("#a892ee"),
+    uAccent: new THREE.Color("#6ff5f5"),
   },
   /* glsl */ `
     varying vec2 vUv;

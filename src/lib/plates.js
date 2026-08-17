@@ -6,8 +6,8 @@
    download, nothing to keep in sync with the palette, and every plate can be
    regenerated at whatever resolution the device deserves.
 
-   All five styles share a language — brushed-silver ground, purple line work,
-   one graphite element, a monospace caption — so a plate sitting between two
+   All five styles share a language — near-black ground, cyan line work, one
+   bone-white element, a monospace caption — so a plate sitting between two
    screenshots reads as part of the same set rather than as a placeholder.
    =========================================================================== */
 
@@ -18,16 +18,21 @@ import * as THREE from "three";
 export const PLATE_W = 1280;
 export const PLATE_H = 720;
 
-/* The plate is metal, not paper: INK is the brushed base and INK_2 the lit
-   edge of it. PURPLE/PURPLE_DIM carry the line work, and CHROME is the single
-   graphite element per plate — the one dark mark that keeps a silver drawing
-   from floating away. */
-const INK = "#d6d8e0";
-const INK_2 = "#edeef2";
-const PURPLE = "#6f52cc";
-const PURPLE_DIM = "#a892ee";
-const CHROME = "#14161b";
-const BONE = "#14161b";
+/* The plate is metal, not paper: INK is the unlit base and INK_2 the lit edge
+   of it. CYAN/CYAN_DIM carry the line work, and CHROME is the single bone
+   element per plate — the one bright mark that keeps a cyan drawing from
+   dissolving into its own ground.
+
+   CHROME inverted with the palette and its NAME no longer describes a colour
+   so much as a role: "the one mark that is not cyan". On silver that had to
+   be graphite; on near-black it has to be bone, or the accent line work has
+   nothing to be measured against. */
+const INK = "#0d0d11";
+const INK_2 = "#1a1a20";
+const CYAN = "#06ffff";
+const CYAN_DIM = "#6ff5f5";
+const CHROME = "#e8eaf2";
+const BONE = "#e8eaf2";
 
 /** Deterministic PRNG so a plate looks the same on every reload. */
 function mulberry32(seed) {
@@ -57,8 +62,8 @@ function ground(ctx) {
     PLATE_H * 0.12,
     PLATE_H * 0.8,
   );
-  r.addColorStop(0, "rgba(168,146,238,0.16)");
-  r.addColorStop(1, "rgba(168,146,238,0)");
+  r.addColorStop(0, "rgba(6,255,255,0.16)");
+  r.addColorStop(1, "rgba(6,255,255,0)");
   ctx.fillStyle = r;
   ctx.fillRect(0, 0, PLATE_W, PLATE_H);
 }
@@ -71,7 +76,7 @@ function caption(ctx, label, sub) {
   ctx.fillText(label, 54, PLATE_H - 84);
   if (sub) {
     ctx.font = "400 17px ui-monospace, 'JetBrains Mono', monospace";
-    ctx.fillStyle = PURPLE;
+    ctx.fillStyle = CYAN;
     ctx.globalAlpha = 0.8;
     ctx.fillText(sub, 54, PLATE_H - 54);
   }
@@ -81,7 +86,7 @@ function caption(ctx, label, sub) {
 /** Registration ticks in the corners — the "instrument" cue. */
 function ticks(ctx) {
   ctx.save();
-  ctx.strokeStyle = "rgba(20,22,27,0.34)";
+  ctx.strokeStyle = "rgba(255,255,255,0.30)";
   ctx.lineWidth = 1.5;
   const m = 40;
   const len = 22;
@@ -104,7 +109,7 @@ function ticks(ctx) {
 
 function drawGrid(ctx, rand) {
   const step = 34;
-  ctx.strokeStyle = "rgba(168,146,238,0.16)";
+  ctx.strokeStyle = "rgba(6,255,255,0.16)";
   ctx.lineWidth = 1;
   ctx.beginPath();
   for (let x = step; x < PLATE_W; x += step) {
@@ -120,7 +125,7 @@ function drawGrid(ctx, rand) {
   // one bold axis pair, offset so the composition is not centred
   const ax = Math.round(PLATE_W * (0.3 + rand() * 0.4));
   const ay = Math.round(PLATE_H * (0.3 + rand() * 0.4));
-  ctx.strokeStyle = PURPLE_DIM;
+  ctx.strokeStyle = CYAN_DIM;
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(ax, 0);
@@ -195,7 +200,7 @@ function drawContour(ctx, rand) {
     ctx.strokeStyle =
       l === Math.floor(levels * 0.6)
         ? CHROME
-        : `rgba(168,146,238,${0.14 + 0.34 * t})`;
+        : `rgba(6,255,255,${0.14 + 0.34 * t})`;
     ctx.lineWidth = l === Math.floor(levels * 0.6) ? 2 : 1.2;
     ctx.stroke();
   }
@@ -231,13 +236,13 @@ function drawTraces(ctx, rand) {
       }
     }
     const accent = i === 3;
-    ctx.strokeStyle = accent ? CHROME : `rgba(168,146,238,${0.3 + rand() * 0.45})`;
+    ctx.strokeStyle = accent ? CHROME : `rgba(6,255,255,${0.3 + rand() * 0.45})`;
     ctx.lineWidth = accent ? 2.6 : 1.4 + rand() * 1.6;
     ctx.stroke();
 
     ctx.beginPath();
     ctx.arc(x, y, accent ? 7 : 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = accent ? CHROME : PURPLE;
+    ctx.fillStyle = accent ? CHROME : CYAN;
     ctx.fill();
   }
 }
@@ -273,7 +278,7 @@ function drawWave(ctx, rand) {
     ctx.strokeStyle =
       r === Math.floor(rows * 0.35)
         ? CHROME
-        : `rgba(168,146,238,${0.2 + 0.5 * (1 - r / rows)})`;
+        : `rgba(6,255,255,${0.2 + 0.5 * (1 - r / rows)})`;
     ctx.lineWidth = r === Math.floor(rows * 0.35) ? 2.2 : 1.2;
     ctx.stroke();
   }
@@ -290,7 +295,7 @@ function drawAperture(ctx, rand) {
     ctx.beginPath();
     ctx.arc(cx, cy, rad, start, start + sweep);
     const t = 1 - i / rings;
-    ctx.strokeStyle = i === 6 ? CHROME : `rgba(168,146,238,${0.12 + 0.5 * t})`;
+    ctx.strokeStyle = i === 6 ? CHROME : `rgba(6,255,255,${0.12 + 0.5 * t})`;
     ctx.lineWidth = i === 6 ? 2.4 : 1 + t * 1.8;
     ctx.stroke();
   }

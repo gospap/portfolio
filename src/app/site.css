@@ -13,8 +13,8 @@
   --hdr-fg: var(--s-text);
   --hdr-muted: var(--s-muted);
   --hdr-line: var(--s-line);
-  --hdr-accent: var(--purple-deep);
-  --hdr-scrim: rgba(230, 231, 236, 0.82);
+  --hdr-accent: var(--cyan);
+  --hdr-scrim: rgba(5, 5, 5, 0.72);
   color: var(--hdr-fg);
   border-bottom: 1px solid transparent;
   transition:
@@ -23,13 +23,14 @@
     border-color 0.5s var(--ease-out),
     color 0.5s var(--ease-out);
 }
-/* over a graphite section */
+/* over a stage section — the lifted panel depth, so the header's own scrim
+   has to lift with it or the bar reads as a dark band cut out of the page */
 .hdr.is-dark {
   --hdr-fg: var(--m-text);
   --hdr-muted: var(--m-muted);
   --hdr-line: var(--m-line);
-  --hdr-accent: var(--purple);
-  --hdr-scrim: rgba(14, 15, 18, 0.72);
+  --hdr-accent: var(--cyan);
+  --hdr-scrim: rgba(16, 16, 20, 0.72);
 }
 .hdr.is-solid {
   background: var(--hdr-scrim);
@@ -116,13 +117,13 @@
     border-color 0.25s var(--ease-out),
     color 0.25s var(--ease-out);
 }
+/* Both themes are dark now, so a filled cyan control carries the same
+   near-black text in either — the per-theme override this used to need is
+   gone rather than duplicated. */
 .hdr__cta:hover {
   background: var(--hdr-accent);
   border-color: var(--hdr-accent);
-  color: #fff;
-}
-.hdr.is-dark .hdr__cta:hover {
-  color: #14121e;
+  color: var(--on-accent);
 }
 
 /* ——— locale switch ——— */
@@ -149,10 +150,7 @@
 }
 .lsw__opt.is-active {
   background: var(--hdr-accent);
-  color: #fff;
-}
-.hdr.is-dark .lsw__opt.is-active {
-  color: #14121e;
+  color: var(--on-accent);
 }
 
 /* ——— mobile ——— */
@@ -237,11 +235,15 @@
   }
 }
 
-/* ——————————————————————————— footer ——————————————————————————— */
+/* ——————————————————————————— footer ———————————————————————————
+   A shade below the reading ground rather than level with it. One step of
+   darkness is enough to end the page: it reads as the floor the content is
+   standing on, and it means the top rule has something to separate. */
 .ftr {
   position: relative;
   margin-top: auto;
   border-top: 1px solid var(--line);
+  background: #040404;
 }
 .ftr__inner {
   display: grid;

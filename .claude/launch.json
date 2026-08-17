@@ -6,7 +6,7 @@
       "runtimeExecutable": "npm.cmd",
       "runtimeArgs": ["run", "dev"],
       "port": 3006,
-      "cwd": "C:\\Users\\gpap2\\Desktop\\programming\\portfolio"
+      "cwd": "C:\\Users\\gpap2\\Desktop\\programming\\Personal\\portfolio"
     }
   ]
 }

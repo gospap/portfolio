@@ -237,7 +237,7 @@
   border-color: var(--accent);
 }
 .contact__copy.is-done {
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
   background: var(--accent);
 }

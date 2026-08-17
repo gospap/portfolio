@@ -260,7 +260,7 @@ export const PROJECTS = [
     kind: "hardware",
     status: "wip",
     year: "2026",
-    url: "",
+    url: "https://box.overpassconnect.com",
     tint: "#262b33",
     cover: "/media/cards/broadcast-box.png",
     images: [],

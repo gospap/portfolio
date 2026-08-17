@@ -18,9 +18,9 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(70% 50% at 78% 12%, rgba(168, 146, 238, 0.34), transparent 70%),
-    radial-gradient(70% 55% at 14% 90%, rgba(255, 255, 255, 0.7), transparent 72%),
-    linear-gradient(160deg, #dcdee5 0%, #c5c8d1 55%, #b6bac5 100%);
+    radial-gradient(70% 50% at 78% 12%, rgba(6, 255, 255, 0.12), transparent 70%),
+    radial-gradient(70% 55% at 14% 90%, rgba(255, 255, 255, 0.05), transparent 72%),
+    linear-gradient(160deg, #121215 0%, #0a0a0c 55%, #050505 100%);
 }
 /* the plates themselves must stay hoverable */
 .show__bg canvas {
@@ -55,7 +55,7 @@
 
 
 .show__index {
-  color: var(--purple);
+  color: var(--cyan);
   font-size: 0.66rem;
 }
 
@@ -96,13 +96,13 @@
   vertical-align: 1px;
 }
 .show__status--live {
-  color: #1f7a52;
+  color: #35e08f;
 }
 .show__status--wip {
-  color: var(--purple);
+  color: var(--cyan);
 }
 .show__status--soon {
-  color: #8a6b1f;
+  color: #e3b04b;
 }
 .show__status--archived {
   color: var(--m-muted);
@@ -147,7 +147,7 @@
   top: -5px;
   bottom: -5px;
   width: 11px;
-  border: 1.5px solid var(--purple);
+  border: 1.5px solid var(--cyan);
   border-radius: 3px;
   opacity: 0;
   pointer-events: none;
@@ -178,8 +178,12 @@
   transition: transform 0.35s var(--ease-out);
 }
 .show__open:hover {
-  border-color: var(--purple);
-  background: rgba(168, 146, 238, 0.26);
+  border-color: var(--cyan);
+  /* far weaker than the silver version's 26%: a cyan wash that read as a
+     tint on grey reads as a lit panel on black, and at 26% it swallowed the
+     label sitting on top of it */
+  background: rgba(6, 255, 255, 0.09);
+  color: var(--cyan);
 }
 .show__open:hover span {
   transform: translateX(4px);
@@ -210,7 +214,7 @@
   color: var(--m-muted);
 }
 .show__frameLabel {
-  color: var(--purple-pale);
+  color: var(--cyan-soft);
   font-size: 0.62rem;
 }
 .show__frameCount {
@@ -264,12 +268,14 @@
     padding: 0;
   }
 
+  /* the shared card treatment, so the phone list matches every other card on
+     the site rather than being a panel of its own invention */
   .show__copy {
     width: 100%;
     padding: clamp(1.35rem, 5vw, 1.75rem);
-    border-radius: var(--radius);
-    border: 1px solid var(--m-line);
-    background: var(--m-surface);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--card-line);
+    background: var(--card-fill);
     backdrop-filter: none;
   }
 
@@ -301,8 +307,8 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   background:
-    radial-gradient(100% 60% at 78% 0%, rgba(168, 146, 238, 0.3), transparent 70%),
-    linear-gradient(170deg, #eceef2 0%, #e6e7ec 60%, #dcdee5 100%);
+    radial-gradient(100% 60% at 78% 0%, rgba(6, 255, 255, 0.1), transparent 70%),
+    linear-gradient(170deg, #121215 0%, #0a0a0c 60%, #050505 100%);
   color: var(--m-text);
   /* No fill-mode: if animations cannot run — hidden tab, reduced motion — the
      panel rests open instead of being stranded off-screen. */
@@ -362,7 +368,7 @@
 }
 .pnl__close:hover {
   color: var(--m-text);
-  border-color: var(--purple);
+  border-color: var(--cyan);
 }
 
 .pnl__grid {
@@ -373,7 +379,7 @@
 }
 
 .pnl .kicker {
-  color: var(--purple);
+  color: var(--cyan);
 }
 
 .pnl__title {
@@ -405,13 +411,13 @@
   font-weight: 500;
 }
 .pnl__status--live {
-  color: #1f7a52;
+  color: #35e08f;
 }
 .pnl__status--soon {
-  color: #8a6b1f;
+  color: #e3b04b;
 }
 .pnl__status--wip {
-  color: var(--purple);
+  color: var(--cyan);
 }
 .pnl__status--archived {
   color: var(--m-muted);
@@ -431,7 +437,7 @@
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.26em;
-  color: var(--purple);
+  color: var(--cyan);
 }
 
 .pnl__points {
@@ -451,7 +457,7 @@
   flex: 0 0 auto;
   padding-top: 0.2rem;
   font-size: 0.64rem;
-  color: var(--purple);
+  color: var(--cyan);
 }
 .pnl__points p {
   font-size: 0.97rem;

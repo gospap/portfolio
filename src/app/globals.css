@@ -1,57 +1,89 @@
 /* ===========================================================================
    Giorgos Papanikolaou — portfolio · global stylesheet (plain CSS, no framework)
 
-   TWO THEMES, ONE TOKEN SET — AND BOTH OF THEM ARE SILVER
-   -------------------------------------------------------
-   The site is silver throughout. The two themes are two *depths* of it: pale
-   silver for reading (.theme-silver) and a deeper brushed silver for the
-   sections carrying a 3D scene (.theme-metal), which need to sit back far
-   enough that chrome and glass have something to be brighter than. Neither is
-   dark — the ink is graphite on both, and the light-purple accent is the only
+   TWO THEMES, ONE TOKEN SET — AND BOTH OF THEM ARE NEAR-BLACK
+   -----------------------------------------------------------
+   The site is near-black throughout. The two themes are two *depths* of it:
+   the true ground for reading (.theme-silver) and a fractionally lifted panel
+   for the sections carrying a 3D scene (.theme-metal), which need to sit
+   forward far enough that chrome and glass have something to be darker than.
+   Neither is light — the ink is off-white on both, and cyan is the only
    colour in the system.
+
+   The class names are historical. This palette started as two depths of
+   brushed silver and the names were accurate then; they are kept because they
+   are spread across every page and component, and a rename sweep would be a
+   large diff that changes no pixels. Read .theme-silver as "the reading
+   depth" and .theme-metal as "the stage depth".
 
    Rather than two stylesheets, every component styles itself against six
    semantic tokens — --bg, --surface, --text, --muted, --line, --accent — and a
    section flips them by carrying one class. Nothing below the token block
    knows which theme it is in.
+
+   WHY THE ACCENT IS RATIONED
+   Cyan at full strength on near-black is about as loud as a colour gets. It
+   is spent on marks that are small and mean something — a rule, an arrow, a
+   hover edge, a live status — and never on a paragraph or a large fill. The
+   moment it covers area it stops reading as an accent and starts reading as
+   a theme, which is the failure mode this palette is most exposed to.
    =========================================================================== */
 
 :root {
-  /* —— metal: the deeper brushed silver, for 3D stages —— */
-  --m-bg: #c5c8d1;
-  --m-bg-2: #d0d3db;
-  --m-surface: #d9dbe2;
-  --m-text: #14161b;
-  --m-muted: #565b66;
-  --m-line: rgba(56, 60, 70, 0.17);
-  --m-line-strong: rgba(20, 22, 27, 0.3);
+  /* —— metal: the lifted panel, for 3D stages —— */
+  --m-bg: #101014;
+  --m-bg-2: #16161b;
+  --m-surface: #1b1b21;
+  --m-text: #ffffff;
+  --m-muted: #9a9aa4;
+  --m-line: rgba(255, 255, 255, 0.11);
+  --m-line-strong: rgba(255, 255, 255, 0.22);
 
-  /* —— silver: pale brushed metal, graphite ink —— */
-  --s-bg: #e6e7ec;
-  --s-bg-2: #f2f3f6;
-  --s-surface: #dcdee5;
-  --s-text: #16181d;
-  --s-muted: #5b606c;
-  --s-line: rgba(22, 24, 29, 0.14);
-  --s-line-strong: rgba(22, 24, 29, 0.26);
+  /* —— silver: the true ground, off-white ink —— */
+  --s-bg: #050505;
+  --s-bg-2: #0a0a0c;
+  --s-surface: #121215;
+  --s-text: #ffffff;
+  --s-muted: #8e8e97;
+  --s-line: rgba(255, 255, 255, 0.09);
+  --s-line-strong: rgba(255, 255, 255, 0.19);
 
-  /* —— accent: light purple ——
-     Both grounds are light, so the accent that carries text has to be the
-     deep tone; the pale one is for glows, edges and 3D only, where it is
-     never asked to be read. */
-  --purple: #6f52cc;
-  --purple-deep: #5a40b0;
-  --purple-pale: #a892ee;
-  --purple-glow: #cfc2ff;
+  /* —— accent: cyan ——
+     Both grounds are dark, so the accent that carries text is the BRIGHT
+     tone — the inverse of how this ramp worked on silver. The deep one is
+     for filled surfaces that carry near-black text on top of them, and the
+     soft/glow pair is for edges, halos and 3D, where it is never read. */
+  --cyan: #06ffff;
+  --cyan-deep: #00c2c6;
+  --cyan-soft: #6ff5f5;
+  --cyan-glow: #b8ffff;
+
+  /* the near-black that sits ON a cyan fill — never pure #000, which vibrates
+     against a saturated cyan at small sizes */
+  --on-accent: #04191b;
 
   /* chrome hairline, used for the metallic edges */
-  --chrome: #d8dae2;
+  --chrome: rgba(255, 255, 255, 0.34);
+
+  /* —— card ——
+     One fill and one edge, shared by every card on the site so they cannot
+     drift apart. The fill is deliberately almost nothing: at 2% white the
+     card is felt as a plane rather than seen as a box, and the hairline does
+     the actual defining. */
+  --card-fill: rgba(255, 255, 255, 0.02);
+  --card-fill-hover: rgba(255, 255, 255, 0.045);
+  --card-line: rgba(255, 255, 255, 0.1);
+  --card-line-hover: rgba(6, 255, 255, 0.45);
+  --card-shadow-hover: 0 24px 60px -32px rgba(0, 0, 0, 0.9);
 
   --wrap: 74rem;
   --wrap-narrow: 46rem;
   --gutter: 1.5rem;
   --radius: 14px;
   --radius-sm: 9px;
+  /* the reference's card radius — smaller than this site's panel radius, and
+     the difference is load-bearing: cards read as hardware, panels as paper */
+  --radius-card: 10px;
 
   --font-sans: var(--font-manrope), system-ui, sans-serif;
   /* Display face. Everything with a heading level uses this; body copy stays on
@@ -62,8 +94,10 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* default surface is silver — the site is mostly reading matter */
-  color-scheme: light;
+  /* default surface is the reading ground — the site is mostly reading matter.
+     Declaring dark here is what stops the browser painting white scrollbars,
+     form controls and the flash before first paint against a black page. */
+  color-scheme: dark;
 }
 
 /* ——— the flip ——— */
@@ -75,13 +109,15 @@
   --muted: var(--m-muted);
   --line: var(--m-line);
   --line-strong: var(--m-line-strong);
-  --accent: var(--purple);
-  --accent-quiet: var(--purple-pale);
-  /* brushed, not flat: a faint diagonal sheen over the base so a full-bleed
-     metal section does not read as a grey rectangle */
+  --accent: var(--cyan);
+  --accent-quiet: var(--cyan-soft);
+  /* lit, not flat: a faint diagonal wash over the base so a full-bleed stage
+     section does not read as a black rectangle. Far weaker than the silver
+     version it replaces — on near-black, 6% white is already a visible sheen
+     where 50% was needed to register on silver. */
   background:
-    linear-gradient(118deg, rgba(255, 255, 255, 0.5) 0%, transparent 34%),
-    linear-gradient(300deg, rgba(255, 255, 255, 0.32) 0%, transparent 40%),
+    linear-gradient(118deg, rgba(255, 255, 255, 0.06) 0%, transparent 34%),
+    linear-gradient(300deg, rgba(6, 255, 255, 0.035) 0%, transparent 40%),
     var(--bg);
   color: var(--text);
 }
@@ -93,8 +129,8 @@
   --muted: var(--s-muted);
   --line: var(--s-line);
   --line-strong: var(--s-line-strong);
-  --accent: var(--purple-deep);
-  --accent-quiet: var(--purple-deep);
+  --accent: var(--cyan);
+  --accent-quiet: var(--cyan-soft);
   background: var(--bg);
   color: var(--text);
 }
@@ -180,26 +216,34 @@ main {
   flex: 1 0 auto;
 }
 
-/* Fine grain over everything. On silver it reads as paper tooth, on graphite
-   as sensor noise — either way it kills the flat-plastic look. */
+/* Fine grain over everything. It kills the flat-plastic look, and on a page
+   this dark it is doing more work than it did on silver: a large near-black
+   fill is where 8-bit banding shows worst, and per-pixel noise is the
+   standard dither against it.
+
+   `screen` rather than `overlay`. Overlay pivots around mid-grey — it
+   darkens everything below it and lightens everything above — so over a
+   #050505 ground it had almost nothing to lighten and the grain went
+   invisible. Screen only ever lifts, which is what film grain does in the
+   shadows anyway. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
+  opacity: 0.05;
+  mix-blend-mode: screen;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
-  background: var(--purple-deep);
-  color: #fff;
+  background: var(--cyan);
+  color: var(--on-accent);
 }
 
 :focus-visible {
-  outline: 2px solid var(--purple-deep);
+  outline: 2px solid var(--cyan);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -223,8 +267,8 @@ body::before {
   z-index: 200;
   padding: 0.6rem 1rem;
   border-radius: 999px;
-  background: var(--purple-deep);
-  color: #fff;
+  background: var(--cyan);
+  color: var(--on-accent);
   font-size: 0.85rem;
   font-weight: 600;
   transform: translateY(-160%);
@@ -484,7 +528,14 @@ button:disabled,
   color: var(--muted);
 }
 
-/* ——— buttons ——— */
+/* ——— buttons ———
+   The filled one is cyan carrying near-black, which is the only place on the
+   site the accent is allowed to cover real area — a control is small, and it
+   is the one element that should win every contrast fight it is in.
+
+   The trailing glyph slides on hover. It is 2px of movement and it is the
+   single cheapest way to make a static pill feel like it is pointing
+   somewhere; `.btn > span` catches the ↗ that the markup already ships. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -493,8 +544,8 @@ button:disabled,
   padding: 0.85rem 1.6rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
-  background: var(--purple-deep);
+  color: var(--on-accent);
+  background: var(--cyan);
   border: 1px solid transparent;
   transition:
     background-color 0.3s var(--ease-out),
@@ -502,9 +553,15 @@ button:disabled,
     box-shadow 0.3s var(--ease-out);
 }
 .btn:hover {
-  background: var(--purple-deep);
+  background: var(--cyan-glow);
   transform: translateY(-1px);
-  box-shadow: 0 10px 30px -14px rgba(111, 82, 204, 0.9);
+  box-shadow: 0 12px 34px -14px rgba(6, 255, 255, 0.55);
+}
+.btn > span {
+  transition: transform 0.3s var(--ease-out);
+}
+.btn:hover > span {
+  transform: translate(2px, -2px);
 }
 
 .btn-ghost {
@@ -513,9 +570,54 @@ button:disabled,
   color: var(--text);
 }
 .btn-ghost:hover {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   border-color: var(--accent);
+  color: var(--cyan);
   box-shadow: none;
+}
+
+/* ——— the reference's primary control: a label, a rule, and an arrow ———
+   No box at all. The underline is a scaleX transform pinned to its left edge
+   rather than a border-bottom, so it wipes in from the start of the word
+   instead of fading in along its whole length — the difference is small and
+   it is most of why the original reads as considered. */
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  position: relative;
+  padding-block: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color 0.3s var(--ease-out);
+}
+.btn-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.45s var(--ease-out);
+}
+.btn-line:hover {
+  color: var(--cyan);
+}
+.btn-line:hover::after {
+  transform: scaleX(1);
+}
+.btn-line > span {
+  transition: transform 0.35s var(--ease-out);
+}
+.btn-line:hover > span {
+  transform: translate(3px, -3px);
 }
 
 /* A brushed-metal rule: light catches the middle, falls off at both ends. */
@@ -531,6 +633,219 @@ button:disabled,
     transparent
   );
   opacity: 0.55;
+}
+
+/* ===========================================================================
+   CARD — one treatment, used by every card on the site.
+
+   The whole card is four values: a 2% white fill, a 10% white hairline, a
+   10px radius, and a transition that names its properties instead of saying
+   `all`. Nothing else. On near-black that is enough to read as a distinct
+   plane, and anything heavier immediately looks like a bootstrap panel.
+
+   WHY THE TRANSITION IS SPELLED OUT
+   `transition: all` also animates layout properties, so a card whose content
+   reflows on hover animates its own geometry for 300ms and judders. Listing
+   the four paint-only properties is what keeps the hover cheap and stable —
+   border and background at .3s, opacity at .2s so overlaid content resolves
+   slightly ahead of the edge, and the shadow trailing at .4s so the lift
+   settles last. That ordering is the whole feel.
+   =========================================================================== */
+.card {
+  position: relative;
+  border: 1px solid var(--card-line);
+  border-radius: var(--radius-card);
+  background: var(--card-fill);
+  transition:
+    border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    opacity 0.2s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+.card:hover {
+  border-color: var(--card-line-hover);
+  background: var(--card-fill-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* A card that is itself a link gets the lift; one that merely contains links
+   must not move under the pointer, or the link you were aiming at leaves. */
+a.card:hover,
+.card--lift:hover {
+  transform: translateY(-4px);
+}
+
+/* The corner mark. A 1px cyan bracket that draws itself on hover — the
+   cheapest possible "this is interactive" signal, and it costs no layout
+   because both rules are pseudo-elements on a border-box that already exists. */
+.card--mark::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 0;
+  height: 0;
+  border-top: 1px solid var(--cyan);
+  border-right: 1px solid var(--cyan);
+  border-top-right-radius: var(--radius-card);
+  opacity: 0;
+  transition:
+    width 0.4s var(--ease-out),
+    height 0.4s var(--ease-out),
+    opacity 0.25s var(--ease-out);
+}
+.card--mark:hover::after {
+  width: 34px;
+  height: 34px;
+  opacity: 1;
+}
+
+/* ===========================================================================
+   MOTION PRIMITIVES
+
+   Everything here is CSS. The reference drives the same effects from GSAP
+   ScrollTrigger, which is a fine choice for them and the wrong one here: this
+   site already runs Lenis for smoothing and an IntersectionObserver for
+   entrances, and adding a second scroll authority means two systems reading
+   the same scrollTop and disagreeing about it on the frame a resize lands.
+   =========================================================================== */
+
+/* ——— sticky stack ———
+   The reference's signature section: cards that pile up at the top of the
+   viewport as you scroll, each one covering the last. It is `position:
+   sticky` and nothing else — no scroll listener, no pinning library.
+
+   Each item sticks a little further down than the one before it (--i steps
+   the offset), so the stack fans rather than aligning into a single edge and
+   you can still see that there are cards underneath.
+
+   The parent CANNOT have `overflow: hidden` on any ancestor or sticky is
+   silently dead — that is the one failure mode here and it produces no error. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+.stack__item {
+  position: sticky;
+  top: calc(var(--stack-top, 6rem) + var(--i, 0) * 1.15rem);
+  /* the scale-down gives depth: a covered card sits fractionally back rather
+     than simply being hidden, so the pile reads as physical */
+  transform: scale(calc(1 - var(--i, 0) * 0.012));
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+/* ——— parallax ———
+   Scroll-driven, on the compositor, using the native view() timeline. There
+   is no JS and no scroll handler, so it cannot desync from Lenis.
+
+   Guarded by @supports because Safari and Firefox do not ship it yet: without
+   the timeline the declarations simply never apply and the element sits
+   still, which is the correct fallback rather than a broken one. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .plx {
+      animation: plx-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    .plx--slow {
+      --plx-shift: 3vh;
+    }
+    .plx--fast {
+      --plx-shift: 9vh;
+    }
+  }
+}
+@keyframes plx-rise {
+  from {
+    transform: translateY(var(--plx-shift, 6vh));
+  }
+  to {
+    transform: translateY(calc(var(--plx-shift, 6vh) * -1));
+  }
+}
+
+/* ——— colour-shift reveal ———
+   Copy enters muted and resolves to full strength. The reference does this to
+   nearly every heading and it is most of why the page feels like it is
+   developing rather than appearing. Pair with .reveal for the translate. */
+.tint-in {
+  color: var(--muted);
+  transition: color 0.6s ease-out;
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+/* Both forms: on the revealed element itself, and on anything inside one.
+   Reveal puts .is-in on its own wrapper, so a heading nested in a <Reveal>
+   never receives the class directly — without the descendant selector every
+   .tint-in inside a Reveal would stay muted forever. */
+.tint-in.is-in,
+.is-in .tint-in {
+  color: var(--text);
+}
+
+/* ——— line reveal ———
+   A heading that wipes up from behind its own baseline. The overflow clip is
+   on the wrapper and the transform on the inner span, which is the only
+   arrangement that crops without also cropping descenders — `overflow:
+   hidden` on the text element itself eats the tail of every g and y.
+
+   The padding-bottom buys that descender room back, and the equal negative
+   margin means the extra space costs nothing in the layout above or below. */
+.line-clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.line-clip > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.line-clip.is-in > span,
+.is-in .line-clip > span {
+  transform: none;
+}
+
+/* ——— marquee ———
+   Two identical tracks side by side, the pair translated by exactly -50%.
+   At the instant the animation restarts, track two is where track one began,
+   so the seam is unobservable. Any value other than 50% with two tracks
+   visibly jumps.
+
+   The track is duplicated in the markup rather than here, and the copy is
+   aria-hidden — a screen reader should hear the list once, not twice. */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+.marquee__track {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-right: clamp(2rem, 5vw, 4.5rem);
+  animation: marquee var(--marquee-dur, 38s) linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ===========================================================================
@@ -732,6 +1047,35 @@ button:disabled,
   .btn,
   .skip-link {
     transition: none;
+  }
+
+  /* Every entrance lands in its finished state rather than being animated to
+     it. The clipped headings in particular must be released explicitly — the
+     span sits at translateY(105%), so simply cancelling the transition would
+     leave the text parked out of sight below its own mask. */
+  .tint-in {
+    color: var(--text);
+    transition: none;
+  }
+  .line-clip > span {
+    transform: none;
+    transition: none;
+  }
+
+  /* The stack keeps its sticky pile — that is layout, not motion, and it is
+     driven by scrolling that the visitor is doing themselves. Only the depth
+     scaling goes, because that is the part that moves without being asked. */
+  .stack__item {
+    transform: none;
+  }
+
+  .marquee__track {
+    animation: none;
+  }
+  /* Without the animation the duplicate track is just a second copy sitting
+     in the flow; clip to the first one. */
+  .marquee__track[aria-hidden="true"] {
+    display: none;
   }
   *,
   *::before,

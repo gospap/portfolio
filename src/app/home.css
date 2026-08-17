@@ -847,80 +847,6 @@
 }
 
 /* ===========================================================================
-   06 · now
-   =========================================================================== */
-.now__title {
-  margin-top: 1.1rem;
-}
-.now__rows {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
-  border-top: 1px solid var(--line);
-}
-.now__row {
-  display: grid;
-  grid-template-columns: 7rem minmax(0, 0.8fr) minmax(0, 1.4fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  align-items: baseline;
-  padding-block: clamp(1.3rem, 3vw, 1.9rem);
-  border-bottom: 1px solid var(--line);
-}
-.now__label {
-  font-size: 0.62rem;
-  color: var(--accent);
-}
-/* The value is wiped in rather than faded: the row is already carried up by
-   Reveal, and a second fade on top of that is a slower version of the same
-   move. A left-to-right unmask is a different one, and it makes the figure the
-   last thing to arrive in its row instead of a part of the block. */
-.now__value {
-  font-size: clamp(1.35rem, 2.8vw, 2.1rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  clip-path: inset(0 100% -0.3em 0);
-  transition: clip-path 0.9s var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 90ms + 180ms);
-}
-.now__row.is-in .now__value {
-  clip-path: inset(0 0 -0.3em 0);
-}
-/* A rule that draws under the row as it lands, left to right, on the same
-   clock as the value above it. */
-.now__row {
-  position: relative;
-}
-.now__row::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.5;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.1s var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 90ms + 180ms);
-}
-.now__row.is-in::after {
-  transform: scaleX(1);
-}
-@media (prefers-reduced-motion: reduce) {
-  .now__value {
-    clip-path: none;
-    transition: none;
-  }
-  .now__row::after {
-    display: none;
-  }
-}
-.now__note {
-  font-size: 0.93rem;
-  line-height: 1.72;
-  color: var(--muted);
-}
-
-/* ===========================================================================
    07 · about teaser
    =========================================================================== */
 .home__about {
@@ -1026,9 +952,6 @@
 .home__contactInner .kicker {
   justify-content: center;
 }
-.home__contactTitle {
-  margin-top: 1rem;
-}
 .home__contactInner .lead {
   margin-top: 1rem;
   margin-inline: auto;
@@ -1127,11 +1050,6 @@
   .deck.is-live .deck__item {
     opacity: 1;
     transform: none;
-  }
-
-  .now__row {
-    grid-template-columns: 1fr;
-    row-gap: 0.4rem;
   }
 }
 

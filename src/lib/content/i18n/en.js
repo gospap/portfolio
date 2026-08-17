@@ -140,31 +140,10 @@ export const en = {
       },
     ],
 
-    nowKicker: "Now",
-    nowTitle: "Where things stand.",
-    now: [
-      {
-        label: "Building",
-        value: "Property Hub",
-        note: "One gateway for entry, noise, climate and energy in short-term rentals.",
-      },
-      {
-        label: "Studying",
-        value: "Year 4 of 5",
-        note: "Information Technology & Electronics Engineering.",
-      },
-      {
-        label: "Working",
-        value: "Overpass Connect",
-        note: "Full cycle — architecture, implementation, deployment and maintenance.",
-      },
-    ],
 
     aboutKicker: "About",
     aboutCta: "More about me",
     contactKicker: "Contact",
-    contactTitle: "Where to find me.",
-    contactBody: "The fastest way to reach me is email. I read everything.",
     contactCta: "Get in touch",
   },
 

@@ -372,30 +372,7 @@ export default async function Home({ params }) {
         title={dict.home.processTitle}
       />
 
-      {/* ——— 06 · now ————————————————————————————————————————————— */}
-      <section className="section-pad now theme-silver curtain">
-        <div className="wrap">
-          <Reveal>
-            <p className="kicker">{dict.home.nowKicker}</p>
-            <h2 className="h2 now__title">
-              <span className="line-clip">
-                <span>{dict.home.nowTitle}</span>
-              </span>
-            </h2>
-          </Reveal>
-          <div className="now__rows">
-            {dict.home.now.map((n, i) => (
-              <Reveal key={n.label} index={i} className="now__row">
-                <span className="mono-note now__label">{n.label}</span>
-                <span className="now__value">{n.value}</span>
-                <span className="now__note">{n.note}</span>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ——— 07 · about ——————————————————————————————————————————— */}
+      {/* ——— 06 · about ——————————————————————————————————————————— */}
       <section className="section-pad home__about theme-metal stage">
         <div className="wrap home__aboutInner">
           <Reveal className="home__aboutCopy">
@@ -436,13 +413,11 @@ export default async function Home({ params }) {
         </div>
       </section>
 
-      {/* ——— 08 · contact ————————————————————————————————————————— */}
+      {/* ——— 07 · contact ————————————————————————————————————————— */}
       <section className="section-pad home__contact theme-silver curtain">
         <div className="wrap wrap-narrow home__contactInner">
           <Reveal>
             <p className="kicker">{dict.home.contactKicker}</p>
-            <h2 className="h2 home__contactTitle">{dict.home.contactTitle}</h2>
-            <p className="lead">{dict.home.contactBody}</p>
             <MagneticCta
               className="btn home__contactCta"
               href={href(loc, "/contact")}

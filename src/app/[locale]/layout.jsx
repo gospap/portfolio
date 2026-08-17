@@ -2,6 +2,7 @@ import { Manrope, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import { DEFAULT_LOCALE, LOCALES, getDict, isLocale } from "@/lib/content/i18n";
 import { PROFILE } from "@/lib/content/profile";
 import { SITE_URL } from "@/lib/site";
+import { jsonLd, personSchema, siteSchema } from "@/lib/seo";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import SiteHeader from "@/components/SiteHeader";
@@ -59,21 +60,63 @@ export async function generateMetadata({ params }) {
       default: `${PROFILE.name} — ${dict.hero.role}`,
       template: `%s · ${PROFILE.name}`,
     },
-    description: dict.hero.tagline,
+    description: dict.about.lead,
+    /* The handle is a name people search for and it appears in no sentence on
+       the site, so it is declared here and in the Person graph's
+       alternateName. Keywords carry almost no ranking weight any more; this
+       is about the string existing in the document at all. */
+    keywords: [
+      PROFILE.name,
+      PROFILE.handle,
+      "George Papanikolaou",
+      "Γιώργος Παπανικολάου",
+      "software engineer",
+      "web developer",
+      "Greece",
+    ],
+    authors: [{ name: PROFILE.name, url: SITE_URL }],
+    creator: PROFILE.name,
+    publisher: PROFILE.name,
     alternates: {
       canonical: `/${loc}`,
-      languages: Object.fromEntries(LOCALES.map((l) => [l, `/${l}`])),
+      languages: {
+        ...Object.fromEntries(LOCALES.map((l) => [l, `/${l}`])),
+        /* Which locale a crawler should serve when it cannot match one.
+           Without this, two equally-weighted alternates just compete. */
+        "x-default": `/${DEFAULT_LOCALE}`,
+      },
     },
     openGraph: {
-      type: "website",
+      type: "profile",
+      firstName: "Giorgos",
+      lastName: "Papanikolaou",
+      username: PROFILE.handle,
       locale: loc === "el" ? "el_GR" : "en_GB",
+      alternateLocale: loc === "el" ? "en_GB" : "el_GR",
       siteName: PROFILE.name,
       title: `${PROFILE.name} — ${dict.hero.role}`,
-      description: dict.hero.tagline,
+      description: dict.about.lead,
       url: `/${loc}`,
     },
-    twitter: { card: "summary_large_image" },
-    robots: { index: true, follow: true },
+    twitter: {
+      card: "summary_large_image",
+      title: `${PROFILE.name} — ${dict.hero.role}`,
+      description: dict.about.lead,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      /* Let Google show a full-length snippet and a large image. The defaults
+         are conservative and truncate both, which for a name query means the
+         one result that should be unmistakable shows two lines of nothing. */
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+      },
+    },
   };
 }
 
@@ -88,6 +131,14 @@ export default async function LocaleLayout({ children, params }) {
       className={`${sans.variable} ${serif.variable} ${mono.variable}`}
     >
       <body>
+        {/* Identity, for machines. See lib/seo.js for why sameAs and
+            alternateName are the two fields that matter here. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLd(personSchema(loc, dict), siteSchema(loc, dict)),
+          }}
+        />
         <a className="skip-link" href="#main">
           {dict.a11y.skip}
         </a>

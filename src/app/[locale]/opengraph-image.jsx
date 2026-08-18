@@ -52,7 +52,7 @@ export default async function Image({ params }) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#050505",
+          backgroundColor: "#0f0f12",
           padding: "72px 80px",
         }}
       >

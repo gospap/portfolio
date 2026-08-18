@@ -20,7 +20,7 @@
   background:
     radial-gradient(70% 50% at 78% 12%, rgba(6, 255, 255, 0.12), transparent 70%),
     radial-gradient(70% 55% at 14% 90%, rgba(255, 255, 255, 0.05), transparent 72%),
-    linear-gradient(160deg, #121215 0%, #0a0a0c 55%, #050505 100%);
+    linear-gradient(160deg, #1c1c22 0%, #15151a 55%, #0f0f12 100%);
 }
 /* the plates themselves must stay hoverable */
 .show__bg canvas {
@@ -308,7 +308,7 @@
   overscroll-behavior: contain;
   background:
     radial-gradient(100% 60% at 78% 0%, rgba(6, 255, 255, 0.1), transparent 70%),
-    linear-gradient(170deg, #121215 0%, #0a0a0c 60%, #050505 100%);
+    linear-gradient(170deg, #1c1c22 0%, #15151a 60%, #0f0f12 100%);
   color: var(--m-text);
   /* No fill-mode: if animations cannot run — hidden tab, reduced motion — the
      panel rests open instead of being stranded off-screen. */

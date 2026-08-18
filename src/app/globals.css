@@ -31,18 +31,18 @@
 
 :root {
   /* —— metal: the lifted panel, for 3D stages —— */
-  --m-bg: #101014;
-  --m-bg-2: #16161b;
-  --m-surface: #1b1b21;
+  --m-bg: #1a1a20;
+  --m-bg-2: #202027;
+  --m-surface: #26262e;
   --m-text: #ffffff;
   --m-muted: #9a9aa4;
   --m-line: rgba(255, 255, 255, 0.11);
   --m-line-strong: rgba(255, 255, 255, 0.22);
 
   /* —— silver: the true ground, off-white ink —— */
-  --s-bg: #050505;
-  --s-bg-2: #0a0a0c;
-  --s-surface: #121215;
+  --s-bg: #0f0f12;
+  --s-bg-2: #15151a;
+  --s-surface: #1c1c22;
   --s-text: #ffffff;
   --s-muted: #8e8e97;
   --s-line: rgba(255, 255, 255, 0.09);
@@ -231,7 +231,7 @@ main {
 
    `screen` rather than `overlay`. Overlay pivots around mid-grey — it
    darkens everything below it and lightens everything above — so over a
-   #050505 ground it had almost nothing to lighten and the grain went
+   #0f0f12 ground it had almost nothing to lighten and the grain went
    invisible. Screen only ever lifts, which is what film grain does in the
    shadows anyway. */
 body::before {

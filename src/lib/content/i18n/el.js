@@ -230,7 +230,6 @@ export const el = {
     copy: "Αντιγραφή",
     copied: "Αντιγράφηκε",
     copyAria: "Αντιγραφή στο πρόχειρο",
-    current: "Μηχανικός λογισμικού στην Overpass Connect.",
     pending: "Οι σύνδεσμοι έρχονται σύντομα.",
   },
 

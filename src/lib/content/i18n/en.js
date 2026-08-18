@@ -223,7 +223,6 @@ export const en = {
     copy: "Copy",
     copied: "Copied",
     copyAria: "Copy to clipboard",
-    current: "Software engineer at Overpass Connect.",
     pending: "Links coming soon.",
   },
 

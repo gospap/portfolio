@@ -241,12 +241,6 @@
   border-color: var(--accent);
   background: var(--accent);
 }
-.contact__note {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
 @media (max-width: 900px) {
   .about__body {
     grid-template-columns: 1fr;

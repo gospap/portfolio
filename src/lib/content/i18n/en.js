@@ -178,6 +178,7 @@ export const en = {
     back: "Back to projects",
     year: "Year",
     releaseHint: "Keep scrolling to close",
+    screens: "Screens",
   },
 
   status: {

@@ -18,7 +18,9 @@
                          the page stops reading as one palette.
      cover     string    path under /public, or '' to fall back to a
                          generated plate
-     images    string[]  detail-panel gallery; cover is prepended automatically
+     images    string[]  detail-panel gallery, shown under the write-up.
+                         Empty means no gallery — the cover is NOT reused here,
+                         it is already the plate this panel opened from.
      stack     string[]  optional — short tech labels. Only the three projects
                          whose build is worth itemising carry one; everywhere
                          else the detail panel drops the section rather than
@@ -186,16 +188,26 @@ export const PROJECTS = [
     },
   },
   {
-    slug: "vibely",
+    slug: "vibeway",
     kind: "app",
     status: "soon",
     year: "2026",
-    url: "",
+    url: "https://vibeway.gr",
     tint: "#3a2d4d",
-    cover: "/media/cards/vibely.jpg",
-    images: [],
+    cover: "/media/cards/vibeway.jpg",
+    /* Shot on device, in the order the night runs: find a place, read it,
+       pick an event, carry the offer, then the same app from the venue's
+       side — the last two are the merchant surfaces, not the punter's. */
+    images: [
+      "/media/shots/vibeway-1.jpg",
+      "/media/shots/vibeway-2.jpg",
+      "/media/shots/vibeway-3.jpg",
+      "/media/shots/vibeway-4.jpg",
+      "/media/shots/vibeway-5.jpg",
+      "/media/shots/vibeway-6.jpg",
+    ],
     en: {
-      title: "Vibely",
+      title: "Vibeway",
       kicker: "Social app · React Native",
       summary:
         "A mobile social app built around going out: a map of venues, an events feed running from tonight forward, a friends graph with messaging, and a profile that ties the three together.",
@@ -207,7 +219,7 @@ export const PROJECTS = [
       ],
     },
     el: {
-      title: "Vibely",
+      title: "Vibeway",
       kicker: "Κοινωνική εφαρμογή · React Native",
       summary:
         "Εφαρμογή για κινητά γύρω από την έξοδο: χάρτης με μαγαζιά, ροή εκδηλώσεων από απόψε και μετά, γράφος φίλων με μηνύματα, και προφίλ που δένει τα τρία μεταξύ τους.",

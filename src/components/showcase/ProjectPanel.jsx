@@ -137,6 +137,34 @@ export default function ProjectPanel({ project, dict, closing, onClose }) {
             </aside>
           ) : null}
         </div>
+
+        {/* Screens. Below the grid rather than inside the copy column, because
+            these are phone captures — three of them side by side in a 1.7fr
+            column would each be the width of a thumbnail. The gallery is
+            `images` only: the cover is the plate this panel opened from, so
+            repeating it here would lead the strip with a picture the reader
+            has just clicked.
+
+            Not lazy. The panel mounts on open, so nothing here is fetched by
+            the page itself — and until a shot loads its cell is the height of
+            its own border, which puts every one of them inside the viewport
+            and defeats the deferral anyway. */}
+        {project.images?.length ? (
+          <section className="pnl__shots">
+            <h3 className="pnl__h3">{dict.panel.screens}</h3>
+            <ul className="pnl__shotGrid">
+              {project.images.map((src, i) => (
+                <li key={src}>
+                  <img
+                    src={src}
+                    alt={`${project.title} — ${dict.panel.screens} ${i + 1}/${project.images.length}`}
+                    decoding="async"
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </div>
     </div>
   );

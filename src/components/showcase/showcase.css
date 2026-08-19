@@ -491,6 +491,29 @@
   color: var(--m-muted);
 }
 
+/* Screens strip. `auto-fill` with a small floor rather than a fixed column
+   count: these are phone captures, so the natural answer to a narrow viewport
+   is fewer per row, not six squeezed ones. Height comes from the image's own
+   ratio — no aspect-ratio here, because a fixed box would crop a screenshot,
+   and a screenshot cropped is a screenshot lying about the screen. */
+.pnl__shots {
+  margin-top: clamp(3rem, 8vh, 5rem);
+}
+.pnl__shotGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  margin-top: 1.35rem;
+}
+.pnl__shotGrid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--m-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--m-surface);
+}
+
 @media (max-width: 860px) {
   .pnl__grid {
     grid-template-columns: 1fr;

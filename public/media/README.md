@@ -26,7 +26,7 @@ public/media/vids/async-proctoring.mp4
 public/media/vids/overpass.mp4
 public/media/vids/livelyvend.mp4
 public/media/vids/beasypro.mp4
-public/media/vids/vibely.mp4
+public/media/vids/vibeway.mp4
 public/media/vids/property-hub.mp4
 public/media/vids/broadcast-box.mp4
 public/media/vids/space-canvas.mp4
@@ -52,7 +52,7 @@ These feed the plates on `/work`, `/apps` and `/hardware` — not the hero.
 public/media/cards/overpass.jpg
 public/media/cards/livelyvend.jpg
 public/media/cards/beasypro.jpg
-public/media/cards/vibely.jpg
+public/media/cards/vibeway.jpg
 public/media/cards/broadcast-box.png
 public/media/cards/space-canvas.jpg
 ```
@@ -66,6 +66,20 @@ plate, because there is nothing real to photograph yet:
 
 - `property-hub` — not built
 - `async-proctoring` — waiting on a capture of the proctoring console
+
+## Detail-panel screens
+
+```
+public/media/shots/<slug>-1.jpg, -2.jpg, …
+```
+
+The strip under the write-up in a project's detail panel, listed on `images`
+in `src/lib/content/projects.js`. Unlike the card these are shown at their own
+aspect ratio and never cropped, so phone captures go in as-shot — `vibeway`
+is six of them straight off the device.
+
+The cover is **not** repeated here: it is the plate the reader clicked to open
+the panel. A project with no `images` simply has no strip.
 
 ## Mechanical CAD — the two enclosure renders
 

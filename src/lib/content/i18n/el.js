@@ -186,6 +186,7 @@ export const el = {
     back: "Πίσω στα έργα",
     year: "Έτος",
     releaseHint: "Συνεχίστε την κύλιση για κλείσιμο",
+    screens: "Οθόνες",
   },
 
   status: {

@@ -5,13 +5,20 @@ Personal site. [Zola](https://www.getzola.org) with the
 purple, in English and Greek.
 
 ```bash
-git clone --recurse-submodules https://github.com/gospap/portfolio.git
+git clone https://github.com/gospap/portfolio.git
 zola serve                     # http://127.0.0.1:1111
 zola build                     # writes ./public
 ```
 
-The theme is a git submodule. If you cloned without `--recurse-submodules`,
-run `git submodule update --init` or the build will fail with missing templates.
+The theme is vendored under `themes/duckquill`, not a submodule. It was a
+submodule at first and Vercel would not fetch it, because the submodule lives
+on Codeberg rather than on the same host as this repo; the build then failed
+with `Failed to load theme duckquill` and exit 1. Vendoring also pins the
+theme, which matters here: Duckquill has no release newer than v6.3.0 and its
+main branch is a moving target that can break against Zola 0.21.
+
+To update it, replace the contents of `themes/duckquill` from
+https://codeberg.org/daudix/duckquill and re-apply the two forks listed below.
 
 ## Zola version
 

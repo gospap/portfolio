@@ -1,88 +1,78 @@
-# Portfolio — Giorgos Papanikolaou
+# Giorgos Papanikolaou
 
-Next.js 16 · React 19 · React Three Fiber · three.js · Lenis · plain CSS.
-**No TypeScript** — every file is `.jsx` / `.js`, with `jsconfig.json` carrying
-the `@/*` alias.
+Personal site. [Zola](https://www.getzola.org) with the
+[Duckquill](https://codeberg.org/daudix/duckquill) theme, in black and midnight
+purple, in English and Greek.
 
 ```bash
-npm install
-npm run dev     # http://localhost:3006
-npm run build   # what Vercel runs
+git clone --recurse-submodules https://github.com/gospap/portfolio.git
+zola serve                     # http://127.0.0.1:1111
+zola build                     # writes ./public
 ```
 
-## Where things are
+The theme is a git submodule. If you cloned without `--recurse-submodules`,
+run `git submodule update --init` or the build will fail with missing templates.
+
+## Zola version
+
+Pinned to **0.21.0**, in `vercel.json` and here. This is not arbitrary: Zola
+0.23 ships a newer Tera that rejects Duckquill's own templates, because that
+Tera requires every template to import the macros it uses and the theme relies
+on inheriting them. Until the theme is updated, 0.21.0 is the version that
+works. Newer Zola will fail loudly at build time, not silently.
+
+## Layout
 
 ```
-src/
-  proxy.js                 locale routing (Next 16's replacement for middleware)
-  app/
-    [locale]/              the root layout lives here — <html lang> needs the locale
-      page.jsx             landing: hero ring, featured helix, index, capabilities,
-                           process strip, now, about, contact
-      work|apps|hardware/  one component, three slices of the project list
-      about|contact/
-    globals.css  site.css  home.css  pages.css
-    sitemap.js  robots.js  icon.svg
-  components/
-    hero/                  bent-card carousel  (bent.js is ported from pmndrs)
-    helix/                 project helix + detail panel + pane shader
-    SiteHeader  SiteFooter  LocaleSwitch  Reveal  ProcessStrip
-    ContactRows  ProjectsRoute  CanvasBoundary
-  lib/
-    motion.js              springs, damping, detents  ← read this first
-    scroll.js              the single Lenis instance
-    plates.js              canvas-drawn card art
-    useCardTextures.js  useNearViewport.js  site.js
-    content/               projects.js · profile.js · i18n/
+config.toml           site config, palette, nav, footer, Person data
+content/
+  _index.md           home            (+ _index.el.md for Greek)
+  blog/_index.md      the post list
+  blog/<slug>/        one folder per post, images colocated
+  links/index.md      profile list
+  contact/index.md    direct routes
+i18n/en.toml el.toml  every string the theme renders
+sass/portfolio.scss   palette override and page furniture
+templates/            the two theme files this site forks
+static/               card.png, Search Console verification
+themes/duckquill/     submodule
 ```
 
-## The two rules that hold the motion together
+Greek is a second file next to the English one, `index.el.md` beside
+`index.md`. Adding a page means adding both, or the Greek nav will 404 on it.
 
-**One scroll value.** There is not a single `window.addEventListener("scroll")`
-in this codebase. Lenis animates the page on its own rAF loop, so anything
-reading the browser's scroll events is drawing a frame from a slightly
-different moment than the one it is animating — which no amount of camera
-smoothing hides. Everything reads `lib/scroll.js` instead, per frame.
+## The two forked theme files
 
-**Time constants, never blend factors.** Nothing calls `lerp(a, b, 0.1)`.
-Every animated value goes through `lib/motion.js`, whose functions take a
-half-life in seconds and are therefore identical at 30, 60 and 144 fps.
+Everything else comes from the theme untouched. These two do not, and both
+carry a comment saying so:
 
-The helix takes this one step further: the camera pose is never smoothed at
-all. A single scalar — the fractional card index — is sprung, and the pose is
-computed exactly from it, so the camera is always precisely on its rail and
-precisely on aim. Smoothing position and rotation separately (the usual
-approach) lets them converge at different rates, which slides the focused card
-off-centre for the duration of every move.
+- `templates/partials/head.html` adds `hreflang` alternates, so the English and
+  Greek pages read as translations of one page rather than as duplicates, and a
+  `Person` JSON-LD record on the home page. Duckquill offers no hook inside
+  `<head>`, so the file is a copy with an addition at the bottom. When the theme
+  updates, re-copy it and re-apply that block.
+- `templates/shortcodes/lane.html` is new, not a fork. It renders the cards on
+  the home page. Pass `url` for an internal `@/path.md` link, which resolves per
+  language, or `href` for an external one.
 
-## Editing content
+## Colours
 
-Everything is in `src/lib/content/`:
-
-- `projects.js` — one record per project; its shape is documented at the top of
-  the file and checked at import time in development.
-- `profile.js` — name, links, studies. Fields left empty are dropped from the
-  UI rather than rendered as dead links, so the `TODO`s are safe to leave.
-- `i18n/en.js`, `i18n/el.js` — all UI copy. Keep the two in step.
-
-## Card art
-
-Everything is **16:9**. Nothing falls over when a file is missing: both the hero
-cards and the showcase plates fall back to art drawn on a canvas at runtime
-(`lib/plates.js`) and upgrade the moment the real media resolves.
-
-- Hero ring → **video**, `public/media/vids/<slug>.mp4`, muted, ~1280 × 720.
-  A card plays only while it faces the camera; the rest hold their last decoded
-  frame. Each card draws its own label plate (number, title, kicker) over the
-  video from `projects.js`, so don't burn text into the clip.
-- Showcase plates → **stills**, `public/media/cards/<slug>.jpg`.
-- Hero portrait → `public/media/portrait.jpg`, 4:5.
-
-Full details, including which projects deliberately have no media, are in
-[`public/media/README.md`](public/media/README.md).
+`config.extra.accent_color` and `accent_color_dark` drive the whole palette,
+because Duckquill derives its dark background as `color-mix(accent 10%, black)`.
+`sass/portfolio.scss` then pins the ground to near black and the raised surfaces
+to the purple.
 
 ## Deploying
 
-Push and import into Vercel; the defaults are correct. Set
-`NEXT_PUBLIC_SITE_URL` to the final domain so canonicals, the sitemap and
-Open Graph URLs are absolute and right.
+Vercel, with the settings committed in `vercel.json`, so nothing needs to be
+configured in the dashboard and the Next.js settings on `main` are untouched.
+The install step downloads the Zola musl binary and the build step runs it.
+
+`base_url` in `config.toml` is a placeholder. The real one is passed at build
+time by `vercel.json`:
+
+- production uses `$SITE_URL` if set, else Vercel's own production domain,
+- previews use their own `$VERCEL_URL`, so preview links stay in the preview.
+
+Set `SITE_URL` in the Vercel project once the final domain is fixed, and put the
+same value in `config.toml` so a plain local `zola build` is correct too.

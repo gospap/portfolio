@@ -3,10 +3,10 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "npm.cmd",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3006,
-      "cwd": "C:\\Users\\gpap2\\Desktop\\programming\\Personal\\portfolio"
+      "runtimeExecutable": "zola",
+      "runtimeArgs": ["serve", "--port", "1111", "--interface", "127.0.0.1"],
+      "port": 1111,
+      "cwd": "C:\Users\gpap2\Desktop\programming\Personal\portfolio"
     }
   ]
 }

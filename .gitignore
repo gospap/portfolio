@@ -10,3 +10,6 @@ next-env.d.ts
 .vercel
 .env*.local
 .DS_Store
+
+# Zola writes resized images here during builds
+static/processed_images/

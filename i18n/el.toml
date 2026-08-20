@@ -1,5 +1,5 @@
 # Greek strings for Duckquill. The theme ships nine languages and Greek is not
-# one of them, so this file is the whole Greek UI — if a key is missing here,
+# one of them, so this file is the whole Greek UI. If a key is missing here,
 # the template's English default is what renders.
 
 language_name = "Ελληνικά"
@@ -7,10 +7,8 @@ date_format = "%d/%m/%Y"
 date_locale = "el_GR"
 
 # Menu items. The keys must match the `name` values in config.extra.nav.links.
-"Web Design" = "Web Design"
-Apps = "Εφαρμογές"
-Electronics = "Ηλεκτρονικά"
-Contact = "Επικοινωνία"
+Blog = "Ιστολόγιο"
+Links = "Σύνδεσμοι"
 
 alert_caution = "Προσοχή"
 alert_important = "Σημαντικό"
@@ -65,14 +63,8 @@ trigger_warning = "Προειδοποίηση περιεχομένου"
 updated = "Ενημερώθηκε στις"
 powered_by = "Με $ZOLA και $DUCKQUILL"
 
-# The section listings count projects, not blog posts.
-posts = "$NUMBER έργα συνολικά"
-one_posts = "$NUMBER έργο συνολικά"
-many_posts = "$NUMBER έργα συνολικά"
-posts_with_tag = "Έργα με ετικέτα $TAG"
-
-# Project status, rendered as the card badge.
-status_live = "Σε λειτουργία"
-status_wip = "Υπό ανάπτυξη"
-status_soon = "Σύντομα"
-status_archived = "Αρχειοθετημένο"
+posts = "$NUMBER αναρτήσεις συνολικά"
+one_posts = "$NUMBER ανάρτηση συνολικά"
+many_posts = "$NUMBER αναρτήσεις συνολικά"
+posts_with_tag = "Αναρτήσεις με ετικέτα $TAG"
+Contact = "Επικοινωνία"

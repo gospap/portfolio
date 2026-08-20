@@ -9,10 +9,8 @@ date_locale = "en_US"
 
 # Menu items.
 # Should match the names in config.extra.nav.links and config.extra.footer.links.
-"Web Design" = "Web Design"
-Apps = "Apps"
-Electronics = "Electronics"
-Contact = "Contact"
+Blog = "Blog"
+Links = "Links"
 
 alert_caution = "Caution"
 alert_important = "Important"
@@ -78,16 +76,8 @@ updated = "Updated on"
 view_comment = "View Comment At"
 view_profile = "View Profile At"
 
-# --- This site's additions -------------------------------------------------
-# The section listings count projects, not blog posts.
-posts = "$NUMBER projects"
-one_posts = "$NUMBER project"
-many_posts = "$NUMBER projects"
-posts_with_tag = "Projects tagged $TAG"
-filter_by_tag = "Browse by tag"
-
-# Project status, rendered as the card badge by templates/partials/articles.html.
-status_live = "Live"
-status_wip = "In development"
-status_soon = "Coming soon"
-status_archived = "Archived"
+posts = "$NUMBER posts in total"
+one_posts = "$NUMBER post in total"
+many_posts = "$NUMBER posts in total"
+posts_with_tag = "Posts tagged $TAG"
+Contact = "Contact"

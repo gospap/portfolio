@@ -244,3 +244,31 @@ h6 {
 h1 {
 	font-weight: lighter;
 }
+
+// The CRT panel is a fixed window onto a longer listing, not a block that grows
+// to fit it. static/crt-type.js types the code in and keeps the newest line in
+// view; without that script the same listing is simply scrollable.
+.crt pre {
+	box-sizing: border-box;
+	height: 250px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent-color-alpha) transparent;
+
+	code::after {
+		animation: crt-caret 1.1s steps(1) infinite;
+		content: "\258d";
+	}
+}
+
+@keyframes crt-caret {
+	50% {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.crt pre code::after {
+		animation: none;
+	}
+}

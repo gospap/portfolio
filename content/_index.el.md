@@ -1,6 +1,10 @@
 +++
 title = "Giorgos Papanikolaou"
 insert_anchor_links = "left"
+
+[extra]
+# Only this page has a CRT block, so the typing script loads only here.
+scripts = ["crt-type.js"]
 +++
 
 {% crt() %}

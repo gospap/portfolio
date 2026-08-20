@@ -1,9 +1,14 @@
 +++
 title = "Giorgos Papanikolaou"
 insert_anchor_links = "left"
+
+[extra]
+# Only this page has a CRT block, so the typing script loads only here.
+scripts = ["crt-type.js"]
 +++
 
 {% crt() %}
+
 ```
 #include <18F4550.h>
 #device ADC=10
@@ -35,6 +40,7 @@ void main(void)
    }
 }
 ```
+
 {% end %}
 
 <div class="hero">
@@ -42,7 +48,6 @@ void main(void)
 <div class="hero-text">
 <span class="kicker">Software &amp; R&amp;D Engineer</span>
 <h1>Giorgos Papanikolaou</h1>
-<p class="lead">I build products that ship: interfaces, the services behind them, and the hardware underneath.</p>
 </div>
 </div>
 

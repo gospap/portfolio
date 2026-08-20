@@ -1,19 +1,23 @@
 // ============================================================================
-// portfolio.scss: black and midnight purple, plus the few pieces of page
-// furniture Duckquill has no opinion about.
+// portfolio.scss: black and midnight purple.
 //
 // Compiled by Zola to static/portfolio.css and pulled in by config.extra.styles,
 // which the theme emits AFTER its own style.css, so equal-specificity overrides
 // here win on source order. The selectors below deliberately mirror the theme's
 // own (:root / [data-theme] / prefers-color-scheme) for that reason.
+//
+// The purple is the accent, not the surface. It belongs to links, the rule
+// under the kicker and the focus ring. Panels stay near black so long stretches
+// of reading are not fighting a tinted background.
 // ============================================================================
 
 @mixin dark-palette {
-	// The ground is very nearly black. Every raised surface is the purple.
 	--bg-color: #06040d;
-	--glass-bg: rgb(23 15 41 / 0.72);
+	// Barely lifted off the ground, and opaque, so text on a card is read
+	// against a flat surface rather than through a tint.
+	--glass-bg: rgb(19 15 28 / 0.94);
 	--purple-fg: rgb(196 168 250);
-	--edge-highlight: inset 0 0.0625rem 0 rgb(167 139 250 / 0.14);
+	--edge-highlight: inset 0 0.0625rem 0 rgb(167 139 250 / 0.08);
 }
 
 [data-theme="dark"] {
@@ -26,10 +30,86 @@
 	}
 }
 
-// Small caps label above a heading.
+// ----------------------------------------------------------------------------
+// Project cards on the Work page.
+//
+// Duckquill washes every card in --accent-color-alpha and paints a 12rem icon
+// across it. Both are turned off here: the tint is what made a page of cards
+// tiring, and the icon is decoration that says nothing. What is left is a flat
+// panel, a hairline, and a small status word.
+// ----------------------------------------------------------------------------
+#article-list article {
+	--bg-overlay: transparent;
+	box-shadow: none;
+	border: 0.0625rem solid var(--fg-muted-2);
+
+	&::before {
+		display: none;
+	}
+
+	&:hover {
+		border-color: var(--fg-muted-3);
+	}
+
+	h3 {
+		color: var(--fg-color);
+	}
+
+	.badge {
+		background-color: transparent;
+		padding-inline: 0;
+		color: var(--fg-muted-4);
+		font-weight: 600;
+		font-size: var(--font-size-x-small);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+
+		.icon {
+			display: none;
+		}
+	}
+
+	// The one place colour is allowed to carry meaning, and only on the word.
+	&.status-live .badge { color: var(--green-fg); }
+	&.status-wip .badge { color: var(--yellow-fg); }
+	&.status-soon .badge { color: var(--accent-color); }
+	&.status-archived .badge { color: var(--fg-muted-4); }
+}
+
+// ----------------------------------------------------------------------------
+// Home page hero.
+// ----------------------------------------------------------------------------
+.hero {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.5rem;
+	margin-block: 1rem 2.5rem;
+
+	.portrait {
+		flex: 0 0 auto;
+		border-radius: var(--rounded-corner);
+		width: 9.5rem;
+		max-width: 40vw;
+		height: auto;
+	}
+
+	.hero-text {
+		flex: 1 1 18rem;
+	}
+
+	h1 {
+		margin-block: 0.25rem 0.5rem;
+	}
+
+	.lead {
+		margin-block-end: 0;
+	}
+}
+
+// Small caps label above the name.
 .kicker {
 	display: block;
-	margin-block-end: 0.25rem;
 	color: var(--accent-color);
 	font-weight: 600;
 	font-size: var(--font-size-x-small);
@@ -44,92 +124,123 @@
 	line-height: 1.5;
 }
 
-// Auto-fitting grid of cards.
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-	gap: 1rem;
-	margin-block: 2rem;
-	padding: 0;
-	list-style: none;
-}
-
-.card {
-	position: relative;
-	transition: var(--transition);
-	box-shadow: var(--edge-highlight), var(--shadow-glass);
-	border-radius: var(--rounded-corner);
-	background-color: var(--glass-bg);
-	padding: 1.25rem;
-
-	h3 {
-		margin-block: 0 0.5rem;
-		font-size: var(--font-size-large);
-	}
-
-	p {
-		margin-block: 0 0.75rem;
-		color: var(--fg-muted-5);
-		font-size: var(--font-size-small);
-	}
-
-	// Whole-card link, the same trick the theme uses on its article cards.
-	&:has(> a.stretch) {
-		&:hover {
-			background-color: color-mix(in srgb, var(--accent-color) 12%, var(--glass-bg));
-		}
-
-		&:active {
-			transform: var(--active);
-		}
-	}
-
-	> a.stretch::after {
-		position: absolute;
-		inset: 0;
-		border-radius: var(--rounded-corner);
-		content: "";
-	}
-}
-
-// The links page: one tall stack of buttons, each with its value spelled out
-// rather than hidden behind a glyph.
-.linktree {
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
+// ----------------------------------------------------------------------------
+// Link rows, used on Links and Contact. A list with hairlines, not buttons.
+// ----------------------------------------------------------------------------
+.rows {
 	margin-block: 2rem;
 	padding: 0;
 	list-style: none;
 
-	a {
+	li {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 0.5rem;
-		transition: var(--transition);
-		box-shadow: var(--edge-highlight), var(--shadow-glass);
-		border-radius: var(--rounded-corner);
-		background-color: var(--glass-bg);
-		padding: 1rem 1.25rem;
-		color: var(--fg-color);
-		font-weight: 600;
-		text-decoration: none;
+		gap: 0.5rem 1rem;
+		border-block-start: 0.0625rem solid var(--fg-muted-2);
+		padding-block: 0.85rem;
 
-		&:hover {
-			background-color: color-mix(in srgb, var(--accent-color) 14%, var(--glass-bg));
-			color: var(--accent-color);
-		}
-
-		&:active {
-			transform: var(--active);
-		}
-
-		span {
-			color: var(--fg-muted-4);
-			font-weight: 400;
-			font-size: var(--font-size-small);
+		&:last-child {
+			border-block-end: 0.0625rem solid var(--fg-muted-2);
 		}
 	}
+
+	.value {
+		color: var(--fg-muted-4);
+		font-size: var(--font-size-small);
+	}
+}
+
+// Screenshot strip inside a project write-up.
+.shots {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+	gap: 0.75rem;
+	margin-block: 2rem;
+
+	img {
+		border-radius: var(--rounded-corner-small);
+		width: 100%;
+		height: auto;
+	}
+}
+
+// Year, status and role, at the top of a project write-up.
+.facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.5rem;
+	margin-block: 1rem 2rem;
+	padding: 0;
+	list-style: none;
+	font-size: var(--font-size-small);
+
+	li {
+		color: var(--fg-muted-5);
+	}
+
+	strong {
+		display: block;
+		color: var(--fg-muted-4);
+		font-weight: 600;
+		font-size: var(--font-size-x-small);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+}
+
+// ----------------------------------------------------------------------------
+// The CRT block at the top of the home page.
+//
+// Duckquill's own version glows hard, which is the point, but the flicker runs
+// forever and that is a motion problem for some readers. Held to a calmer glow
+// and stopped entirely when reduced motion is asked for.
+// ----------------------------------------------------------------------------
+.crt {
+	box-shadow: var(--edge-highlight), 0 0 0 0.0625rem var(--accent-color-alpha);
+
+	pre {
+		font-size: var(--font-size-small);
+		line-height: 1.5;
+
+		// The fence carries no language, but keep any span monochrome so the
+		// panel reads as one terminal rather than as highlighted source.
+		span {
+			color: inherit !important;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.crt pre {
+		animation: none;
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Headings.
+//
+// bundled_fonts is on, which self-hosts Inter and gives consistent body text
+// across machines, and matters for Greek. Its side effect is that it also
+// swaps Duckquill's serif headings for bold Inter. This puts the serif back:
+// the theme's own default, and the reason its article pages read the way they
+// do. Body and code stay Inter and JetBrains Mono.
+//
+// The stack is system serifs, so nothing is downloaded. Superclarendon and
+// Bookman carry no Greek, and the stack falls through to Georgia, which does.
+// ----------------------------------------------------------------------------
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: lighter;
+	font-family: var(--font-antique);
+	letter-spacing: -0.03em;
+}
+
+h1 {
+	font-weight: lighter;
 }

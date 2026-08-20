@@ -1,0 +1,15 @@
+{#- The Work section.
+
+    Duckquill's article_list.html is built for a blog: it prints a post count
+    and a "filter by tag" link. Neither belongs on a project list, and the tag
+    link would point at a taxonomy only the blog posts populate. Everything
+    else, including the cards themselves, is the theme's. -#}
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ section.title }}</h1>
+
+{{ section.content | safe }}
+
+{% include "partials/articles.html" %}
+{% endblock content %}

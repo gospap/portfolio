@@ -8,7 +8,6 @@ date_locale = "el_GR"
 
 # Menu items. The keys must match the `name` values in config.extra.nav.links.
 Blog = "Ιστολόγιο"
-Links = "Σύνδεσμοι"
 
 alert_caution = "Προσοχή"
 alert_important = "Σημαντικό"
@@ -68,3 +67,10 @@ one_posts = "$NUMBER ανάρτηση συνολικά"
 many_posts = "$NUMBER αναρτήσεις συνολικά"
 posts_with_tag = "Αναρτήσεις με ετικέτα $TAG"
 Contact = "Επικοινωνία"
+
+# Project status, rendered as the card badge on the Work page.
+status_live = "Σε λειτουργία"
+status_wip = "Υπό ανάπτυξη"
+status_soon = "Σύντομα"
+status_archived = "Αρχειοθετημένο"
+Work = "Έργα"

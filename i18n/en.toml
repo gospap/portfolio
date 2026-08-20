@@ -10,7 +10,6 @@ date_locale = "en_US"
 # Menu items.
 # Should match the names in config.extra.nav.links and config.extra.footer.links.
 Blog = "Blog"
-Links = "Links"
 
 alert_caution = "Caution"
 alert_important = "Important"
@@ -81,3 +80,10 @@ one_posts = "$NUMBER post in total"
 many_posts = "$NUMBER posts in total"
 posts_with_tag = "Posts tagged $TAG"
 Contact = "Contact"
+
+# Project status, rendered as the card badge on the Work page.
+status_live = "Live"
+status_wip = "In development"
+status_soon = "Coming soon"
+status_archived = "Archived"
+Work = "Work"

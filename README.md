@@ -26,17 +26,21 @@ works. Newer Zola will fail loudly at build time, not silently.
 ```
 config.toml           site config, palette, nav, footer, Person data
 content/
-  _index.md           home            (+ _index.el.md for Greek)
+  _index.md           home: CRT block, hero, bio, education, open source
+  work/_index.md      the project list        (+ _index.el.md for Greek)
+  work/<slug>/        one folder per project, banner and stills colocated
   blog/_index.md      the post list
-  blog/<slug>/        one folder per post, images colocated
-  links/index.md      profile list
-  contact/index.md    direct routes
+  blog/<slug>/        one folder per post
+  contact/index.md    email and profiles, in one page
 i18n/en.toml el.toml  every string the theme renders
-sass/portfolio.scss   palette override and page furniture
-templates/            the two theme files this site forks
-static/               card.png, Search Console verification
+sass/portfolio.scss   palette, headings, and the few classes the pages use
+templates/            the theme files this site forks, plus work_list.html
+static/               card.png, portrait.webp, Search Console verification
 themes/duckquill/     submodule
 ```
+
+The home page is generated rather than hand-written, from the copy that lived
+in `src/lib/content` on `main`. Nothing on the site is retyped prose.
 
 Greek is a second file next to the English one, `index.el.md` beside
 `index.md`. Adding a page means adding both, or the Greek nav will 404 on it.
@@ -51,9 +55,16 @@ carry a comment saying so:
   `Person` JSON-LD record on the home page. Duckquill offers no hook inside
   `<head>`, so the file is a copy with an addition at the bottom. When the theme
   updates, re-copy it and re-apply that block.
-- `templates/shortcodes/lane.html` is new, not a fork. It renders the cards on
-  the home page. Pass `url` for an internal `@/path.md` link, which resolves per
-  language, or `href` for an external one.
+- `templates/partials/articles.html` drives each project card's badge from
+  `extra.status` in its front matter. Duckquill's own card states are blog
+  states, and one of them ("poor") is drawn with a poop icon.
+- `templates/work_list.html` is new, not a fork. It is `article_list.html`
+  without the post count and the tag filter, neither of which belongs on a
+  project list.
+
+`sass/portfolio.scss` also puts back the theme's serif headings, which
+`bundled_fonts` would otherwise replace with bold Inter, and turns off the
+accent wash and the giant icon Duckquill paints across every card.
 
 ## Colours
 

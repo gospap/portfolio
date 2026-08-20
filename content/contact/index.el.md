@@ -1,14 +1,20 @@
 +++
 title = "Επικοινωνία"
 description = "Το email είναι ο γρηγορότερος δρόμος."
+template = "contact.html"
 +++
 
-<p class="lead">Το email είναι ο γρηγορότερος δρόμος. Όλα τα άλλα είναι πιο αργές εκδοχές του.</p>
+<div class="avatar">
+<img src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="422" height="486" />
+</div>
 
-<ul class="rows">
-<li><a href="mailto:g.pap2005@gmail.com">Email</a><span class="value">g.pap2005@gmail.com</span></li>
-<li><a href="https://www.linkedin.com/in/george-papanikolaou-71a925344/" rel="me noopener noreferrer">LinkedIn</a><span class="value">george-papanikolaou</span></li>
-<li><a href="https://www.instagram.com/gospap_/" rel="me noopener noreferrer">Instagram</a><span class="value">@gospap_</span></li>
-</ul>
+<p class="contact-name">Giorgos Papanikolaou</p>
+<p class="kicker">Αρχιτέκτονας Λογισμικού &amp; Σχεδιαστής Προϊόντος</p>
+
+Το email είναι ο γρηγορότερος δρόμος. Όλα τα άλλα είναι πιο αργές εκδοχές του.
+
+- [g.pap2005@gmail.com](mailto:g.pap2005@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/george-papanikolaou-71a925344/) — george-papanikolaou
+- [Instagram](https://www.instagram.com/gospap_/) — @gospap_
 
 Έδρα στην Ελλάδα.

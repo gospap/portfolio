@@ -14,7 +14,7 @@ base_url = "https://gospap.vercel.app"
 theme = "duckquill"
 
 title = "Giorgos Papanikolaou"
-description = "Software & R&D engineer. Interfaces, the services behind them, and the hardware underneath."
+description = "Software architect and product designer. Interfaces, the services behind them, and the hardware underneath."
 author = "Giorgos Papanikolaou"
 
 default_language = "en"
@@ -47,18 +47,22 @@ dark_theme = "solarized-dark"
 # -----------------------------------------------------------------------------
 [languages.el]
 title = "Giorgos Papanikolaou"
-description = "Μηχανικός λογισμικού και έρευνας. Διεπαφές, οι υπηρεσίες πίσω τους, και το υλικό από κάτω."
+description = "Αρχιτέκτονας λογισμικού και σχεδιαστής προϊόντος. Διεπαφές, οι υπηρεσίες πίσω τους, και το υλικό από κάτω."
 generate_feeds = true
 build_search_index = true
 
 taxonomies = [{ name = "tags", feed = true }]
 
 [extra]
-# Black and midnight purple. The dark background is derived by the theme as
+# Black and lilac. The dark background is derived by the theme as
 # color-mix(accent 10%, black), so this accent is what makes the ground a
 # near-black with a violet cast rather than a flat grey.
-accent_color = "#5f19d0"
-accent_color_dark = "#8f70ec"
+#
+# The dark value is the one that shows on the default theme, so it is a true
+# lilac. The light value is the same hue held a few steps darker, because a
+# lilac at full lightness on a white page is not readable as link text.
+accent_color = "#7a4fd8"
+accent_color_dark = "#c9aefc"
 default_theme = "dark"
 
 # Inter + JetBrains Mono, served from the theme rather than from a CDN.
@@ -86,7 +90,10 @@ csp = [
 ]
 
 [extra.nav]
-show_feed = true
+# The feed button is off: the Atom feeds are still generated and still
+# advertised in <head>, so a reader can subscribe, but the glyph was one more
+# thing in a bar that has to fit on a phone in one row.
+show_feed = false
 show_theme_switcher = true
 show_repo = false
 links = [
@@ -120,7 +127,7 @@ socials = [
 [extra.person]
 name = "Giorgos Papanikolaou"
 alternate_name = ["gospap", "Γιώργος Παπανικολάου"]
-job_title = "Software & R&D Engineer"
+job_title = "Software Architect & Product Designer"
 same_as = [
 	"https://www.linkedin.com/in/george-papanikolaou-71a925344/",
 	"https://www.instagram.com/gospap_/"

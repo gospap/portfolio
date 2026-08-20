@@ -35,20 +35,78 @@
 //
 // Duckquill washes every card in --accent-color-alpha and paints a 12rem icon
 // across it. Both are turned off here: the tint is what made a page of cards
-// tiring, and the icon is decoration that says nothing. What is left is a flat
-// panel, a hairline, and a small status word.
+// tiring, and the icon is decoration that says nothing. What is left is a
+// thumbnail, a flat panel, a hairline, and a small status word.
+//
+// The list is a grid rather than the theme's single column, because a card
+// that now carries a real image is too tall to stack four deep.
 // ----------------------------------------------------------------------------
+#article-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+	gap: 1rem;
+}
+
 #article-list article {
 	--bg-overlay: transparent;
+	display: flex;
+	flex-direction: column;
 	box-shadow: none;
 	border: 0.0625rem solid var(--fg-muted-2);
+	background-color: var(--glass-bg);
+	padding: 0;
 
 	&::before {
 		display: none;
 	}
 
 	&:hover {
-		border-color: var(--fg-muted-3);
+		border-color: var(--accent-color);
+
+		.card-media img {
+			transform: scale(1.04);
+		}
+	}
+
+	// The theme's overlay link is the whole card's click target. It has to
+	// stay above the thumbnail, which is a positioned element in its own
+	// right so the zoom on hover is clipped to the frame.
+	& > a {
+		z-index: 1;
+	}
+
+	.card-media {
+		position: relative;
+		z-index: 0;
+		background-image: var(--blurnail);
+		background-position: center;
+		background-size: cover;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+
+		img {
+			display: block;
+			transition: var(--transition-longer);
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.card-body {
+		flex: 1 1 auto;
+		padding: 1rem;
+	}
+
+	// What the project is, in one line, under the image.
+	.card-description {
+		color: var(--fg-muted-5);
+		font-size: var(--font-size-small);
+		line-height: 1.5;
+
+		p {
+			margin-block: 0.5rem 0;
+		}
 	}
 
 	h3 {
@@ -81,29 +139,30 @@
 // ----------------------------------------------------------------------------
 .hero {
 	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 1.5rem;
+	flex-direction: column;
+	align-items: flex-start;
 	margin-block: 1rem 2.5rem;
 
+	// The name reads first and the photograph sits under it, so the page
+	// opens with who this is rather than with a picture of someone.
 	.portrait {
-		flex: 0 0 auto;
+		// Duckquill centres images in article bodies with auto margins, and
+		// an auto margin beats align-items. This one is a portrait beside the
+		// text column, not a figure, so it stays on the start edge.
+		margin-inline: 0 auto;
+		margin-block: 0.5rem 1.25rem;
 		border-radius: var(--rounded-corner);
-		width: 9.5rem;
-		max-width: 40vw;
+		width: 11rem;
+		max-width: 55vw;
 		height: auto;
 	}
 
-	.hero-text {
-		flex: 1 1 18rem;
+	.lead {
+		margin-block: 0;
 	}
 
 	h1 {
-		margin-block: 0.25rem 0.5rem;
-	}
-
-	.lead {
-		margin-block-end: 0;
+		margin-block: 0.25rem 0;
 	}
 }
 
@@ -250,7 +309,7 @@ h1 {
 // view; without that script the same listing is simply scrollable.
 .crt pre {
 	box-sizing: border-box;
-	height: 250px;
+	height: 200px;
 	overflow-y: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--accent-color-alpha) transparent;
@@ -270,5 +329,216 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
 	.crt pre code::after {
 		animation: none;
+	}
+}
+
+// ----------------------------------------------------------------------------
+// The open source panel.
+//
+// This used to be one paragraph at the foot of the home page and read like a
+// footnote. It is the only public code with somebody else's name on the
+// repository, so it gets the one accent-lit surface on the page: a lilac
+// hairline, a wash coming off the top corner, and the repository name set in
+// the code face.
+// ----------------------------------------------------------------------------
+.oss {
+	margin-block: 1.5rem 2.5rem;
+	box-shadow: var(--edge-highlight);
+	border: 0.0625rem solid var(--accent-color);
+	border-radius: var(--rounded-corner);
+	background-color: var(--glass-bg);
+	background-image: radial-gradient(
+		120% 140% at 0% 0%,
+		var(--accent-color-alpha),
+		transparent 60%
+	);
+	padding: 1.5rem;
+
+	h3 {
+		margin-block: 0.35rem 0.75rem;
+		font-weight: bold;
+		font-size: var(--font-size-large);
+		font-family: var(--font-monospace-code);
+		letter-spacing: -0.01em;
+
+		a {
+			text-decoration: none;
+		}
+	}
+
+	p {
+		color: var(--fg-muted-5);
+	}
+}
+
+.oss-facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1.5rem;
+	margin-block: 1.25rem;
+	padding: 0;
+	list-style: none;
+	font-size: var(--font-size-small);
+
+	li {
+		color: var(--fg-muted-5);
+	}
+
+	strong {
+		display: block;
+		color: var(--fg-muted-4);
+		font-weight: 600;
+		font-size: var(--font-size-x-small);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+}
+
+.oss-cta {
+	margin-block-end: 0;
+}
+
+// A single call-to-action link. Duckquill only styles buttons inside .buttons,
+// which is a two-ended navigation row, so this is its own thing.
+.btn {
+	display: inline-block;
+	transition: var(--transition);
+	box-shadow: var(--edge-highlight);
+	border-radius: var(--rounded-corner);
+	background-color: var(--accent-color-alpha);
+	padding: 0.75rem 1rem;
+	color: var(--accent-color);
+	font-weight: bold;
+	font-size: var(--font-size-small);
+	line-height: 1;
+	text-decoration: none;
+
+	&:hover {
+		background-color: var(--accent-color);
+		color: var(--contrast-color);
+	}
+
+	&:active {
+		transform: var(--active);
+	}
+}
+
+// ----------------------------------------------------------------------------
+// The Contact page.
+//
+// Rendered by templates/contact.html, which drops the <h1>: the reader clicked
+// "Contact" to get here, so a heading saying "Contact" is a line of text that
+// tells them nothing. What replaces it is the portrait, and the page is one
+// centred column.
+// ----------------------------------------------------------------------------
+#contact {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: min(66vh, 36rem);
+	text-align: center;
+
+	// The portrait is a full-length photo, so a plain circular crop would be
+	// a person standing in a coin. The frame is the circle and the image is
+	// zoomed and offset inside it to land on the face.
+	.avatar {
+		position: relative;
+		box-shadow: 0 0 0 0.0625rem var(--accent-color-alpha);
+		border: 0.0625rem solid var(--fg-muted-2);
+		border-radius: 50%;
+		width: 9.5rem;
+		height: 9.5rem;
+		overflow: hidden;
+
+		img {
+			position: absolute;
+			transform: translate(-64%, -26%);
+			inset-block-start: 50%;
+			inset-inline-start: 50%;
+			width: 360%;
+			max-width: none;
+			height: auto;
+		}
+	}
+
+	.contact-name {
+		margin-block: 1.25rem 0.25rem;
+		font-size: var(--font-size-x-large);
+		font-family: var(--font-antique);
+		letter-spacing: -0.03em;
+	}
+
+	.kicker {
+		margin-block-end: 1.5rem;
+	}
+
+	p {
+		max-width: 28rem;
+	}
+
+	// The three routes, centred like the rest of the column rather than
+	// indented off a bullet.
+	ul {
+		margin-block: 1.5rem;
+		padding: 0;
+		list-style: none;
+
+		li {
+			margin-block: 0.5rem;
+			color: var(--fg-muted-4);
+		}
+	}
+}
+
+// ----------------------------------------------------------------------------
+// The nav on a phone.
+//
+// Duckquill gives every non-circle item `flex: 0 0 100%` under 480px, which
+// stacks the site title and the three page links into four separate rows and
+// turns the bar into a block. Here it stays a single row and shrinks instead:
+// smaller text, tighter padding, and the site title reduced to its home icon,
+// which is the longest item in the bar and the one the icon already covers.
+// ----------------------------------------------------------------------------
+@media only screen and (max-width: 480px) {
+	#site-nav {
+		max-width: 96%;
+	}
+
+	#site-nav nav {
+		padding: 0.375rem;
+
+		ul {
+			flex-wrap: nowrap;
+			gap: 0.125rem;
+		}
+
+		li:not(:has(.circle)) {
+			flex: 0 1 auto;
+			min-width: 0;
+		}
+
+		a,
+		summary {
+			flex: 0 1 auto;
+			padding: 0.5rem 0.4375rem;
+			font-size: var(--font-size-x-small);
+			white-space: nowrap;
+		}
+
+		.circle {
+			padding: 0.5rem;
+		}
+
+		// font-size: 0 drops the title text node; .icon is sized in rem, so
+		// the home glyph is untouched.
+		#home a {
+			padding-inline: 0.5rem;
+			font-size: 0;
+
+			.icon {
+				margin-inline-end: 0;
+			}
+		}
 	}
 }

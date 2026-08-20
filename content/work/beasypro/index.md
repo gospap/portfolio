@@ -1,6 +1,6 @@
 +++
 title = "BeasyPro"
-description = "Hiring pipeline"
+description = "A hiring pipeline that carries a candidate from the job advert through screening and video interviews to the offer."
 weight = 30
 
 [extra]

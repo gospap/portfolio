@@ -1,0 +1,16 @@
+{#- The Contact page.
+
+    Duckquill's page.html opens every page with its title as an <h1>. Here that
+    heading is noise: the reader clicked "Contact" in the nav to arrive, so the
+    page does not need to tell them where they are. This is page.html with the
+    heading dropped and the body wrapped in one centred column, which is what
+    #contact in sass/portfolio.scss lays out: portrait on top, then the name,
+    the role and the links, centred on both axes. -#}
+{% extends "base.html" %}
+
+{% block content %}
+<div id="contact">
+	{%- include "partials/statements.html" -%}
+	{{ page.content | safe }}
+</div>
+{% endblock content %}

@@ -1,6 +1,6 @@
 +++
 title = "Vibeway"
-description = "Social app · React Native"
+description = "A mobile social app built around going out: a map of venues, an events feed, friends and messaging."
 weight = 20
 
 [extra]

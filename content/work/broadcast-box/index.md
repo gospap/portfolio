@@ -1,6 +1,6 @@
 +++
 title = "Broadcast Monitoring Box"
-description = "Enclosure & electronics design"
+description = "A monitoring appliance that gives a station a continuous record of the music it has aired. Enclosure and electronics."
 weight = 40
 
 [extra]

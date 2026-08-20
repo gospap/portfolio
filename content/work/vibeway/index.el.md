@@ -1,6 +1,6 @@
 +++
 title = "Vibeway"
-description = "Κοινωνική εφαρμογή · React Native"
+description = "Εφαρμογή για κινητό γύρω από την έξοδο: χάρτης με μαγαζιά, ροή με events, φίλοι και μηνύματα."
 weight = 20
 
 [extra]

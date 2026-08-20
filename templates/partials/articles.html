@@ -1,14 +1,22 @@
 {#- Project cards.
 
-    Overrides the theme's partial for one reason: Duckquill's card states are
-    blog states (featured / hot / poor / archive), and "poor" draws a poop
-    icon. A portfolio needs live / in development / coming soon / archived,
-    so the badge is driven by `extra.status` in the page's front matter and
-    styled by `.status-*` in sass/portfolio.scss.
+    Overrides the theme's partial for three reasons.
 
-    The other change is that tags render without needing a date. Upstream
-    nests them inside the date block, and these pages carry no date — the
-    year is part of the write-up, not a publication timestamp. -#}
+    One: Duckquill's card states are blog states (featured / hot / poor /
+    archive), and "poor" draws a poop icon. A portfolio needs live / in
+    development / coming soon / archived, so the badge is driven by
+    `extra.status` in the page's front matter and styled by `.status-*` in
+    sass/portfolio.scss.
+
+    Two: upstream only ever uses `extra.banner` as a 4x2 blur behind the text,
+    which tells a reader nothing. Here the banner is also rendered as a real
+    thumbnail at the top of the card, with the title and the description under
+    it, so the list can be read as a set of projects rather than a set of
+    names. The blur stays as the backdrop the thumbnail sits on while it loads.
+
+    Three: tags render without needing a date. Upstream nests them inside the
+    date block, and these pages carry no date — the year is part of the
+    write-up, not a publication timestamp. -#}
 
 {%- if paginator.pages -%}
 	{%- set pages = paginator.pages -%}
@@ -34,39 +42,52 @@
 		{%- endif -%}
 
 		{%- set blurnail = false -%}
+		{%- set thumb = false -%}
 		{%- if page.extra.banner -%}
 			{%- set blurnail = resize_image(path=page.colocated_path ~ page.extra.banner, width=4, height=2, op="fill", format="webp") -%}
+			{#- 16:10 so a portrait banner (a phone mockup) still keeps its middle
+			    band, and wide enough to stay sharp on a two-column grid. -#}
+			{%- set thumb = resize_image(path=page.colocated_path ~ page.extra.banner, width=960, height=600, op="fill", format="webp") -%}
 		{%- endif -%}
 
 		<article {% if article_type %}class="{{ article_type }}"{% endif %} {% if blurnail %}style="--blurnail: url('{{ blurnail.url }}')"{% endif %}>
 			<a href="{{ page.permalink | safe }}"></a>
-			{% if article_type %}
-				<span class="badge">
-					<i class="icon"></i>
-					{{- article_string -}}
-				</span>
-			{%- endif %}
-			<h3>
-				<a href="{{ page.permalink | safe }}">
-				{{ page.title }}
-				</a>
-			</h3>
-			{%- if page.description %}
-				{{ page.description | markdown | safe }}
-			{%- endif %}
-			{%- if page.taxonomies -%}
-				<div class="details">
-					{%- for name, taxon in page.taxonomies %}
-						<small>
-							<ul class="tags">
-								{%- for item in taxon -%}
-									<li><a class="tag" href="{{ get_taxonomy_url(kind=name, name=item, lang=lang) }}">{{ item }}</a></li>
-								{%- endfor %}
-							</ul>
-						</small>
-					{%- endfor -%}
+			{%- if thumb %}
+				<div class="card-media">
+					<img src="{{ thumb.url }}" alt="" width="960" height="600" loading="lazy" decoding="async" />
 				</div>
-			{%- endif -%}
+			{%- endif %}
+			<div class="card-body">
+				{% if article_type %}
+					<span class="badge">
+						<i class="icon"></i>
+						{{- article_string -}}
+					</span>
+				{%- endif %}
+				<h3>
+					<a href="{{ page.permalink | safe }}">
+					{{ page.title }}
+					</a>
+				</h3>
+				{%- if page.description %}
+					<div class="card-description">
+						{{ page.description | markdown | safe }}
+					</div>
+				{%- endif %}
+				{%- if page.taxonomies -%}
+					<div class="details">
+						{%- for name, taxon in page.taxonomies %}
+							<small>
+								<ul class="tags">
+									{%- for item in taxon -%}
+										<li><a class="tag" href="{{ get_taxonomy_url(kind=name, name=item, lang=lang) }}">{{ item }}</a></li>
+									{%- endfor %}
+								</ul>
+							</small>
+						{%- endfor -%}
+					</div>
+				{%- endif -%}
+			</div>
 		</article>
 	{%- endfor %}
 </div>

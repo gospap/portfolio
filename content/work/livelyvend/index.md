@@ -1,6 +1,6 @@
 +++
 title = "LivelyVend"
-description = "Live shopping platform"
+description = "Merchants run shopping broadcasts; viewers chat, react and buy without ever leaving the video."
 weight = 10
 
 [extra]

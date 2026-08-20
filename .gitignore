@@ -1,7 +1,12 @@
+# Zola build output
+public/
+
+# Left over from the Next.js version, which still lives on main
 node_modules
 .next
-out
-.env*.local
-.vercel
+next-env.d.ts
 *.tsbuildinfo
+
+.vercel
+.env*.local
 .DS_Store

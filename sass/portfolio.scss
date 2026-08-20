@@ -1,0 +1,280 @@
+// ============================================================================
+// portfolio.scss — black and midnight purple, plus the bits Duckquill has no
+// opinion about because it is a blog theme and this is a portfolio.
+//
+// Compiled by Zola to static/portfolio.css and pulled in by config.extra.styles,
+// which the theme emits AFTER its own style.css — so equal-specificity
+// overrides here win on source order. Selectors deliberately mirror the
+// theme's own (:root / [data-theme] / prefers-color-scheme) for that reason.
+// ============================================================================
+
+@mixin dark-palette {
+	// Ground is very nearly black; every raised surface is the purple.
+	--bg-color: #06040d;
+	--glass-bg: rgb(23 15 41 / 0.72);
+	--purple-fg: rgb(196 168 250);
+	--edge-highlight: inset 0 0.0625rem 0 rgb(167 139 250 / 0.14);
+}
+
+[data-theme="dark"] {
+	@include dark-palette;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		@include dark-palette;
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Project status badges.
+//
+// Duckquill's card states are blog states — featured, hot, poor, archive — and
+// "poor" is drawn with a poop icon. These four replace them; the markup that
+// emits the class is templates/partials/articles.html.
+// ----------------------------------------------------------------------------
+#article-list article {
+	&[class*="status-"] {
+		&::before {
+			position: absolute;
+			transform: translateY(-50%);
+			opacity: var(--disabled-opacity);
+			mask-size: cover;
+			-webkit-mask-size: cover;
+			transition: var(--transition-longer);
+			inset-block-start: 50%;
+			inset-inline-end: -3rem;
+			width: 12rem;
+			height: 12rem;
+			content: "";
+		}
+
+		&:hover::before {
+			transform: translateY(-50%) rotate(-10deg) scale(1.5);
+		}
+	}
+
+	@each $status, $icon, $fg, $bg in
+		("live", "verified", "--green-fg", "--green-bg"),
+		("wip", "fire", "--yellow-fg", "--yellow-bg"),
+		("soon", "star", "--accent-color", "--accent-color-alpha"),
+		("archived", "archive", "--fg-muted-5", "--fg-muted-1")
+	{
+		&.status-#{$status} {
+			--bg-overlay: var(#{$bg});
+
+			&::before {
+				-webkit-mask-image: var(--icon-#{$icon});
+				mask-image: var(--icon-#{$icon});
+				background-color: var(#{$bg});
+			}
+
+			h3 {
+				color: var(#{$fg});
+			}
+
+			.badge {
+				background-color: var(#{$bg});
+				color: var(#{$fg});
+
+				.icon {
+					-webkit-mask-image: var(--icon-#{$icon});
+					mask-image: var(--icon-#{$icon});
+				}
+			}
+
+			.tags a {
+				background-color: var(#{$bg});
+				color: var(#{$fg});
+
+				&:hover {
+					background-color: var(#{$fg});
+					color: var(--fg-contrast);
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Page furniture the theme does not ship, used from the Markdown directly.
+// ----------------------------------------------------------------------------
+
+// Small caps label above a heading.
+.kicker {
+	display: block;
+	margin-block-end: 0.25rem;
+	color: var(--accent-color);
+	font-weight: 600;
+	font-size: var(--font-size-x-small);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// The one oversized paragraph under a page title.
+.lead {
+	color: var(--fg-muted-5);
+	font-size: var(--font-size-large);
+	line-height: 1.5;
+}
+
+// Three-up (or two-up) grid of linked cards. Used for the landing page lanes
+// and the capability columns.
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+	gap: 1rem;
+	margin-block: 2rem;
+	padding: 0;
+	list-style: none;
+}
+
+.card {
+	position: relative;
+	box-shadow: var(--edge-highlight), var(--shadow-glass);
+	border-radius: var(--rounded-corner);
+	background-color: var(--glass-bg);
+	padding: 1.25rem;
+
+	h3 {
+		margin-block: 0 0.5rem;
+		font-size: var(--font-size-large);
+	}
+
+	p {
+		margin-block: 0;
+		color: var(--fg-muted-5);
+		font-size: var(--font-size-small);
+	}
+
+	ul {
+		margin-block: 0;
+		padding-inline-start: 1.1rem;
+		color: var(--fg-muted-5);
+		font-size: var(--font-size-small);
+	}
+
+	// Whole-card link, same trick the theme uses on article cards.
+	&:has(> a.stretch) {
+		transition: var(--transition);
+
+		&:hover {
+			background-color: color-mix(in srgb, var(--accent-color) 12%, var(--glass-bg));
+		}
+
+		&:active {
+			transform: var(--active);
+		}
+	}
+
+	> a.stretch::after {
+		position: absolute;
+		inset: 0;
+		border-radius: var(--rounded-corner);
+		content: "";
+	}
+}
+
+// Facts strip at the top of a project page: year, status, role.
+.facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.25rem;
+	margin-block: 1rem 2rem;
+	padding: 0;
+	list-style: none;
+	font-size: var(--font-size-small);
+
+	li {
+		color: var(--fg-muted-5);
+	}
+
+	strong {
+		display: block;
+		color: var(--fg-muted-4);
+		font-weight: 600;
+		font-size: var(--font-size-x-small);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+}
+
+// Numbered process steps.
+.steps {
+	margin-block: 2rem;
+	padding-inline-start: 0;
+	list-style: none;
+	counter-reset: step;
+
+	li {
+		position: relative;
+		margin-block-end: 1rem;
+		padding-inline-start: 3rem;
+		counter-increment: step;
+
+		&::before {
+			display: grid;
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			place-items: center;
+			border-radius: 50%;
+			background-color: var(--accent-color-alpha);
+			width: 2rem;
+			height: 2rem;
+			color: var(--accent-color);
+			font-weight: 600;
+			font-size: var(--font-size-small);
+			content: counter(step);
+		}
+
+		strong {
+			display: block;
+		}
+
+		span {
+			color: var(--fg-muted-5);
+			font-size: var(--font-size-small);
+		}
+	}
+}
+
+// Contact rows: a label, and the value spelled out rather than hidden in a glyph.
+.rows {
+	margin-block: 2rem;
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem;
+		border-block-end: 0.0625rem solid var(--fg-muted-2);
+		padding-block: 0.75rem;
+
+		&:last-child {
+			border-block-end: 0;
+		}
+	}
+
+	.label {
+		color: var(--fg-muted-4);
+		font-size: var(--font-size-small);
+	}
+}
+
+// Screenshot strips inside a project write-up.
+.shots {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+	gap: 0.75rem;
+	margin-block: 2rem;
+
+	img {
+		box-shadow: var(--shadow-glass);
+		border-radius: var(--rounded-corner-small);
+		width: 100%;
+		height: auto;
+	}
+}

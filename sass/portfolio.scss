@@ -6,18 +6,26 @@
 // here win on source order. The selectors below deliberately mirror the theme's
 // own (:root / [data-theme] / prefers-color-scheme) for that reason.
 //
-// The purple is the accent, not the surface. It belongs to links, the rule
-// under the kicker and the focus ring. Panels stay near black so long stretches
-// of reading are not fighting a tinted background.
+// Every colour below is derived from --accent-color rather than written as a
+// hex, so changing accent_color_dark in config.toml moves the whole palette
+// together instead of leaving hardcoded surfaces behind.
 // ============================================================================
 
 @mixin dark-palette {
-	--bg-color: #06040d;
-	// Barely lifted off the ground, and opaque, so text on a card is read
-	// against a flat surface rather than through a tint.
-	--glass-bg: rgb(19 15 28 / 0.94);
-	--purple-fg: rgb(196 168 250);
-	--edge-highlight: inset 0 0.0625rem 0 rgb(167 139 250 / 0.08);
+	// --bg-color is deliberately NOT set here.
+	//
+	// The theme derives it as color-mix(in srgb, var(--accent-color) 10%, black),
+	// and that derivation is the whole reason the ground reads as purple-black
+	// rather than as flat black. Pinning a hex over it, which this file used to
+	// do, threw that away and left the background stranded on an accent it no
+	// longer matched.
+
+	// Panels sit one step above that ground, mixed from the same accent so they
+	// belong to it, and kept mostly opaque so long stretches of text are read
+	// against a surface rather than through a tint.
+	--glass-bg: color-mix(in srgb, var(--accent-color) 16%, rgb(0 0 0 / 0.88));
+	--edge-highlight: inset 0 0.0625rem 0
+		rgb(from var(--accent-color) r g b / 0.1);
 }
 
 [data-theme="dark"] {

@@ -5,7 +5,7 @@ template = "contact.html"
 +++
 
 <div class="avatar">
-<img src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="422" height="486" />
+<img class="no-hover" src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="720" height="960" />
 </div>
 
 <p class="contact-name">Giorgos Papanikolaou</p>

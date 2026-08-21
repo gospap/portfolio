@@ -43,7 +43,7 @@ i18n/en.toml el.toml  every string the theme renders
 sass/portfolio.scss   palette, headings, and the few classes the pages use
 templates/            the theme files this site forks, plus work_list.html
                       and contact.html
-static/               card.png, portrait.webp, Search Console verification
+static/               card.png, media/ (portrait, bench photo), Search Console verification
 themes/duckquill/     submodule
 ```
 

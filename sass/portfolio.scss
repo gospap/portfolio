@@ -154,10 +154,10 @@
 	// The name reads first and the photograph sits under it, so the page
 	// opens with who this is rather than with a picture of someone.
 	.portrait {
-		// Duckquill centres images in article bodies with auto margins, and
-		// an auto margin beats align-items. This one is a portrait beside the
-		// text column, not a figure, so it stays on the start edge.
-		margin-inline: 0 auto;
+		// Auto margins on both sides beat the flex-start alignment of the
+		// hero, which is what centres the photograph under the role and the
+		// name while those two stay on the start edge.
+		margin-inline: auto;
 		margin-block: 0.5rem 1.25rem;
 		border-radius: var(--rounded-corner);
 		width: 11rem;
@@ -230,6 +230,31 @@
 		border-radius: var(--rounded-corner-small);
 		width: 100%;
 		height: auto;
+	}
+}
+
+// A single photograph inside body copy, with its caption under it. Narrower
+// than the text column on purpose: it is evidence for the paragraph above it,
+// not a banner, so it should not outweigh the prose it belongs to. Duckquill
+// already centres images in article bodies and centres caption text, so the
+// caption box is centred to sit under the picture rather than fought back to
+// the start edge.
+.photo {
+	margin-block: 2rem;
+
+	img {
+		border-radius: var(--rounded-corner);
+		width: 22rem;
+		max-width: 100%;
+		height: auto;
+	}
+
+	figcaption {
+		margin-block-start: 0.6rem;
+		margin-inline: auto;
+		max-width: 22rem;
+		color: var(--fg-muted-4);
+		font-size: var(--font-size-small);
 	}
 }
 
@@ -459,12 +484,15 @@ h1 {
 		height: 9.5rem;
 		overflow: hidden;
 
+		// The two percentages are where the face sits in the source frame,
+		// 61.5% across and 38.3% down, which is what lands it in the middle
+		// of the circle. Re-measure both if the photograph is replaced.
 		img {
 			position: absolute;
-			transform: translate(-64%, -26%);
+			transform: translate(-61.5%, -38.3%);
 			inset-block-start: 50%;
 			inset-inline-start: 50%;
-			width: 360%;
+			width: 280%;
 			max-width: none;
 			height: auto;
 		}

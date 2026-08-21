@@ -25,12 +25,12 @@ banner = "banner.jpg"
 ## Οθόνες
 
 <div class="shots">
-<img src="vibeway-1.jpg" alt="Vibeway" loading="lazy" />
-<img src="vibeway-2.jpg" alt="Vibeway" loading="lazy" />
-<img src="vibeway-3.jpg" alt="Vibeway" loading="lazy" />
-<img src="vibeway-4.jpg" alt="Vibeway" loading="lazy" />
-<img src="vibeway-5.jpg" alt="Vibeway" loading="lazy" />
-<img src="vibeway-6.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-1.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-2.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-3.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-4.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-5.jpg" alt="Vibeway" loading="lazy" />
+<img class="no-hover" src="vibeway-6.jpg" alt="Vibeway" loading="lazy" />
 </div>
 
 [Επισκεφθείτε τον ιστότοπο](https://vibeway.gr)

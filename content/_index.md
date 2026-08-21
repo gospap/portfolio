@@ -46,7 +46,7 @@ void main(void)
 <div class="hero">
 <span class="kicker">Software Architect &amp; Product Designer</span>
 <h1>Giorgos Papanikolaou</h1>
-<img class="portrait" src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="422" height="486" />
+<img class="portrait no-hover" src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="720" height="960" />
 
 </div>
 
@@ -55,6 +55,11 @@ I am Giorgos Papanikolaou, a 21-year-old IT &amp; Electronics Engineering studen
 A product in production is as much an infrastructure and security question as a code one. The matter is not only coding a Node backend service and a Vue.js frontend, but also handling the issues that turn up in each project on its own terms. Inspired by [Vassilios Syrakis](https://vsyrakis.dev), I keep adding new technologies to my CV and now I have to learn them.
 
 On the hardware side, as a student of Information Technology &amp; Electronic Systems Engineering, I have practical experience in PCB design, multi-stage transistor amplifiers for signal amplification, and laboratory instrumentation: oscilloscopes and spectrum analysers for wireless communications. My expertise here is still small, but I am always looking forward to starting the next project — one that will **soon** be on the work page.
+
+<figure class="photo">
+<img class="no-hover" src="/media/bench.webp" alt="A transistor stage on a breadboard, wired to a bench supply and a function generator, with the output on an oscilloscope" loading="lazy" width="720" height="960" />
+<figcaption>Bench work: a transistor stage on the breadboard, driven from the function generator and read on the oscilloscope.</figcaption>
+</figure>
 
 ## What I do
 

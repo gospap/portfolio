@@ -14,7 +14,7 @@ We have all seen, on top of cruise and bus ships, some spinning elements that lo
 
 ## How will we change the directivity without spinning the antenna?
 
-There are some cases where we can't spin the antenna. Small cube satellites don't have the capacity to add external power thrusts because of the lack of space, so they use the law of stroformi (angular momentum) inside them to make it rotate on its own. For some reasons, we can't rotate an antenna either.
+There are some cases where we can't spin the antenna. Small cube satellites don't have the capacity to add external power thrusts because of the lack of space, so they use the law of (angular momentum) inside them to make it rotate on its own. For some reasons, we can't rotate an antenna either.
 
 Among many types of antennas, there is one called the linear particle antenna, and its characteristic is that it is made of linearly placed particles of the same type. A known one is the Hertz Bipolar. Now that we can put many elements together to create an antenna, all of those, when supplied with current, create an electromagnetic field around them, pulsing waves towards a direction. But the directivity of the final antenna won't have its max value unless we design it correctly.
 

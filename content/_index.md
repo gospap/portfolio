@@ -44,7 +44,7 @@ void main(void)
 {% end %}
 
 <div class="hero">
-<span class="kicker">Software Architect &amp; Product Designer</span>
+<span class="kicker">Systems Architect &amp; Product Designer</span>
 <h1>Giorgos Papanikolaou</h1>
 <img class="portrait no-hover" src="/media/portrait.webp" alt="Giorgos Papanikolaou" width="720" height="960" />
 
